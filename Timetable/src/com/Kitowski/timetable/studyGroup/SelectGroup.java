@@ -36,7 +36,7 @@ public class SelectGroup implements OnItemSelectedListener {
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-		Log.i(logcatTAG, (String)spinner.getSelectedItem() + spinner.getSelectedItemId());
+		Log.i(logcatTAG, (String)spinner.getSelectedItem());
 		timetable.refresh(true);
 	}
 

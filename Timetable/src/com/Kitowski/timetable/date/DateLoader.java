@@ -5,15 +5,15 @@ import com.Kitowski.timetable.utilities.HttpReader;
 import android.util.Log;
 
 public class DateLoader {
-	private final static String logcatTAG = "Meeting dates";
+	private final static String logcatTAG = "Date loader";
 
 	private ArrayList<String> toConvert;
-	private ArrayList<String> meetingList;
+	private ArrayList<String> dateList;
 	
 	public DateLoader() {
 		HttpReader http = (HttpReader) new HttpReader().execute("https://inf.ug.edu.pl/terminy-zjazdow-semestr-zimowy-201617", "table");
 		toConvert = new ArrayList<String>();
-		meetingList = new ArrayList<String>();
+		dateList = new ArrayList<String>();
 		
 		if(loadFromHttp(http)) convertDate();
 	}
@@ -31,7 +31,7 @@ public class DateLoader {
 		}
 	}
 	
-	public ArrayList<String> getList() { return meetingList; }
+	public ArrayList<String> getList() { return dateList; }
 	
 	private void convertDate() {
 		String buffer = "";
@@ -46,8 +46,8 @@ public class DateLoader {
 				String st[] = str.split("/");
 				if(st[0].length() < 2) st[0] = "0" + st[0];
 				if(st[1].length() < 2) st[1] = "0" + st[1];
-				meetingList.add(buffer + "-" + st[0]);
-				meetingList.add(buffer + "-" + st[1]);
+				dateList.add(buffer + "-" + st[0]);
+				dateList.add(buffer + "-" + st[1]);
 			}
 		}
 	}
