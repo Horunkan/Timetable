@@ -68,7 +68,7 @@ public class Timetable extends Activity {
 		if(groups.loaded)selectGroup = new SelectGroup(this, layout, groups);
 		else {
 			if(!isOnline()) setError("No internet connection");
-			else setError("Timetable at selected day is not published yet");
+			else setError("Timetable for selected day is not published yet");
 		}
 	}
 	
