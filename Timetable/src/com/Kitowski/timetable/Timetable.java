@@ -37,6 +37,8 @@ public class Timetable extends Activity {
 			TimetableLoader timetable = new TimetableLoader(selectDates.getSelected());
 			
 			selectGroup = new SelectGroup(this, layout, timetable);
+			
+			DisplayLessons lessons = new DisplayLessons(this, layout, timetable.getGroup(selectGroup.getSelectedGroup()));
 		}
 		else {
 			setError("No internet connection");

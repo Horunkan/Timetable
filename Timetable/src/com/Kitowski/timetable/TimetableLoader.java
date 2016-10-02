@@ -45,6 +45,7 @@ public class TimetableLoader {
 	}
 	
 	public ArrayList<Group> getGroups() { return groups; }
+	public Group getGroup(int id) { return groups.get(id); }
 	
 	private void loadGroups() {
 		Group buffer = null;

@@ -25,11 +25,12 @@ public class SelectGroup implements OnItemSelectedListener {
 		spinner.setOnItemSelectedListener(this);
 		layout.addView(spinner);
 	}
+	
+	public int getSelectedGroup() { return (int) spinner.getSelectedItemId(); }
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-		Log.i(logcatTAG, (String)spinner.getSelectedItem());
-		
+		Log.i(logcatTAG, (String)spinner.getSelectedItem() + spinner.getSelectedItemId());
 	}
 
 	@Override public void onNothingSelected(AdapterView<?> parent) { }
