@@ -6,7 +6,7 @@ import android.widget.TextView;
 public class DisplayLessons {
 	
 	
-	public DisplayLessons(Timetable timetable, LinearLayout layout, Group group) {
+	public DisplayLessons(Timetable timetable, LinearLayout layout, StudyGroup group) {
 		for(String str : group.getLessons()) {
 			TextView txt = new TextView(timetable);
 			txt.setText(str);

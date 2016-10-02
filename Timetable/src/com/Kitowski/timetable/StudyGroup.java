@@ -2,11 +2,11 @@ package com.Kitowski.timetable;
 
 import java.util.ArrayList;
 
-public class Group {
+public class StudyGroup {
 	private String groupName;
 	private ArrayList<String> lessons;
 	
-	public Group(String name) {
+	public StudyGroup(String name) {
 		groupName = name;
 		lessons = new ArrayList<String>();
 	}

@@ -14,12 +14,12 @@ public class SelectGroup implements OnItemSelectedListener {
 	private Spinner spinner;
 	private ArrayAdapter<String> spinnerArrayAdapter;
 	
-	public SelectGroup(Timetable timetable, LinearLayout layout, TimetableLoader loader) {
+	public SelectGroup(Timetable timetable, LinearLayout layout, StudyGroupLoader loader) {
 		spinner = new Spinner(timetable);
 		spinnerArrayAdapter = new ArrayAdapter<String>(timetable, android.R.layout.simple_spinner_item); //selected item will look like a spinner set from XML
 		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		
-		for(Group gr : loader.getGroups()) spinnerArrayAdapter.add(gr.getName());
+		for(StudyGroup gr : loader.getGroups()) spinnerArrayAdapter.add(gr.getName());
 		
 		spinner.setAdapter(spinnerArrayAdapter);
 		spinner.setOnItemSelectedListener(this);

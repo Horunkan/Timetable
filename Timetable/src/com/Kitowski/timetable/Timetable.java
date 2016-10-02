@@ -34,7 +34,7 @@ public class Timetable extends Activity {
 			meetings = new MeetingDates();
 			selectDates = new SelectDate(this, layout, meetings);
 			
-			TimetableLoader timetable = new TimetableLoader(selectDates.getSelected());
+			StudyGroupLoader timetable = new StudyGroupLoader(selectDates.getSelected());
 			
 			selectGroup = new SelectGroup(this, layout, timetable);
 			
