@@ -46,6 +46,8 @@ public class MeetingDates {
 			}
 			else {
 				String st[] = str.split("/");
+				if(st[0].length() < 2) st[0] = "0" + st[0];
+				if(st[1].length() < 2) st[1] = "0" + st[1];
 				meetingList.add(buffer + "-" + st[0]);
 				meetingList.add(buffer + "-" + st[1]);
 			}

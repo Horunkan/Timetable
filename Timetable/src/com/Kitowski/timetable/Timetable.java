@@ -19,6 +19,7 @@ public class Timetable extends Activity {
 	private Button refreshButton;
 	private MeetingDates meetings;
 	private SelectDate selectDates;
+	private SelectGroup selectGroup;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,10 @@ public class Timetable extends Activity {
 		if(isOnline()) {
 			meetings = new MeetingDates();
 			selectDates = new SelectDate(this, layout, meetings);
+			
+			TimetableLoader timetable = new TimetableLoader(selectDates.getSelected());
+			
+			selectGroup = new SelectGroup(this, layout, timetable);
 		}
 		else {
 			setError("No internet connection");

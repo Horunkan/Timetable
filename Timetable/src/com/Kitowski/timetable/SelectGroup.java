@@ -1,33 +1,35 @@
 package com.Kitowski.timetable;
 
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
 
-public class SelectDate implements OnItemSelectedListener {
-	private final static String logcatTAG = "Select date";
+public class SelectGroup implements OnItemSelectedListener {
+	private final static String logcatTAG = "Select group";
 	
 	private Spinner spinner;
 	private ArrayAdapter<String> spinnerArrayAdapter;
 	
-	public SelectDate(Timetable timetable, LinearLayout layout, MeetingDates meetings) {
+	public SelectGroup(Timetable timetable, LinearLayout layout, TimetableLoader loader) {
 		spinner = new Spinner(timetable);
-		spinnerArrayAdapter = new ArrayAdapter<String>(timetable, android.R.layout.simple_spinner_item, meetings.getList()); //selected item will look like a spinner set from XML
+		spinnerArrayAdapter = new ArrayAdapter<String>(timetable, android.R.layout.simple_spinner_item); //selected item will look like a spinner set from XML
 		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		
+		for(Group gr : loader.getGroups()) spinnerArrayAdapter.add(gr.getName());
+		
 		spinner.setAdapter(spinnerArrayAdapter);
 		spinner.setOnItemSelectedListener(this);
 		layout.addView(spinner);
 	}
-	
-	public String getSelected() { return (String)spinner.getSelectedItem(); }
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		Log.i(logcatTAG, (String)spinner.getSelectedItem());
+		
 	}
 
 	@Override public void onNothingSelected(AdapterView<?> parent) { }
