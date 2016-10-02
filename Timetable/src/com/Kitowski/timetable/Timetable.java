@@ -1,5 +1,7 @@
 package com.Kitowski.timetable;
 
+import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;

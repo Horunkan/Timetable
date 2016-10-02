@@ -1,4 +1,4 @@
-package com.Kitowski.timetable;
+package com.Kitowski.timetable.studyGroup;
 
 import java.util.ArrayList;
 
@@ -11,10 +11,7 @@ public class StudyGroup {
 		lessons = new ArrayList<String>();
 	}
 	
-	public void addLesson(String str) {
-		lessons.add(str);
-	}
-	
+	public void addLesson(String str) { lessons.add(str); }
 	public String getName() { return groupName; }
 	public ArrayList<String> getLessons() { return lessons; }
 }

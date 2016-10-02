@@ -1,5 +1,7 @@
 package com.Kitowski.timetable;
 
+import com.Kitowski.timetable.studyGroup.StudyGroup;
+
 import android.widget.LinearLayout;
 import android.widget.TextView;
 

@@ -1,9 +1,7 @@
 package com.Kitowski.timetable;
 
 import java.util.ArrayList;
-
 import com.Kitowski.timetable.utilities.HttpReader;
-
 import android.util.Log;
 
 public class MeetingDates {
