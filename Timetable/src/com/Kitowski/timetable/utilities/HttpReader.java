@@ -1,4 +1,4 @@
-package com.Kitowski.timetable;
+package com.Kitowski.timetable.utilities;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
