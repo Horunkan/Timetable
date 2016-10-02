@@ -31,6 +31,8 @@ public class Timetable extends Activity {
 	private void loadTimetable() {
 		if(isOnline()) {
 			addProgressBar();
+			
+			MeetingDates meetings = new MeetingDates();
 		}
 		else {
 			setError("No internet connection");
