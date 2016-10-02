@@ -4,32 +4,32 @@ import java.util.ArrayList;
 import com.Kitowski.timetable.utilities.HttpReader;
 import android.util.Log;
 
-public class MeetingDates {
+public class DateLoader {
 	private final static String logcatTAG = "Meeting dates";
 	public boolean loaded = false;
 	
 	private ArrayList<String> toConvert;
 	private ArrayList<String> meetingList;
 	
-	public MeetingDates() {
+	public DateLoader() {
 		HttpReader http = (HttpReader) new HttpReader().execute("https://inf.ug.edu.pl/terminy-zjazdow-semestr-zimowy-201617", "table");
 		toConvert = new ArrayList<String>();
+		meetingList = new ArrayList<String>();
 		
-		try {
-			toConvert = http.get();
-			
-			if(toConvert.size() == 0) loaded = false;
-			else loaded = true;
-		}
+		if(loadFromHttp(http)) convertDate();
+	}
+	
+	
+	@SuppressWarnings("finally")
+	private boolean loadFromHttp(HttpReader http) {
+		try { toConvert = http.get(); }
 		catch(Exception e) {
 			Log.e(logcatTAG, "Failed to load");
-			loaded = false;
+			return false;
 		}
-		
-		if(loaded) {
-			meetingList = new ArrayList<String>();
-			convertDate();
-			for(String str : meetingList) Log.i(logcatTAG, str);
+		finally {
+			if(toConvert.size() == 0) return false;
+			else return true;
 		}
 	}
 	

@@ -16,7 +16,7 @@ public class SelectDate implements OnItemSelectedListener {
 	private Spinner spinner;
 	private ArrayAdapter<String> spinnerArrayAdapter;
 	
-	public SelectDate(Timetable timetable, LinearLayout layout, MeetingDates meetings) {
+	public SelectDate(Timetable timetable, LinearLayout layout, DateLoader meetings) {
 		spinner = new Spinner(timetable);
 		spinnerArrayAdapter = new ArrayAdapter<String>(timetable, android.R.layout.simple_spinner_item, meetings.getList()); //selected item will look like a spinner set from XML
 		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

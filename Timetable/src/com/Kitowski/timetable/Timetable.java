@@ -1,6 +1,6 @@
 package com.Kitowski.timetable;
 
-import com.Kitowski.timetable.meeting.MeetingDates;
+import com.Kitowski.timetable.meeting.DateLoader;
 import com.Kitowski.timetable.meeting.SelectDate;
 import com.Kitowski.timetable.studyGroup.SelectGroup;
 import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
@@ -22,7 +22,7 @@ public class Timetable extends Activity {
 	private LinearLayout layout;
 	private TextView errorText;
 	private Button refreshButton;
-	private MeetingDates meetings;
+	private DateLoader meetings;
 	private SelectDate selectDates;
 	private SelectGroup selectGroup;
 	
@@ -36,7 +36,7 @@ public class Timetable extends Activity {
 	
 	private void loadTimetable() {
 		if(isOnline()) {
-			meetings = new MeetingDates();
+			meetings = new DateLoader();
 			selectDates = new SelectDate(this, layout, meetings);
 			
 			StudyGroupLoader timetable = new StudyGroupLoader(selectDates.getSelected());
