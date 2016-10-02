@@ -1,11 +1,10 @@
-package com.Kitowski.timetable;
+package com.Kitowski.timetable.studyGroup;
 
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
-import com.Kitowski.timetable.studyGroup.StudyGroup;
-import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
+import com.Kitowski.timetable.Timetable;
 
 import android.util.Log;
 import android.view.View;
