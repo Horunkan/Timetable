@@ -7,6 +7,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,6 +18,7 @@ public class Timetable extends Activity {
 	private LinearLayout layout;
 	private ProgressBar loadBar = null;
 	private TextView errorText = null;
+	private Button refreshButton = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +33,8 @@ public class Timetable extends Activity {
 			addProgressBar();
 		}
 		else {
-			removeProgressBar();
 			setError("No internet connection");
+			addRefreshButton();
 		}
 	}
 	
@@ -54,8 +58,19 @@ public class Timetable extends Activity {
 		layout.addView(loadBar);
 	}
 	
-	private void removeProgressBar() {
-		layout.removeView(loadBar);
-		loadBar = null;
+	private void addRefreshButton() {
+		refreshButton = new Button(this);
+		refreshButton.setText("Refresh");
+		refreshButton.setGravity(Gravity.CENTER);
+		refreshButton.setTextSize(20);
+		layout.addView(refreshButton);
+		
+		refreshButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+		      layout.removeAllViews();
+		      loadTimetable();
+		    }
+		});
 	}
 }
