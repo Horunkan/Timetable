@@ -11,14 +11,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class Timetable extends Activity {
 	private LinearLayout layout;
-	private ProgressBar loadBar = null;
-	private TextView errorText = null;
-	private Button refreshButton = null;
+	private TextView errorText;
+	private Button refreshButton;
+	private MeetingDates meetings;
+	private SelectDate selectDates;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +30,8 @@ public class Timetable extends Activity {
 	
 	private void loadTimetable() {
 		if(isOnline()) {
-			addProgressBar();
-			
-			MeetingDates meetings = new MeetingDates();
+			meetings = new MeetingDates();
+			selectDates = new SelectDate(this, layout, meetings);
 		}
 		else {
 			setError("No internet connection");
@@ -53,11 +52,6 @@ public class Timetable extends Activity {
 		errorText.setGravity(Gravity.CENTER);
 		errorText.setTextSize(20);
 		layout.addView(errorText);
-	}
-	
-	private void addProgressBar() {
-		loadBar = new ProgressBar(this);
-		layout.addView(loadBar);
 	}
 	
 	private void addRefreshButton() {

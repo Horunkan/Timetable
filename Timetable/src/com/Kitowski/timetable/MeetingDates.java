@@ -33,6 +33,8 @@ public class MeetingDates {
 		}
 	}
 	
+	public ArrayList<String> getList() { return meetingList; }
+	
 	private void convertDate() {
 		String buffer = "";
 		
