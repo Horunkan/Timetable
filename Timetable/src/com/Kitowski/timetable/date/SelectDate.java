@@ -1,4 +1,4 @@
-package com.Kitowski.timetable.meeting;
+package com.Kitowski.timetable.date;
 
 import com.Kitowski.timetable.Timetable;
 
@@ -16,9 +16,9 @@ public class SelectDate implements OnItemSelectedListener {
 	private Spinner spinner;
 	private ArrayAdapter<String> spinnerArrayAdapter;
 	
-	public SelectDate(Timetable timetable, LinearLayout layout, DateLoader meetings) {
+	public SelectDate(Timetable timetable, LinearLayout layout, DateLoader date) {
 		spinner = new Spinner(timetable);
-		spinnerArrayAdapter = new ArrayAdapter<String>(timetable, android.R.layout.simple_spinner_item, meetings.getList()); //selected item will look like a spinner set from XML
+		spinnerArrayAdapter = new ArrayAdapter<String>(timetable, android.R.layout.simple_spinner_item, date.getList()); //selected item will look like a spinner set from XML
 		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(spinnerArrayAdapter);
 		spinner.setOnItemSelectedListener(this);

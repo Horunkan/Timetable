@@ -1,4 +1,4 @@
-package com.Kitowski.timetable.meeting;
+package com.Kitowski.timetable.date;
 
 import java.util.ArrayList;
 import com.Kitowski.timetable.utilities.HttpReader;
@@ -6,8 +6,7 @@ import android.util.Log;
 
 public class DateLoader {
 	private final static String logcatTAG = "Meeting dates";
-	public boolean loaded = false;
-	
+
 	private ArrayList<String> toConvert;
 	private ArrayList<String> meetingList;
 	
@@ -18,7 +17,6 @@ public class DateLoader {
 		
 		if(loadFromHttp(http)) convertDate();
 	}
-	
 	
 	@SuppressWarnings("finally")
 	private boolean loadFromHttp(HttpReader http) {
