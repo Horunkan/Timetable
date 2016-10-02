@@ -1,4 +1,4 @@
-package com.Kitowski.timetable;
+package com.Kitowski.timetable.utilities;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -45,7 +45,7 @@ public class HttpReader extends AsyncTask<String, Void, ArrayList<String>> {
 			}
 		}
 		catch(Exception e) {
-			Log.e(logcatTAG, "Failed to load website", e);
+			Log.e(logcatTAG, "Failed to load website");
 		}
 	}
 	

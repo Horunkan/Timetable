@@ -1,39 +1,37 @@
-package com.Kitowski.timetable;
+package com.Kitowski.timetable.date;
 
 import java.util.ArrayList;
-
+import com.Kitowski.timetable.utilities.HttpReader;
 import android.util.Log;
 
-public class MeetingDates {
-	private final static String logcatTAG = "Meeting dates";
-	public boolean loaded = false;
-	
+public class DateLoader {
+	private final static String logcatTAG = "Date loader";
+
 	private ArrayList<String> toConvert;
-	private ArrayList<String> meetingList;
+	private ArrayList<String> dateList;
 	
-	public MeetingDates() {
+	public DateLoader() {
 		HttpReader http = (HttpReader) new HttpReader().execute("https://inf.ug.edu.pl/terminy-zjazdow-semestr-zimowy-201617", "table");
 		toConvert = new ArrayList<String>();
+		dateList = new ArrayList<String>();
 		
-		try {
-			toConvert = http.get();
-			
-			if(toConvert.size() == 0) loaded = false;
-			else loaded = true;
-		}
+		if(loadFromHttp(http)) convertDate();
+	}
+	
+	@SuppressWarnings("finally")
+	private boolean loadFromHttp(HttpReader http) {
+		try { toConvert = http.get(); }
 		catch(Exception e) {
 			Log.e(logcatTAG, "Failed to load");
-			loaded = false;
+			return false;
 		}
-		
-		if(loaded) {
-			meetingList = new ArrayList<String>();
-			convertDate();
-			for(String str : meetingList) Log.i(logcatTAG, str);
+		finally {
+			if(toConvert.size() == 0) return false;
+			else return true;
 		}
 	}
 	
-	public ArrayList<String> getList() { return meetingList; }
+	public ArrayList<String> getList() { return dateList; }
 	
 	private void convertDate() {
 		String buffer = "";
@@ -48,8 +46,8 @@ public class MeetingDates {
 				String st[] = str.split("/");
 				if(st[0].length() < 2) st[0] = "0" + st[0];
 				if(st[1].length() < 2) st[1] = "0" + st[1];
-				meetingList.add(buffer + "-" + st[0]);
-				meetingList.add(buffer + "-" + st[1]);
+				dateList.add(buffer + "-" + st[0]);
+				dateList.add(buffer + "-" + st[1]);
 			}
 		}
 	}

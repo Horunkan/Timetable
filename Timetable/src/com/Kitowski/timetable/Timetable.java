@@ -1,5 +1,10 @@
 package com.Kitowski.timetable;
 
+import com.Kitowski.timetable.date.DateLoader;
+import com.Kitowski.timetable.date.SelectDate;
+import com.Kitowski.timetable.studyGroup.SelectGroup;
+import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -17,9 +22,10 @@ public class Timetable extends Activity {
 	private LinearLayout layout;
 	private TextView errorText;
 	private Button refreshButton;
-	private MeetingDates meetings;
-	private SelectDate selectDates;
+	private SelectDate selectDate;
+	private StudyGroupLoader groups;
 	private SelectGroup selectGroup;
+	private DisplayLessons lessons;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,19 +37,43 @@ public class Timetable extends Activity {
 	
 	private void loadTimetable() {
 		if(isOnline()) {
-			meetings = new MeetingDates();
-			selectDates = new SelectDate(this, layout, meetings);
-			
-			TimetableLoader timetable = new TimetableLoader(selectDates.getSelected());
-			
-			selectGroup = new SelectGroup(this, layout, timetable);
-			
-			DisplayLessons lessons = new DisplayLessons(this, layout, timetable.getGroup(selectGroup.getSelectedGroup()));
+			addSelectDate();
+			addSelectGroup();
+			addLessons();
 		}
 		else {
 			setError("No internet connection");
 			addRefreshButton();
 		}
+	}
+	
+	public void refresh(boolean lessonsOnly) {
+		layout.removeView(errorText);
+		if(!lessonsOnly) {
+			layout.removeView(selectGroup.getSpinner());
+			addSelectGroup();
+		}
+		
+		for(TextView txt : lessons.getLessons()) layout.removeView(txt);
+		if(groups.loaded) addLessons();
+	}
+	
+	private void addSelectDate() {
+		DateLoader date = new DateLoader();
+		selectDate = new SelectDate(this, layout, date);
+	}
+	
+	private void addSelectGroup() {
+		groups = new StudyGroupLoader(selectDate.getSelected());	
+		if(groups.loaded)selectGroup = new SelectGroup(this, layout, groups);
+		else {
+			if(!isOnline()) setError("No internet connection");
+			else setError("Timetable at selected day is not published yet");
+		}
+	}
+	
+	private void addLessons() {
+		lessons = new DisplayLessons(this, layout, groups.getGroup(selectGroup.getSelectedGroup()));
 	}
 	
 	private boolean isOnline() {
