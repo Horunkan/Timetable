@@ -1,4 +1,4 @@
-package com.Kitowski.timetable;
+package com.Kitowski.timetable.meeting;
 
 import java.util.ArrayList;
 import com.Kitowski.timetable.utilities.HttpReader;

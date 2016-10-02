@@ -1,5 +1,7 @@
 package com.Kitowski.timetable;
 
+import com.Kitowski.timetable.meeting.MeetingDates;
+import com.Kitowski.timetable.meeting.SelectDate;
 import com.Kitowski.timetable.studyGroup.SelectGroup;
 import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
 

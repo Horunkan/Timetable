@@ -1,4 +1,6 @@
-package com.Kitowski.timetable;
+package com.Kitowski.timetable.meeting;
+
+import com.Kitowski.timetable.Timetable;
 
 import android.util.Log;
 import android.view.View;
