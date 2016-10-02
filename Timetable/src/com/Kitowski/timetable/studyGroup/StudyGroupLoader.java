@@ -10,23 +10,29 @@ public class StudyGroupLoader {
 	private ArrayList<String> toConvert;
 	private ArrayList<StudyGroup> groups;
 	
+	public boolean loaded = true;
+	
 	public StudyGroupLoader(String date) {
-		HttpReader http = (HttpReader) new HttpReader().execute("https://inf.ug.edu.pl/plan-" + date + ".print", "body");
+		
 		toConvert = new ArrayList<String>();
 		groups = new ArrayList<StudyGroup>();
 		
-		if(loadFromHttp(http)) {
+		if(loadFromHttp(date)) {
 			removeUnnecessaryLines();
 			loadStudyGroups();
 		}
+		else loaded = false;
 	}
 	
 	public ArrayList<StudyGroup> getGroups() { return groups; }
 	public StudyGroup getGroup(int id) { return groups.get(id); }
 	
 	@SuppressWarnings("finally")
-	private boolean loadFromHttp(HttpReader http) {
-		try { toConvert = http.get(); }
+	private boolean loadFromHttp(String date) {
+		try { 
+			HttpReader http = (HttpReader) new HttpReader().execute("https://inf.ug.edu.pl/plan-" + date + ".print", "body");
+			toConvert = http.get(); 
+		}
 		catch(Exception e) {
 			Log.e(logcatTAG, "Failed to load");
 			return false;

@@ -26,9 +26,6 @@ public class Timetable extends Activity {
 	private StudyGroupLoader groups;
 	private SelectGroup selectGroup;
 	private DisplayLessons lessons;
-	/*private DateLoader meetings;
-	private SelectDate selectDates;
-	private SelectGroup selectGroup;*/
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +48,14 @@ public class Timetable extends Activity {
 	}
 	
 	public void refresh(boolean lessonsOnly) {
+		layout.removeView(errorText);
 		if(!lessonsOnly) {
 			layout.removeView(selectGroup.getSpinner());
 			addSelectGroup();
 		}
 		
 		for(TextView txt : lessons.getLessons()) layout.removeView(txt);
-		addLessons();
+		if(groups.loaded) addLessons();
 	}
 	
 	private void addSelectDate() {
@@ -66,8 +64,12 @@ public class Timetable extends Activity {
 	}
 	
 	private void addSelectGroup() {
-		groups = new StudyGroupLoader(selectDate.getSelected());
-		selectGroup = new SelectGroup(this, layout, groups);
+		groups = new StudyGroupLoader(selectDate.getSelected());	
+		if(groups.loaded)selectGroup = new SelectGroup(this, layout, groups);
+		else {
+			if(!isOnline()) setError("No internet connection");
+			else setError("Timetable at selected day is not published yet");
+		}
 	}
 	
 	private void addLessons() {

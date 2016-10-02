@@ -45,7 +45,7 @@ public class HttpReader extends AsyncTask<String, Void, ArrayList<String>> {
 			}
 		}
 		catch(Exception e) {
-			Log.e(logcatTAG, "Failed to load website", e);
+			Log.e(logcatTAG, "Failed to load website");
 		}
 	}
 	
