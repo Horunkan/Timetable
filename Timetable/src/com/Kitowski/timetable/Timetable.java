@@ -50,6 +50,16 @@ public class Timetable extends Activity {
 		}
 	}
 	
+	public void refresh(boolean lessonsOnly) {
+		if(!lessonsOnly) {
+			layout.removeView(selectGroup.getSpinner());
+			addSelectGroup();
+		}
+		
+		for(TextView txt : lessons.getLessons()) layout.removeView(txt);
+		addLessons();
+	}
+	
 	private void addSelectDate() {
 		DateLoader date = new DateLoader();
 		selectDate = new SelectDate(this, layout, date);
