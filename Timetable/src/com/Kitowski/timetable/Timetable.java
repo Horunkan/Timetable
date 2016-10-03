@@ -2,6 +2,7 @@ package com.Kitowski.timetable;
 
 import com.Kitowski.timetable.date.DateLoader;
 import com.Kitowski.timetable.date.SelectDate;
+import com.Kitowski.timetable.lessons.DisplayLessons;
 import com.Kitowski.timetable.studyGroup.SelectGroup;
 import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
 
@@ -61,7 +62,7 @@ public class Timetable extends Activity {
 	private void addSelectDate() {
 		DateLoader date = new DateLoader();
 		selectDate = new SelectDate(this, date);
-		layout.addView(selectDate);
+		layout.addView(selectDate);	
 	}
 	
 	private void addSelectGroup() {
