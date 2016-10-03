@@ -31,6 +31,7 @@ public class Timetable extends Activity {
 	private SelectGroup selectGroup;
 	private ArrayList<Lesson> lessons;
 	private LessonLegend legend;
+	private Button calendarButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,8 @@ public class Timetable extends Activity {
 	
 	public void refresh(boolean lessonsOnly) {
 		layout.removeView(errorText);
+		layout.removeView(refreshButton);
+		layout.removeView(calendarButton);
 		legend.remove(layout);
 		if(!lessonsOnly) {
 			layout.removeView(selectGroup);
@@ -62,8 +65,11 @@ public class Timetable extends Activity {
 		}
 		
 		for(TextView txt : lessons) layout.removeView(txt);
-		if(groups.loaded) addLessons();
-		if(groups.loaded) addLegend();
+		if(groups.loaded) {
+			addLessons();
+			addCalendarButton();
+			addLegend();
+		}
 	}
 	
 	private void addSelectDate() {
@@ -91,6 +97,23 @@ public class Timetable extends Activity {
 			layout.addView(ls);
 			lessons.add(ls);
 		}
+	}
+	
+	private void addCalendarButton() {
+		calendarButton = new Button(this);
+		calendarButton.setText("Add to calendar");
+		calendarButton.setGravity(Gravity.CENTER);
+		calendarButton.setPadding(10, 15, 10, 15);
+		calendarButton.setTextSize(20);
+		layout.addView(calendarButton);
+		
+		calendarButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+		      layout.removeAllViews();
+		      loadTimetable();
+		    }
+		});
 	}
 	
 	private void addLegend() {
