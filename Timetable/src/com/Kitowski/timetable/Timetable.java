@@ -50,7 +50,7 @@ public class Timetable extends Activity {
 	public void refresh(boolean lessonsOnly) {
 		layout.removeView(errorText);
 		if(!lessonsOnly) {
-			layout.removeView(selectGroup.getSpinner());
+			layout.removeView(selectGroup);
 			addSelectGroup();
 		}
 		
@@ -65,7 +65,10 @@ public class Timetable extends Activity {
 	
 	private void addSelectGroup() {
 		groups = new StudyGroupLoader(selectDate.getSelected());	
-		if(groups.loaded)selectGroup = new SelectGroup(this, layout, groups);
+		if(groups.loaded) {
+			selectGroup = new SelectGroup(this, groups);
+			layout.addView(selectGroup);
+		}
 		else {
 			if(!isOnline()) setError("No internet connection");
 			else setError("Timetable for selected day is not published yet");
