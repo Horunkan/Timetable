@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.Kitowski.timetable.date.DateLoader;
 import com.Kitowski.timetable.date.SelectDate;
 import com.Kitowski.timetable.lessons.Lesson;
+import com.Kitowski.timetable.lessons.LessonLegend;
 import com.Kitowski.timetable.studyGroup.SelectGroup;
 import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
 
@@ -29,6 +30,7 @@ public class Timetable extends Activity {
 	private StudyGroupLoader groups;
 	private SelectGroup selectGroup;
 	private ArrayList<Lesson> lessons;
+	private LessonLegend legend;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class Timetable extends Activity {
 			addSelectDate();
 			addSelectGroup();
 			addLessons();
+			addLegend();
 		}
 		else {
 			setError("No internet connection");
@@ -59,6 +62,8 @@ public class Timetable extends Activity {
 		
 		for(TextView txt : lessons) layout.removeView(txt);
 		if(groups.loaded) addLessons();
+		legend.remove(layout);
+		addLegend();
 	}
 	
 	private void addSelectDate() {
@@ -86,6 +91,11 @@ public class Timetable extends Activity {
 			layout.addView(ls);
 			lessons.add(ls);
 		}
+	}
+	
+	private void addLegend() {
+		 legend = new LessonLegend(this);
+		 legend.dispay(layout);
 	}
 	
 	private boolean isOnline() {

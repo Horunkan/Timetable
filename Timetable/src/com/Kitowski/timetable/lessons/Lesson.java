@@ -2,7 +2,6 @@ package com.Kitowski.timetable.lessons;
 
 import com.Kitowski.timetable.Timetable;
 
-import android.R.color;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -21,7 +20,7 @@ public class Lesson extends TextView {
 		
 		lessonData = lesson.split(",");
 		background = new GradientDrawable();
-        background.setColor(getBackgroundColor(lesson));
+        background.setColor(LessonLegend.getColor(lesson));
         background.setStroke(4, Color.LTGRAY);
 		
 		this.setText(lessonData[0] + " " + lessonData[1]);
@@ -31,16 +30,6 @@ public class Lesson extends TextView {
 		this.setOnClickListener(new OnClickListener() {
 			@Override public void onClick(View v) { displayDetails(); }
         });
-	}
-	
-	private int getBackgroundColor(String str) {
-		if(str.contains("wykład+laboratorium")) return Color.CYAN;
-		else if(str.contains("wykład+ćwiczenia")) return Color.GREEN;
-		else if(str.contains("wykład+ćwiczenia")) return Color.MAGENTA;
-		else if(str.contains("ćwiczenia")) return Color.RED;
-		else if(str.contains("laboratorium")) return Color.YELLOW;
-		else if(str.contains("wykład")) return Color.GRAY;
-		return Color.WHITE;
 	}
 	
 	private void displayDetails() {
