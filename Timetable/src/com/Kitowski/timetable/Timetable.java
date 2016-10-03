@@ -55,6 +55,7 @@ public class Timetable extends Activity {
 	
 	public void refresh(boolean lessonsOnly) {
 		layout.removeView(errorText);
+		legend.remove(layout);
 		if(!lessonsOnly) {
 			layout.removeView(selectGroup);
 			addSelectGroup();
@@ -62,8 +63,7 @@ public class Timetable extends Activity {
 		
 		for(TextView txt : lessons) layout.removeView(txt);
 		if(groups.loaded) addLessons();
-		legend.remove(layout);
-		addLegend();
+		if(groups.loaded) addLegend();
 	}
 	
 	private void addSelectDate() {
