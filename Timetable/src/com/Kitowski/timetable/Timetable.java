@@ -111,16 +111,22 @@ public class Timetable extends Activity {
 		
 		calendarButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {;
-				for(Lesson ls : lessons) {
-					if(!CalendarHelper.addToCalendar(getTimetable(), selectDate.getSelected(), ls)) {
-						Toast toast = Toast.makeText(getTimetable(), "Failed to add timetable to calendar", Toast.LENGTH_SHORT);
-						toast.show();
-						break;
-					}
-					Toast toast = Toast.makeText(getTimetable(), "Timetable added to calendar", Toast.LENGTH_SHORT);
-					toast.show();
+			public void onClick(View v) {
+				Toast toastBad = Toast.makeText(getTimetable(), "Failed to add timetable to calendar", Toast.LENGTH_SHORT);
+				Toast toastGood = Toast.makeText(getTimetable(), "Timetable added to calendar", Toast.LENGTH_SHORT);
+				
+				if(!CalendarHelper.addToCalendar(getTimetable(), selectDate.getSelected(), lessons.get(0), true)) {
+					toastBad.show();
+					return;
 				}
+				
+				for(int i = 1; i < lessons.size(); ++i) {
+					if(!CalendarHelper.addToCalendar(getTimetable(), selectDate.getSelected(), lessons.get(1), false)) {
+						toastBad.show();
+						return;
+					}
+				}
+				toastGood.show();
 		    }
 		});
 	}

@@ -13,12 +13,15 @@ import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.net.Uri;
+import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
+import android.provider.CalendarContract.Reminders;
+import android.provider.ContactsContract.CommonDataKinds.Event;
 
 @SuppressLint("SimpleDateFormat")
 @SuppressWarnings("unused")
 public class CalendarHelper {
-	public static boolean addToCalendar(Timetable timetable, String date, Lesson lesson) {
+	public static boolean addToCalendar(Timetable timetable, String date, Lesson lesson, boolean withAlarm) {
 		try {
 			Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(date + " " + lesson.getRawTime()[0]);
 			Date end = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(date + " " + lesson.getRawTime()[1]);
@@ -27,20 +30,35 @@ public class CalendarHelper {
 			beginTime.setTime(start);
 			endTime.setTime(end);
 			
-			ContentResolver cr = timetable.getContentResolver();
-			ContentValues values = new ContentValues();
+			ContentResolver content = timetable.getContentResolver();
+			ContentValues event = new ContentValues();
 			
-			values.put(Events.DTSTART, beginTime.getTimeInMillis());
-			values.put(Events.DTEND, endTime.getTimeInMillis());
-			values.put(Events.TITLE, lesson.getLessonName());
-			values.put(Events.DESCRIPTION, lesson.getDetails());
-			values.put(Events.CALENDAR_ID, 1);
-			values.put(Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
-			Uri uri = cr.insert(Events.CONTENT_URI, values);	
+			event.put(Events.DTSTART, beginTime.getTimeInMillis());
+			event.put(Events.DTEND, endTime.getTimeInMillis());
+			event.put(Events.TITLE, lesson.getLessonName());
+			event.put(Events.DESCRIPTION, lesson.getDetails());
+			event.put(Events.CALENDAR_ID, 1);
+			event.put(Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+			event.put(Events.HAS_ALARM, withAlarm);
+			Uri uri = content.insert(Events.CONTENT_URI, event);
+			
+			if(withAlarm) {
+				long eventID = Long.parseLong(uri.getLastPathSegment());
+				addAlarm(content, eventID);
+			}
+			 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;
+	}
+	
+	private static void addAlarm(ContentResolver content, long eventID) {
+		ContentValues alarm = new ContentValues();
+	    alarm.put(Reminders.EVENT_ID, eventID);
+	    alarm.put(Reminders.METHOD, Reminders.METHOD_ALERT);
+	    alarm.put(Reminders.MINUTES, 1440);
+	    content.insert(Reminders.CONTENT_URI,alarm);
 	}
 }
