@@ -1,8 +1,10 @@
 package com.Kitowski.timetable;
 
+import java.util.ArrayList;
+
 import com.Kitowski.timetable.date.DateLoader;
 import com.Kitowski.timetable.date.SelectDate;
-import com.Kitowski.timetable.lessons.DisplayLessons;
+import com.Kitowski.timetable.lessons.Lesson;
 import com.Kitowski.timetable.studyGroup.SelectGroup;
 import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
 
@@ -26,7 +28,7 @@ public class Timetable extends Activity {
 	private SelectDate selectDate;
 	private StudyGroupLoader groups;
 	private SelectGroup selectGroup;
-	private DisplayLessons lessons;
+	private ArrayList<Lesson> lessons;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class Timetable extends Activity {
 			addSelectGroup();
 		}
 		
-		for(TextView txt : lessons.getLessons()) layout.removeView(txt);
+		for(TextView txt : lessons) layout.removeView(txt);
 		if(groups.loaded) addLessons();
 	}
 	
@@ -78,7 +80,12 @@ public class Timetable extends Activity {
 	}
 	
 	private void addLessons() {
-		lessons = new DisplayLessons(this, layout, groups.getGroup(selectGroup.getSelectedGroup()));
+		lessons = new ArrayList<Lesson>();
+		for(String str : groups.getGroup(selectGroup.getSelectedGroup()).getLessons()) {
+			Lesson ls = new Lesson(this, str);	
+			layout.addView(ls);
+			lessons.add(ls);
+		}
 	}
 	
 	private boolean isOnline() {

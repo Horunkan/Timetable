@@ -16,7 +16,6 @@ public class Lesson extends TextView {
 		super(timetable);
 		
 		lessonData = lesson.split(",");
-		
 		background = new GradientDrawable();
         background.setColor(color.white);
         background.setStroke(4, Color.LTGRAY);
