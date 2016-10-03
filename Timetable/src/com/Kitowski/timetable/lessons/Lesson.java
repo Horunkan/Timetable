@@ -32,6 +32,10 @@ public class Lesson extends TextView {
         });
 	}
 	
+	public String[] getRawTime() { return lessonData[0].split("—"); }
+	public String getLessonName() { return lessonData[1]; }
+	public String getDetails() { return formatDetails(); }
+	
 	private void displayDetails() {
 		AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(timetable);
 		dlgAlert.setTitle(lessonData[1]);

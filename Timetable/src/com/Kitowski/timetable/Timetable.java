@@ -2,6 +2,7 @@ package com.Kitowski.timetable;
 
 import java.util.ArrayList;
 
+import com.Kitowski.timetable.Calendar.CalendarHelper;
 import com.Kitowski.timetable.date.DateLoader;
 import com.Kitowski.timetable.date.SelectDate;
 import com.Kitowski.timetable.lessons.Lesson;
@@ -109,12 +110,15 @@ public class Timetable extends Activity {
 		
 		calendarButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
-		      layout.removeAllViews();
-		      loadTimetable();
+			public void onClick(View v) {;
+				for(Lesson ls : lessons) {
+					CalendarHelper.addToCalendar(getTimetable(), selectDate.getSelected(), ls);
+				}
 		    }
 		});
 	}
+	
+	public Timetable getTimetable() { return this; }
 	
 	private void addLegend() {
 		 legend = new LessonLegend(this);
