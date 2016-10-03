@@ -18,7 +18,7 @@ import android.provider.CalendarContract.Events;
 @SuppressLint("SimpleDateFormat")
 @SuppressWarnings("unused")
 public class CalendarHelper {
-	public static void addToCalendar(Timetable timetable, String date, Lesson lesson) {
+	public static boolean addToCalendar(Timetable timetable, String date, Lesson lesson) {
 		try {
 			Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(date + " " + lesson.getRawTime()[0]);
 			Date end = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(date + " " + lesson.getRawTime()[1]);
@@ -39,6 +39,8 @@ public class CalendarHelper {
 			Uri uri = cr.insert(Events.CONTENT_URI, values);	
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 }

@@ -22,6 +22,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Timetable extends Activity {
 	private LinearLayout layout;
@@ -112,7 +113,13 @@ public class Timetable extends Activity {
 			@Override
 			public void onClick(View v) {;
 				for(Lesson ls : lessons) {
-					CalendarHelper.addToCalendar(getTimetable(), selectDate.getSelected(), ls);
+					if(!CalendarHelper.addToCalendar(getTimetable(), selectDate.getSelected(), ls)) {
+						Toast toast = Toast.makeText(getTimetable(), "Failed to add timetable to calendar", Toast.LENGTH_SHORT);
+						toast.show();
+						break;
+					}
+					Toast toast = Toast.makeText(getTimetable(), "Timetable added to calendar", Toast.LENGTH_SHORT);
+					toast.show();
 				}
 		    }
 		});
