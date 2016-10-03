@@ -121,7 +121,7 @@ public class Timetable extends Activity {
 				}
 				
 				for(int i = 1; i < lessons.size(); ++i) {
-					if(!CalendarHelper.addToCalendar(getTimetable(), selectDate.getSelected(), lessons.get(1), false)) {
+					if(!CalendarHelper.addToCalendar(getTimetable(), selectDate.getSelected(), lessons.get(i), false)) {
 						toastBad.show();
 						return;
 					}

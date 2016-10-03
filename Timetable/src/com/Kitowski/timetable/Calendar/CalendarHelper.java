@@ -15,7 +15,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
+import android.provider.CalendarContract.Calendars;
 import android.provider.CalendarContract.Events;
+import android.provider.CalendarContract.Instances;
 import android.provider.CalendarContract.Reminders;
 import android.provider.ContactsContract.CommonDataKinds.Event;
 import android.util.Log;
@@ -27,6 +29,8 @@ public class CalendarHelper {
 	
 	public static boolean addToCalendar(Timetable timetable, String date, Lesson lesson, boolean withAlarm) {
 		try {
+			
+			
 			Date start = dateFormat.parse(date + " " + lesson.getRawTime()[0]);
 			Date end = dateFormat.parse(date + " " + lesson.getRawTime()[1]);
 			Calendar beginTime = Calendar.getInstance();
@@ -34,23 +38,27 @@ public class CalendarHelper {
 			beginTime.setTime(start);
 			endTime.setTime(end);
 			
-			ContentResolver content = timetable.getContentResolver();
-			ContentValues event = new ContentValues();
-			
-			event.put(Events.DTSTART, beginTime.getTimeInMillis());
-			event.put(Events.DTEND, endTime.getTimeInMillis());
-			event.put(Events.TITLE, lesson.getLessonName());
-			event.put(Events.DESCRIPTION, lesson.getDetails());
-			event.put(Events.CALENDAR_ID, 1);
-			event.put(Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
-			event.put(Events.HAS_ALARM, withAlarm);
-			Uri uri = content.insert(Events.CONTENT_URI, event);
-			
-			if(withAlarm) {
-				long eventID = Long.parseLong(uri.getLastPathSegment());
-				addAlarm(content, eventID);
+			if(!isEventExists(timetable, lesson.getLessonName(), lesson.getDetails(), beginTime, endTime)) {
+				ContentResolver content = timetable.getContentResolver();
+				ContentValues event = new ContentValues();
+				
+				event.put(Events.DTSTART, beginTime.getTimeInMillis());
+				event.put(Events.DTEND, endTime.getTimeInMillis());
+				event.put(Events.TITLE, lesson.getLessonName());
+				event.put(Events.DESCRIPTION, lesson.getDetails());
+				event.put(Events.CALENDAR_ID, 1);
+				event.put(Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+				event.put(Events.HAS_ALARM, withAlarm);
+				Uri uri = content.insert(Events.CONTENT_URI, event);
+				
+				if(withAlarm) {
+					long eventID = Long.parseLong(uri.getLastPathSegment());
+					addAlarm(content, eventID);
+				}	
 			}
-			 
+			else {
+				
+			}	 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -64,5 +72,19 @@ public class CalendarHelper {
 	    alarm.put(Reminders.METHOD, Reminders.METHOD_ALERT);
 	    alarm.put(Reminders.MINUTES, 1440);
 	    content.insert(Reminders.CONTENT_URI,alarm);
+	}
+	
+	
+	private static boolean isEventExists(Timetable timetable, String title, String description, Calendar beginTime, Calendar endTime) {
+		ContentResolver content = timetable.getContentResolver();
+		String queryProjection[] = {"_id"};
+		String querySelection = "(deleted != 1 and dtstart is " + beginTime.getTimeInMillis() + " and dtend is " + endTime.getTimeInMillis() + " and title is \"" + title + "\" and description is \"" + description + "\")";
+		Cursor cursor = content.query(Events.CONTENT_URI, queryProjection, querySelection, null, null);
+		
+		int count = cursor.getCount();
+		cursor.close();
+		
+		if(count > 0) return true;
+		else return false;
 	}
 }
