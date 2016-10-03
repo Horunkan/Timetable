@@ -60,7 +60,8 @@ public class Timetable extends Activity {
 	
 	private void addSelectDate() {
 		DateLoader date = new DateLoader();
-		selectDate = new SelectDate(this, layout, date);
+		selectDate = new SelectDate(this, date);
+		layout.addView(selectDate);
 	}
 	
 	private void addSelectGroup() {
