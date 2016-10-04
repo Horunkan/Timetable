@@ -51,7 +51,7 @@ public class Timetable extends Activity {
 			addLegend();
 		}
 		else {
-			setError("No internet connection");
+			setError(getResources().getString(R.string.error_nointernet));
 			addRefreshButton();
 		}
 	}
@@ -87,8 +87,8 @@ public class Timetable extends Activity {
 			layout.addView(selectGroup);
 		}
 		else {
-			if(!isOnline()) setError("No internet connection");
-			else setError("Timetable for selected day is not published yet");
+			if(!isOnline()) setError(getResources().getString(R.string.error_nointernet));
+			else setError(getResources().getString(R.string.error_notimetable));
 		}
 	}
 	
@@ -103,7 +103,7 @@ public class Timetable extends Activity {
 	
 	private void addCalendarButton() {
 		calendarButton = new Button(this);
-		calendarButton.setText("Add to calendar");
+		calendarButton.setText(R.string.button_addtocalendar);
 		calendarButton.setGravity(Gravity.CENTER);
 		calendarButton.setPadding(10, 15, 10, 15);
 		calendarButton.setTextSize(20);
@@ -112,8 +112,8 @@ public class Timetable extends Activity {
 		calendarButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Toast toastBad = Toast.makeText(getTimetable(), "Failed to add timetable to calendar", Toast.LENGTH_SHORT);
-				Toast toastGood = Toast.makeText(getTimetable(), "Timetable added to calendar", Toast.LENGTH_SHORT);
+				Toast toastBad = Toast.makeText(getTimetable(), R.string.toast_addfailed, Toast.LENGTH_SHORT);
+				Toast toastGood = Toast.makeText(getTimetable(), R.string.toast_addsuccess, Toast.LENGTH_SHORT);
 				
 				if(!CalendarHelper.addToCalendar(getTimetable(), selectDate.getSelected(), lessons.get(0), true)) {
 					toastBad.show();
@@ -155,7 +155,7 @@ public class Timetable extends Activity {
 	
 	private void addRefreshButton() {
 		refreshButton = new Button(this);
-		refreshButton.setText("Refresh");
+		refreshButton.setText(R.string.button_refresh);
 		refreshButton.setGravity(Gravity.CENTER);
 		refreshButton.setTextSize(20);
 		layout.addView(refreshButton);

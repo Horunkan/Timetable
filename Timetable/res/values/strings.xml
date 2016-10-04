@@ -3,5 +3,12 @@
 
     <string name="app_name">Timetable</string>
     <string name="title_activity_timetable">Timetable</string>
+    <string name="button_refresh">Odśwież</string>
+    <string name="error_nointernet">Brak dostępu do internetu</string>
+    <string name="error_notimetable">Plan na wybrany dzień nie został jeszcze opublikowany</string>
+    <string name="button_addtocalendar">Dodaj do kalendarza</string>
+    <string name="toast_addfailed">Wystąpił błąd podczas dodawania planu do kalendarza</string>
+    <string name="toast_addsuccess">Plan został dodany do kalendarza</string>
+    <string name="toast_removeduplicate">Usunięto duplikaty z kalendarza</string>
 
 </resources>

@@ -1,12 +1,12 @@
 package com.Kitowski.timetable.Calendar;
 
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import com.Kitowski.timetable.R;
 import com.Kitowski.timetable.Timetable;
 import com.Kitowski.timetable.lessons.Lesson;
 import android.annotation.SuppressLint;
@@ -15,17 +15,11 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.CalendarContract;
-import android.provider.CalendarContract.Calendars;
 import android.provider.CalendarContract.Events;
-import android.provider.CalendarContract.Instances;
 import android.provider.CalendarContract.Reminders;
-import android.provider.ContactsContract.CommonDataKinds.Event;
-import android.util.Log;
 import android.widget.Toast;
 
 @SuppressLint("SimpleDateFormat")
-@SuppressWarnings("unused")
 public class CalendarHelper {
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	
@@ -58,7 +52,7 @@ public class CalendarHelper {
 			}
 			else {
 				deleteEvent(timetable, lesson.getLessonName(), lesson.getDetails(), beginTime, endTime);
-				Toast.makeText(timetable, "Removed duplicated events", Toast.LENGTH_SHORT).show();
+				Toast.makeText(timetable, R.string.toast_removeduplicate, Toast.LENGTH_SHORT).show();
 				addToCalendar(timetable, date, lesson, withAlarm);
 			}	 
 		} catch (Exception e) {
@@ -95,8 +89,6 @@ public class CalendarHelper {
 		String queryProjection[] = {"_id"};
 		String querySelection = "(deleted != 1 and dtstart is " + beginTime.getTimeInMillis() + " and dtend is " + endTime.getTimeInMillis() + " and title is \"" + title + "\" and description is \"" + description + "\")";
 		Cursor cursor = content.query(Events.CONTENT_URI, queryProjection, querySelection, null, null);
-		
-		int count = cursor.getCount();
 		
 		while(cursor.moveToNext()) {
 			Uri eventUri = ContentUris.withAppendedId(Events.CONTENT_URI, cursor.getLong(0));
