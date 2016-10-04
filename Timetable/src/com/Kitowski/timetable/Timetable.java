@@ -145,12 +145,12 @@ public class Timetable extends Activity {
 	    return netInfo != null && netInfo.isConnectedOrConnecting();
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void setError(String error) {
 		errorText = new TextView(this);
 		errorText.setText(error);
-		errorText.setTypeface(Typeface.DEFAULT_BOLD);
+		errorText.setTextAppearance(this, R.style.ErrorText);
 		errorText.setGravity(Gravity.CENTER);
-		errorText.setTextSize(20);
 		layout.addView(errorText);
 	}
 	
