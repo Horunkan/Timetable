@@ -40,6 +40,7 @@ public class Timetable extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timetable);
 		layout = (LinearLayout)findViewById(R.id.mainLayout);
+		LessonLegend.updateLessonType(this);
 		loadTimetable();
 	}
 	

@@ -10,5 +10,13 @@
     <string name="toast_addfailed">Wystąpił błąd podczas dodawania planu do kalendarza</string>
     <string name="toast_addsuccess">Plan został dodany do kalendarza</string>
     <string name="toast_removeduplicate">Usunięto duplikaty z kalendarza</string>
+    <string name="legend_title">Legenda</string>
+    <string-array name="legend_values">
+        <item >wykład+laboratorium</item>
+        <item >wykład+ćwiczenia</item>
+        <item >ćwiczenia</item>
+        <item >laboratorium</item>
+        <item >wykład</item>
+    </string-array>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.Kitowski.timetable.lessons;
 
+import com.Kitowski.timetable.R;
 import com.Kitowski.timetable.Timetable;
 
 import android.graphics.Color;
@@ -10,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class LessonLegend {
-	private final static String lessonType[] = {"wykład+laboratorium", "wykład+ćwiczenia", "ćwiczenia", "laboratorium", "wykład"};
+	private static String lessonType[];
 	
 	private TextView title;
 	private TextView legend[];
@@ -37,7 +38,7 @@ public class LessonLegend {
 	
 	private void addTitle() {
 		title = new TextView(timetable);
-		title.setText("Legenda");
+		title.setText(R.string.legend_title);
 		title.setTypeface(Typeface.DEFAULT_BOLD);
 		title.setGravity(Gravity.CENTER);
 		title.setTextSize(20);
@@ -58,6 +59,8 @@ public class LessonLegend {
 		
 		return buffer;
 	}
+	
+	public static void updateLessonType(Timetable timetable) { lessonType = timetable.getResources().getStringArray(R.array.legend_values); }
 	
 	public static int getColor(String str) {
 		if(str.contains(lessonType[0])) return Color.CYAN;
