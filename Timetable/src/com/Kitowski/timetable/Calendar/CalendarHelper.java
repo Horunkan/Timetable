@@ -45,12 +45,12 @@ public class CalendarHelper {
 			if(withAlarm) {
 				long eventID = Long.parseLong(uri.getLastPathSegment());
 				addAlarm(content, eventID);
-			}	 
+			}
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-		return true;
 	}
 	
 	private static void addAlarm(ContentResolver content, long eventID) {
@@ -72,7 +72,7 @@ public class CalendarHelper {
 			endTime.setTime(end);
 			
 			ContentResolver content = timetable.getContentResolver();
-			String queryProjection[] = {"_id"};
+			String queryProjection[] = {Events._ID};
 			String querySelection = "(deleted != 1 and dtstart>" + beginTime.getTimeInMillis() + " and dtend <" + endTime.getTimeInMillis() + ")";
 			Cursor cursor = content.query(Events.CONTENT_URI, queryProjection, querySelection, null, null);
 			
@@ -84,13 +84,13 @@ public class CalendarHelper {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
 	}
 	
 	private static void deleteEvent(Timetable timetable, String title, String description, Calendar beginTime, Calendar endTime) {
 		ContentResolver content = timetable.getContentResolver();
-		String queryProjection[] = {"_id"};
+		String queryProjection[] = {Events._ID};
 		String querySelection = "(deleted != 1 and dtstart is " + beginTime.getTimeInMillis() + " and dtend is " + endTime.getTimeInMillis() + " and title is \"" + title + "\" and description is \"" + description + "\")";
 		Cursor cursor = content.query(Events.CONTENT_URI, queryProjection, querySelection, null, null);
 		
