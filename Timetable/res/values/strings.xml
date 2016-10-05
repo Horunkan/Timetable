@@ -40,7 +40,7 @@
     
     <string name="eventExists_title">Kalendarz</string>
     <string name="eventExists_message">W wybranym dniu instnieją inne wydarzenia</string>
-    <string name="eventExists_cancel">Anuluj</string>
+    <string name="eventExists_ignore">Ignoruj</string>
     <string name="eventExists_deleteall">Usuń wszystkie</string>
     <string name="eventExists_deleteselect">Usuń wybrane</string>
 

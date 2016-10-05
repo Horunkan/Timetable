@@ -14,6 +14,7 @@ import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -118,41 +119,64 @@ public class Timetable extends Activity {
 	}
 	
 	private void addToCalendar() {
+		if(CalendarHelper.anyEventExists(this, selectDate.getSelected())) eventExistsMessage();
+		else addEvents();
+	}
+	
+	private void addEvents() {
 		Toast toastBad = Toast.makeText(this, R.string.toast_addfailed, Toast.LENGTH_SHORT);
 		Toast toastGood = Toast.makeText(this, R.string.toast_addsuccess, Toast.LENGTH_SHORT);
-		Toast toastExists = Toast.makeText(this, R.string.toast_addexists, Toast.LENGTH_SHORT);
 		
-		if(CalendarHelper.anyEventExists(this, selectDate.getSelected())) {
-			/*toastExists.show();
-			Intent intent = new Intent(this, DeleteEvents.class);
-			intent.putExtra("date", selectDate.getSelected());
-			startActivity(intent);*/
-			eventExistsMessage();
+		if(!CalendarHelper.addToCalendar(this, selectDate.getSelected(), lessons.get(0), true)) {
+			toastBad.show();
+			return;
 		}
-		else {
-			if(!CalendarHelper.addToCalendar(this, selectDate.getSelected(), lessons.get(0), true)) {
+		for(int i = 1; i < lessons.size(); ++i) {
+			if(!CalendarHelper.addToCalendar(this, selectDate.getSelected(), lessons.get(i), false)) {
 				toastBad.show();
 				return;
 			}
-			for(int i = 1; i < lessons.size(); ++i) {
-				if(!CalendarHelper.addToCalendar(this, selectDate.getSelected(), lessons.get(i), false)) {
-					toastBad.show();
-					return;
-				}
-			}
-			toastGood.show();
 		}
+		toastGood.show();
 	}
 	
 	private void eventExistsMessage() {
 		AlertDialog.Builder alert  = new AlertDialog.Builder(this);
 		alert.setTitle(R.string.eventExists_title);
 		alert.setMessage(R.string.eventExists_message);
-		alert.setNegativeButton(R.string.eventExists_cancel, null);
-		alert.setNeutralButton(R.string.eventExists_deleteall, null);
-		alert.setPositiveButton(R.string.eventExists_deleteselect, null);
+		alert.setNegativeButton(R.string.eventExists_deleteall, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				deleteAllEvents();
+				addEvents();
+			}
+		});
+		alert.setNeutralButton(R.string.eventExists_ignore, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				addEvents();
+			}
+		});
+		alert.setPositiveButton(R.string.eventExists_deleteselect, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				deleteSelectedEvents();
+			}
+		});
 		alert.setCancelable(true);
 		alert.show();
+	}
+	
+	private void deleteAllEvents() {
+		for(String str : CalendarHelper.getAllEvents(this, selectDate.getSelected())) {
+			CalendarHelper.deleteEvent(this, Long.parseLong(str.split(",")[0]));
+		}
+	}
+	
+	private void deleteSelectedEvents() {
+		Intent intent = new Intent(this, DeleteEvents.class);
+		intent.putExtra("date", selectDate.getSelected());
+		startActivity(intent);
 	}
 	
 	private void addLegend() {
