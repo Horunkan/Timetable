@@ -46,7 +46,7 @@ public class DeleteEvents extends Activity {
 		for(String str : eventsNames) {
 			CheckBox buffer = new CheckBox(this);
 			
-			buffer.setText(str.split(",")[1]); //Display without ids
+			buffer.setText(str.split(",")[1]); //Display without id
 			eventsCheckbox.add(buffer);
 			layout.addView(buffer);
 		}

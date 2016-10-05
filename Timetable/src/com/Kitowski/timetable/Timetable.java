@@ -2,7 +2,6 @@ package com.Kitowski.timetable;
 
 import java.util.ArrayList;
 
-import com.Kitowski.DeleteEvents.DeleteEvents;
 import com.Kitowski.timetable.Calendar.CalendarHelper;
 import com.Kitowski.timetable.date.DateLoader;
 import com.Kitowski.timetable.date.SelectDate;
@@ -13,9 +12,7 @@ import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
 import com.Kitowski.timetable.utilities.EventsExistsAlert;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
