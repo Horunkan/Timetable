@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-import com.Kitowski.timetable.Timetable;
 import com.Kitowski.timetable.lessons.Lesson;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -115,17 +114,9 @@ public class CalendarHelper {
 		return buffer;
 	}
 	
-	private static void deleteEvent(Activity act, String title, String description, Calendar beginTime, Calendar endTime) {
-		ContentResolver content = act.getContentResolver();
-		String queryProjection[] = {Events._ID};
-		String querySelection = "(deleted != 1 and dtstart is " + beginTime.getTimeInMillis() + " and dtend is " + endTime.getTimeInMillis() + " and title is \"" + title + "\" and description is \"" + description + "\")";
-		Cursor cursor = content.query(Events.CONTENT_URI, queryProjection, querySelection, null, null);
-		
-		while(cursor.moveToNext()) {
-			Uri eventUri = ContentUris.withAppendedId(Events.CONTENT_URI, cursor.getLong(0));
-			content.delete(eventUri, null, null);
-		}
-		
-		cursor.close();
+	public static void deleteEvent(Activity act, long id) {
+		ContentResolver content = act.getContentResolver();		
+		Uri toDelete = ContentUris.withAppendedId(Events.CONTENT_URI, id);
+		content.delete(toDelete, null, null);
 	}
 }

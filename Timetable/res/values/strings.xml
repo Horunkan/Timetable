@@ -37,5 +37,6 @@
     
     <string name="Checkbox_selectall">Zaznacz wszystkie</string>
     <string name="Delete_info">Usuń zbędne wydarzenia</string>
+    <string name="button_delete">Usuń zaznaczone</string>
 
 </resources>

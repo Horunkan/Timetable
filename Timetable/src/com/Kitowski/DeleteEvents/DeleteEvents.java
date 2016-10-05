@@ -7,9 +7,10 @@ import com.Kitowski.timetable.Calendar.CalendarHelper;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
@@ -18,6 +19,7 @@ public class DeleteEvents extends Activity {
 	private CheckBox selectAllCheckbox;
 	private ArrayList<String> eventsNames;
 	private ArrayList<CheckBox> eventsCheckbox;
+	private Button deleteButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +28,14 @@ public class DeleteEvents extends Activity {
 		layout = (LinearLayout)findViewById(R.id.deleteLayout);
 		
 		selectAllCheckbox = (CheckBox)findViewById(R.id.checkBox_selectAll);
-		selectAllCheckbox.setOnClickListener(new OnClickListener() { @Override public void onClick(View v) { toggleAllCheckboxes(); } });
+		selectAllCheckbox.setOnClickListener(new OnClickListener() { 
+			@Override
+			public void onClick(View v) { toggleAllCheckboxes(); }});
 		
 		eventsNames = CalendarHelper.getAllEvents(this, getIntent().getStringExtra("date"));
 		eventsCheckbox = new ArrayList<CheckBox>();
 		addCheckboxes();
+		addDeleteButton();
 	}
 	
 	private void toggleAllCheckboxes() {
@@ -44,6 +49,26 @@ public class DeleteEvents extends Activity {
 			buffer.setText(str.split(",")[1]); //Display without ids
 			eventsCheckbox.add(buffer);
 			layout.addView(buffer);
+		}
+	}
+	
+	private void addDeleteButton() {
+		deleteButton = new Button(this);
+		deleteButton.setText(R.string.button_delete);
+		deleteButton.setGravity(Gravity.CENTER);
+		deleteButton.setPadding(10, 15, 10, 15);
+		deleteButton.setTextSize(20);
+		layout.addView(deleteButton);
+		
+		deleteButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) { delete(); }});
+	}
+	
+	private void delete() {
+		for(int i = 0; i < eventsCheckbox.size(); ++i) {
+			if(eventsCheckbox.get(i).isChecked()) CalendarHelper.deleteEvent(this, Long.parseLong(eventsNames.get(i).split(",")[0]));
+			this.finish();
 		}
 	}
 }
