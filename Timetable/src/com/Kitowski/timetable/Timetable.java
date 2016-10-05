@@ -10,6 +10,7 @@ import com.Kitowski.timetable.lessons.Lesson;
 import com.Kitowski.timetable.lessons.LessonLegend;
 import com.Kitowski.timetable.studyGroup.SelectGroup;
 import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
+import com.Kitowski.timetable.utilities.EventsExistsAlert;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -119,11 +120,11 @@ public class Timetable extends Activity {
 	}
 	
 	private void addToCalendar() {
-		if(CalendarHelper.anyEventExists(this, selectDate.getSelected())) eventExistsMessage();
+		if(CalendarHelper.anyEventExists(this, selectDate.getSelected())) new EventsExistsAlert(this, selectDate).show();
 		else addEvents();
 	}
 	
-	private void addEvents() {
+	public void addEvents() {
 		Toast toastBad = Toast.makeText(this, R.string.toast_addfailed, Toast.LENGTH_SHORT);
 		Toast toastGood = Toast.makeText(this, R.string.toast_addsuccess, Toast.LENGTH_SHORT);
 		
@@ -139,44 +140,11 @@ public class Timetable extends Activity {
 		}
 		toastGood.show();
 	}
-	
-	private void eventExistsMessage() {
-		AlertDialog.Builder alert  = new AlertDialog.Builder(this);
-		alert.setTitle(R.string.eventExists_title);
-		alert.setMessage(R.string.eventExists_message);
-		alert.setNegativeButton(R.string.eventExists_deleteall, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				deleteAllEvents();
-				addEvents();
-			}
-		});
-		alert.setNeutralButton(R.string.eventExists_ignore, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				addEvents();
-			}
-		});
-		alert.setPositiveButton(R.string.eventExists_deleteselect, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				deleteSelectedEvents();
-			}
-		});
-		alert.setCancelable(true);
-		alert.show();
-	}
-	
-	private void deleteAllEvents() {
+
+	public void deleteAllEvents() {
 		for(String str : CalendarHelper.getAllEvents(this, selectDate.getSelected())) {
 			CalendarHelper.deleteEvent(this, Long.parseLong(str.split(",")[0]));
 		}
-	}
-	
-	private void deleteSelectedEvents() {
-		Intent intent = new Intent(this, DeleteEvents.class);
-		intent.putExtra("date", selectDate.getSelected());
-		startActivityForResult(intent,0);
 	}
 	
 	//Add to calendar after return from DeleteEvents activity
