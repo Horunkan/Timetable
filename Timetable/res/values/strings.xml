@@ -31,6 +31,6 @@
         <item >listopad</item>
         <item >grudzień</item>
     </string-array>
-    <string name="toas_addexists">Plan nie został dodany, ponieważ w danym dniu istnieją inne wydarzenia</string>
+    <string name="toast_addexists">Plan nie został dodany, ponieważ w danym dniu istnieją inne wydarzenia</string>
 
 </resources>

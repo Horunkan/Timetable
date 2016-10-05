@@ -111,32 +111,31 @@ public class Timetable extends Activity {
 		
 		calendarButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				Toast toastBad = Toast.makeText(getTimetable(), R.string.toast_addfailed, Toast.LENGTH_SHORT);
-				Toast toastGood = Toast.makeText(getTimetable(), R.string.toast_addsuccess, Toast.LENGTH_SHORT);
-				Toast toastExists = Toast.makeText(getTimetable(), R.string.toas_addexists, Toast.LENGTH_SHORT);
-				
-				if(CalendarHelper.anyEventExists(getTimetable(), selectDate.getSelected())) {
-					toastExists.show();
-				}
-				else {
-					if(!CalendarHelper.addToCalendar(getTimetable(), selectDate.getSelected(), lessons.get(0), true)) {
-						toastBad.show();
-						return;
-					}
-					for(int i = 1; i < lessons.size(); ++i) {
-						if(!CalendarHelper.addToCalendar(getTimetable(), selectDate.getSelected(), lessons.get(i), false)) {
-							toastBad.show();
-							return;
-						}
-					}
-					toastGood.show();
-				}
-		    }
-		});
+			public void onClick(View v) { addToCalendar(); }});
 	}
 	
-	public Timetable getTimetable() { return this; }
+	private void addToCalendar() {
+		Toast toastBad = Toast.makeText(this, R.string.toast_addfailed, Toast.LENGTH_SHORT);
+		Toast toastGood = Toast.makeText(this, R.string.toast_addsuccess, Toast.LENGTH_SHORT);
+		Toast toastExists = Toast.makeText(this, R.string.toast_addexists, Toast.LENGTH_SHORT);
+		
+		if(CalendarHelper.anyEventExists(this, selectDate.getSelected())) {
+			toastExists.show();
+		}
+		else {
+			if(!CalendarHelper.addToCalendar(this, selectDate.getSelected(), lessons.get(0), true)) {
+				toastBad.show();
+				return;
+			}
+			for(int i = 1; i < lessons.size(); ++i) {
+				if(!CalendarHelper.addToCalendar(this, selectDate.getSelected(), lessons.get(i), false)) {
+					toastBad.show();
+					return;
+				}
+			}
+			toastGood.show();
+		}
+	}
 	
 	private void addLegend() {
 		 legend = new LessonLegend(this);
