@@ -30,18 +30,20 @@ public class DeleteEvents extends Activity {
 		
 		eventsNames = CalendarHelper.getAllEvents(this, getIntent().getStringExtra("date"));
 		eventsCheckbox = new ArrayList<CheckBox>();
-		
-		for(String str : eventsNames) {
-			CheckBox buffer = new CheckBox(this);
-			
-			buffer.setText(str.split(",")[1]); //Display without ids
-			
-			eventsCheckbox.add(buffer);
-			layout.addView(buffer);
-		}
+		addCheckboxes();
 	}
 	
 	private void toggleAllCheckboxes() {
 		for(CheckBox ch : eventsCheckbox) ch.setChecked(selectAllCheckbox.isChecked());
+	}
+	
+	private void addCheckboxes() {
+		for(String str : eventsNames) {
+			CheckBox buffer = new CheckBox(this);
+			
+			buffer.setText(str.split(",")[1]); //Display without ids
+			eventsCheckbox.add(buffer);
+			layout.addView(buffer);
+		}
 	}
 }
