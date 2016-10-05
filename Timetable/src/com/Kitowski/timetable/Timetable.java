@@ -2,6 +2,7 @@ package com.Kitowski.timetable;
 
 import java.util.ArrayList;
 
+import com.Kitowski.DeleteEvents.DeleteEvents;
 import com.Kitowski.timetable.Calendar.CalendarHelper;
 import com.Kitowski.timetable.date.DateLoader;
 import com.Kitowski.timetable.date.SelectDate;
@@ -12,6 +13,7 @@ import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -121,6 +123,8 @@ public class Timetable extends Activity {
 		
 		if(CalendarHelper.anyEventExists(this, selectDate.getSelected())) {
 			toastExists.show();
+			Intent intent = new Intent(this, DeleteEvents.class);
+			startActivity(intent);
 		}
 		else {
 			if(!CalendarHelper.addToCalendar(this, selectDate.getSelected(), lessons.get(0), true)) {

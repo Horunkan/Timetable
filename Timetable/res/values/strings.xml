@@ -3,34 +3,39 @@
 
     <string name="app_name">Timetable</string>
     <string name="title_activity_timetable">Timetable</string>
-    <string name="button_refresh">Odśwież</string>
+    <string name="title_activity_delete_events">DeleteEvents</string><string name="button_refresh">Odśwież</string>
     <string name="error_nointernet">Brak dostępu do internetu</string>
     <string name="error_notimetable">Plan na wybrany dzień nie został jeszcze opublikowany</string>
     <string name="button_addtocalendar">Dodaj do kalendarza</string>
     <string name="toast_addfailed">Wystąpił błąd podczas dodawania planu do kalendarza</string>
     <string name="toast_addsuccess">Plan został dodany do kalendarza</string>
     <string name="legend_title">Legenda</string>
+
     <string-array name="legend_values">
-        <item >wykład+laboratorium</item>
-        <item >wykład+ćwiczenia</item>
-        <item >ćwiczenia</item>
-        <item >laboratorium</item>
-        <item >wykład</item>
+        <item>wykład+laboratorium</item>
+        <item>wykład+ćwiczenia</item>
+        <item>ćwiczenia</item>
+        <item>laboratorium</item>
+        <item>wykład</item>
     </string-array>
     <string-array name="month">
-        <item >styczeń</item>
-        <item >luty</item>
-        <item >marzec</item>
-        <item >kwiecień</item>
-        <item >maj</item>
-        <item >czerwiec</item>
-        <item >lipiec</item>
-        <item >sierpień</item>
-        <item >wrzesień</item>
-        <item >październik</item>
-        <item >listopad</item>
-        <item >grudzień</item>
+        <item>styczeń</item>
+        <item>luty</item>
+        <item>marzec</item>
+        <item>kwiecień</item>
+        <item>maj</item>
+        <item>czerwiec</item>
+        <item>lipiec</item>
+        <item>sierpień</item>
+        <item>wrzesień</item>
+        <item>październik</item>
+        <item>listopad</item>
+        <item>grudzień</item>
     </string-array>
+
     <string name="toast_addexists">Plan nie został dodany, ponieważ w danym dniu istnieją inne wydarzenia</string>
+    
+    <string name="Checkbox_selectall">Zaznacz wszystkie</string>
+    <string name="Delete_info">Usuń zbędne wydarzenia</string>
 
 </resources>
