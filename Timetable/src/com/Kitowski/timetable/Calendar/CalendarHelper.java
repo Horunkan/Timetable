@@ -2,13 +2,14 @@ package com.Kitowski.timetable.Calendar;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-import com.Kitowski.timetable.Timetable;
 import com.Kitowski.timetable.lessons.Lesson;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -21,7 +22,7 @@ import android.provider.CalendarContract.Reminders;
 public class CalendarHelper {
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	
-	public static boolean addToCalendar(Timetable timetable, String date, Lesson lesson, boolean withAlarm) {
+	public static boolean addToCalendar(Activity act, String date, Lesson lesson, boolean withAlarm) {
 		try {
 			Date start = dateFormat.parse(date + " " + lesson.getRawTime()[0]);
 			Date end = dateFormat.parse(date + " " + lesson.getRawTime()[1]);
@@ -30,7 +31,7 @@ public class CalendarHelper {
 			beginTime.setTime(start);
 			endTime.setTime(end);
 			
-			ContentResolver content = timetable.getContentResolver();
+			ContentResolver content = act.getContentResolver();
 			ContentValues event = new ContentValues();
 			
 			event.put(Events.DTSTART, beginTime.getTimeInMillis());
@@ -61,7 +62,7 @@ public class CalendarHelper {
 	    content.insert(Reminders.CONTENT_URI,alarm);
 	}
 	
-	public static boolean anyEventExists(Timetable timetable, String date) {
+	public static boolean anyEventExists(Activity act, String date) {
 		try {
 			Date start = dateFormat.parse(date + " 00:00");
 			Date end = dateFormat.parse(date + " 23:59");
@@ -71,7 +72,7 @@ public class CalendarHelper {
 			beginTime.setTime(start);
 			endTime.setTime(end);
 			
-			ContentResolver content = timetable.getContentResolver();
+			ContentResolver content = act.getContentResolver();
 			String queryProjection[] = {Events._ID};
 			String querySelection = "(deleted != 1 and dtstart>" + beginTime.getTimeInMillis() + " and dtend <" + endTime.getTimeInMillis() + ")";
 			Cursor cursor = content.query(Events.CONTENT_URI, queryProjection, querySelection, null, null);
@@ -88,17 +89,34 @@ public class CalendarHelper {
 		}
 	}
 	
-	private static void deleteEvent(Timetable timetable, String title, String description, Calendar beginTime, Calendar endTime) {
-		ContentResolver content = timetable.getContentResolver();
-		String queryProjection[] = {Events._ID};
-		String querySelection = "(deleted != 1 and dtstart is " + beginTime.getTimeInMillis() + " and dtend is " + endTime.getTimeInMillis() + " and title is \"" + title + "\" and description is \"" + description + "\")";
-		Cursor cursor = content.query(Events.CONTENT_URI, queryProjection, querySelection, null, null);
-		
-		while(cursor.moveToNext()) {
-			Uri eventUri = ContentUris.withAppendedId(Events.CONTENT_URI, cursor.getLong(0));
-			content.delete(eventUri, null, null);
+	public static ArrayList<String> getAllEvents(Activity act, String date) {
+		ArrayList<String> buffer = new ArrayList<String>();
+
+		try {
+			Date start = dateFormat.parse(date + " 00:00");
+			Date end = dateFormat.parse(date + " 23:59");
+			
+			Calendar beginTime = Calendar.getInstance();
+			Calendar endTime = Calendar.getInstance();
+			beginTime.setTime(start);
+			endTime.setTime(end);
+			
+			ContentResolver content = act.getContentResolver();
+			String queryProjection[] = {Events._ID, Events.TITLE};
+			String querySelection = "(deleted != 1 and dtstart>" + beginTime.getTimeInMillis() + " and dtend <" + endTime.getTimeInMillis() + ")";
+			Cursor cursor = content.query(Events.CONTENT_URI, queryProjection, querySelection, null, null);
+			
+			while(cursor.moveToNext()) buffer.add(cursor.getString(0) + "," + cursor.getString(1));
+			cursor.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		cursor.close();
+		return buffer;
+	}
+	
+	public static void deleteEvent(Activity act, long id) {
+		ContentResolver content = act.getContentResolver();		
+		Uri toDelete = ContentUris.withAppendedId(Events.CONTENT_URI, id);
+		content.delete(toDelete, null, null);
 	}
 }

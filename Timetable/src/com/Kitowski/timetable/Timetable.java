@@ -9,9 +9,11 @@ import com.Kitowski.timetable.lessons.Lesson;
 import com.Kitowski.timetable.lessons.LessonLegend;
 import com.Kitowski.timetable.studyGroup.SelectGroup;
 import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
+import com.Kitowski.timetable.utilities.EventsExistsAlert;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -115,27 +117,39 @@ public class Timetable extends Activity {
 	}
 	
 	private void addToCalendar() {
+		if(CalendarHelper.anyEventExists(this, selectDate.getSelected())) new EventsExistsAlert(this, selectDate).show();
+		else addEvents();
+	}
+	
+	public void addEvents() {
 		Toast toastBad = Toast.makeText(this, R.string.toast_addfailed, Toast.LENGTH_SHORT);
 		Toast toastGood = Toast.makeText(this, R.string.toast_addsuccess, Toast.LENGTH_SHORT);
-		Toast toastExists = Toast.makeText(this, R.string.toast_addexists, Toast.LENGTH_SHORT);
 		
-		if(CalendarHelper.anyEventExists(this, selectDate.getSelected())) {
-			toastExists.show();
+		if(!CalendarHelper.addToCalendar(this, selectDate.getSelected(), lessons.get(0), true)) {
+			toastBad.show();
+			return;
 		}
-		else {
-			if(!CalendarHelper.addToCalendar(this, selectDate.getSelected(), lessons.get(0), true)) {
+		for(int i = 1; i < lessons.size(); ++i) {
+			if(!CalendarHelper.addToCalendar(this, selectDate.getSelected(), lessons.get(i), false)) {
 				toastBad.show();
 				return;
 			}
-			for(int i = 1; i < lessons.size(); ++i) {
-				if(!CalendarHelper.addToCalendar(this, selectDate.getSelected(), lessons.get(i), false)) {
-					toastBad.show();
-					return;
-				}
-			}
-			toastGood.show();
+		}
+		toastGood.show();
+	}
+
+	public void deleteAllEvents() {
+		for(String str : CalendarHelper.getAllEvents(this, selectDate.getSelected())) {
+			CalendarHelper.deleteEvent(this, Long.parseLong(str.split(",")[0]));
 		}
 	}
+	
+	//Add to calendar after return from DeleteEvents activity
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		addEvents();
+    }
 	
 	private void addLegend() {
 		 legend = new LessonLegend(this);
