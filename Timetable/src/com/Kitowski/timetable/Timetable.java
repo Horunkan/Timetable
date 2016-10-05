@@ -12,6 +12,7 @@ import com.Kitowski.timetable.studyGroup.SelectGroup;
 import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -122,10 +123,11 @@ public class Timetable extends Activity {
 		Toast toastExists = Toast.makeText(this, R.string.toast_addexists, Toast.LENGTH_SHORT);
 		
 		if(CalendarHelper.anyEventExists(this, selectDate.getSelected())) {
-			toastExists.show();
+			/*toastExists.show();
 			Intent intent = new Intent(this, DeleteEvents.class);
 			intent.putExtra("date", selectDate.getSelected());
-			startActivity(intent);
+			startActivity(intent);*/
+			eventExistsMessage();
 		}
 		else {
 			if(!CalendarHelper.addToCalendar(this, selectDate.getSelected(), lessons.get(0), true)) {
@@ -140,6 +142,17 @@ public class Timetable extends Activity {
 			}
 			toastGood.show();
 		}
+	}
+	
+	private void eventExistsMessage() {
+		AlertDialog.Builder alert  = new AlertDialog.Builder(this);
+		alert.setTitle(R.string.eventExists_title);
+		alert.setMessage(R.string.eventExists_message);
+		alert.setNegativeButton(R.string.eventExists_cancel, null);
+		alert.setNeutralButton(R.string.eventExists_deleteall, null);
+		alert.setPositiveButton(R.string.eventExists_deleteselect, null);
+		alert.setCancelable(true);
+		alert.show();
 	}
 	
 	private void addLegend() {
