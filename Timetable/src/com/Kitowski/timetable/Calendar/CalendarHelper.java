@@ -2,6 +2,7 @@ package com.Kitowski.timetable.Calendar;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -87,6 +88,31 @@ public class CalendarHelper {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public static ArrayList<String> getAllEvents(Activity act, String date) {
+		ArrayList<String> buffer = new ArrayList<String>();
+
+		try {
+			Date start = dateFormat.parse(date + " 00:00");
+			Date end = dateFormat.parse(date + " 23:59");
+			
+			Calendar beginTime = Calendar.getInstance();
+			Calendar endTime = Calendar.getInstance();
+			beginTime.setTime(start);
+			endTime.setTime(end);
+			
+			ContentResolver content = act.getContentResolver();
+			String queryProjection[] = {Events._ID, Events.TITLE};
+			String querySelection = "(deleted != 1 and dtstart>" + beginTime.getTimeInMillis() + " and dtend <" + endTime.getTimeInMillis() + ")";
+			Cursor cursor = content.query(Events.CONTENT_URI, queryProjection, querySelection, null, null);
+			
+			while(cursor.moveToNext()) buffer.add(cursor.getString(0) + "," + cursor.getString(1));
+			cursor.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return buffer;
 	}
 	
 	private static void deleteEvent(Activity act, String title, String description, Calendar beginTime, Calendar endTime) {

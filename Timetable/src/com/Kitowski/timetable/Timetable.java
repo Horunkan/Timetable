@@ -124,6 +124,7 @@ public class Timetable extends Activity {
 		if(CalendarHelper.anyEventExists(this, selectDate.getSelected())) {
 			toastExists.show();
 			Intent intent = new Intent(this, DeleteEvents.class);
+			intent.putExtra("date", selectDate.getSelected());
 			startActivity(intent);
 		}
 		else {
