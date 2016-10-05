@@ -176,8 +176,15 @@ public class Timetable extends Activity {
 	private void deleteSelectedEvents() {
 		Intent intent = new Intent(this, DeleteEvents.class);
 		intent.putExtra("date", selectDate.getSelected());
-		startActivity(intent);
+		startActivityForResult(intent,0);
 	}
+	
+	//Add to calendar after return from DeleteEvents activity
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		addEvents();
+    }
 	
 	private void addLegend() {
 		 legend = new LessonLegend(this);
