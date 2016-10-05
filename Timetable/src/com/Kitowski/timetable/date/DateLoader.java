@@ -1,7 +1,11 @@
 package com.Kitowski.timetable.date;
 
 import java.util.ArrayList;
+
+import com.Kitowski.timetable.R;
+import com.Kitowski.timetable.Timetable;
 import com.Kitowski.timetable.utilities.HttpReader;
+
 import android.util.Log;
 
 public class DateLoader {
@@ -9,11 +13,13 @@ public class DateLoader {
 
 	private ArrayList<String> toConvert;
 	private ArrayList<String> dateList;
+	private final String monthList[];
 	
-	public DateLoader() {
+	public DateLoader(Timetable timetable) {
 		HttpReader http = (HttpReader) new HttpReader().execute("https://inf.ug.edu.pl/terminy-zjazdow-semestr-zimowy-201617", "table");
 		toConvert = new ArrayList<String>();
 		dateList = new ArrayList<String>();
+		monthList = timetable.getResources().getStringArray(R.array.month);
 		
 		if(loadFromHttp(http)) convertDate();
 	}
@@ -52,19 +58,8 @@ public class DateLoader {
 		}
 	}
 	
-	private int getMonth(String month) {
-		if(month.contentEquals("styczeń")) return 1;
-		if(month.contentEquals("luty")) return 2;
-		if(month.contentEquals("marzec")) return 3;
-		if(month.contentEquals("kwiecień")) return 4;
-		if(month.contentEquals("maj")) return 5;
-		if(month.contentEquals("czerwiec")) return 6;
-		if(month.contentEquals("lipiec")) return 7;
-		if(month.contentEquals("sierpień")) return 8;
-		if(month.contentEquals("wrzesień")) return 9;
-		if(month.contentEquals("październik")) return 10;
-		if(month.contentEquals("listopad")) return 11;
-		if(month.contentEquals("grudzień")) return 12;
+	private int getMonth(String value) {
+		for(int i = 0; i < monthList.length; ++i) if(monthList[i].contentEquals(value)) return i + 1;
 		return 1;
 	}
 }
