@@ -114,19 +114,24 @@ public class Timetable extends Activity {
 			public void onClick(View v) {
 				Toast toastBad = Toast.makeText(getTimetable(), R.string.toast_addfailed, Toast.LENGTH_SHORT);
 				Toast toastGood = Toast.makeText(getTimetable(), R.string.toast_addsuccess, Toast.LENGTH_SHORT);
+				Toast toastExists = Toast.makeText(getTimetable(), R.string.toas_addexists, Toast.LENGTH_SHORT);
 				
-				if(!CalendarHelper.addToCalendar(getTimetable(), selectDate.getSelected(), lessons.get(0), true)) {
-					toastBad.show();
-					return;
+				if(CalendarHelper.anyEventExists(getTimetable(), selectDate.getSelected())) {
+					toastExists.show();
 				}
-				
-				for(int i = 1; i < lessons.size(); ++i) {
-					if(!CalendarHelper.addToCalendar(getTimetable(), selectDate.getSelected(), lessons.get(i), false)) {
+				else {
+					if(!CalendarHelper.addToCalendar(getTimetable(), selectDate.getSelected(), lessons.get(0), true)) {
 						toastBad.show();
 						return;
 					}
+					for(int i = 1; i < lessons.size(); ++i) {
+						if(!CalendarHelper.addToCalendar(getTimetable(), selectDate.getSelected(), lessons.get(i), false)) {
+							toastBad.show();
+							return;
+						}
+					}
+					toastGood.show();
 				}
-				toastGood.show();
 		    }
 		});
 	}

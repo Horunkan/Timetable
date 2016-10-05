@@ -9,7 +9,6 @@
     <string name="button_addtocalendar">Dodaj do kalendarza</string>
     <string name="toast_addfailed">Wystąpił błąd podczas dodawania planu do kalendarza</string>
     <string name="toast_addsuccess">Plan został dodany do kalendarza</string>
-    <string name="toast_removeduplicate">Usunięto duplikaty z kalendarza</string>
     <string name="legend_title">Legenda</string>
     <string-array name="legend_values">
         <item >wykład+laboratorium</item>
@@ -32,5 +31,6 @@
         <item >listopad</item>
         <item >grudzień</item>
     </string-array>
+    <string name="toas_addexists">Plan nie został dodany, ponieważ w danym dniu istnieją inne wydarzenia</string>
 
 </resources>
