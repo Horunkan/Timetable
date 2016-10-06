@@ -24,8 +24,8 @@ public class CalendarHelper {
 	
 	public static boolean addToCalendar(Activity act, String date, Lesson lesson, boolean withAlarm) {
 		try {
-			Date start = dateFormat.parse(date + " " + lesson.getRawTime()[0]);
-			Date end = dateFormat.parse(date + " " + lesson.getRawTime()[1]);
+			Date start = dateFormat.parse(date + " " + lesson.getStartTime());
+			Date end = dateFormat.parse(date + " " + lesson.getEndTime());
 			Calendar beginTime = Calendar.getInstance();
 			Calendar endTime = Calendar.getInstance();
 			beginTime.setTime(start);
@@ -36,8 +36,8 @@ public class CalendarHelper {
 			
 			event.put(Events.DTSTART, beginTime.getTimeInMillis());
 			event.put(Events.DTEND, endTime.getTimeInMillis());
-			event.put(Events.TITLE, lesson.getLessonName());
-			event.put(Events.DESCRIPTION, lesson.getDetails());
+			event.put(Events.TITLE, lesson.getTitle());
+			event.put(Events.DESCRIPTION, lesson.getDescription());
 			event.put(Events.CALENDAR_ID, 1);
 			event.put(Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
 			event.put(Events.HAS_ALARM, withAlarm);

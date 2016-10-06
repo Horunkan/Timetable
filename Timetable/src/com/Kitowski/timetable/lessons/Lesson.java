@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class Lesson extends TextView {
-	private String lessonData[];
+	private String startTime, endTime, title, description;
 	private GradientDrawable background;
 	private Timetable timetable;
 	
@@ -18,12 +18,12 @@ public class Lesson extends TextView {
 		super(timetable);
 		this.timetable = timetable;
 		
-		lessonData = lesson.split(",");
+		formatString(lesson);
 		background = new GradientDrawable();
         background.setColor(LessonLegend.getColor(lesson));
         background.setStroke(4, Color.LTGRAY);
 		
-		this.setText(lessonData[0] + " " + lessonData[1]);
+        this.setText(String.format("%s—%s %s", startTime, endTime, title));
 		this.setPadding(15, 15, 15, 15);
 		this.setBackgroundDrawable(background);
 		
@@ -32,20 +32,30 @@ public class Lesson extends TextView {
         });
 	}
 	
-	public String[] getRawTime() { return lessonData[0].split("—"); }
-	public String getLessonName() { return lessonData[1]; }
-	public String getDetails() { return formatDetails(); }
+	private void formatString(String rawLesson) {
+		String lessonData[] = rawLesson.split(",");
+		
+		startTime = lessonData[0].split("—")[0];
+		endTime = lessonData[0].split("—")[1];
+		title = lessonData[1];
+		description = formatDetails(lessonData);
+	}
+	
+	public String getStartTime() { return startTime; }
+	public String getEndTime() { return endTime; }
+	public String getTitle() { return title; }
+	public String getDescription() { return description; }
 	
 	private void displayDetails() {
 		AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(timetable);
-		dlgAlert.setTitle(lessonData[1]);
-		dlgAlert.setMessage(formatDetails());
+		dlgAlert.setTitle(title);
+		dlgAlert.setMessage(description);
 		dlgAlert.setPositiveButton("OK", null);
 		dlgAlert.setCancelable(true);
 		dlgAlert.create().show();
 	}
 	
-	private String formatDetails() {
+	private String formatDetails(String lessonData[]) {
 		String buffer = lessonData[2] + "\n";
 		
 		for(int i = 3; i < lessonData.length; ++i) {
