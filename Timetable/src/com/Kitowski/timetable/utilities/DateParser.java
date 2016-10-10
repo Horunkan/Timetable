@@ -1,4 +1,4 @@
-package com.Kitowski.timetable.Calendar;
+package com.Kitowski.timetable.utilities;
 
 import android.annotation.SuppressLint;
 import java.text.ParseException;

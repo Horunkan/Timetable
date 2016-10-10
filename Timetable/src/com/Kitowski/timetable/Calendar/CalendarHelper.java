@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import com.Kitowski.timetable.lessons.Lesson;
+import com.Kitowski.timetable.utilities.DateParser;
+
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
