@@ -1,14 +1,12 @@
 package com.Kitowski.timetable.Calendar;
 
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
 import com.Kitowski.timetable.lessons.Lesson;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -18,14 +16,11 @@ import android.net.Uri;
 import android.provider.CalendarContract.Events;
 import android.provider.CalendarContract.Reminders;
 
-@SuppressLint("SimpleDateFormat")
 public class CalendarHelper {
-	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	
 	public static boolean addToCalendar(Activity act, String date, Lesson lesson, boolean withAlarm) {
 		try {
-			Date start = dateFormat.parse(date + " " + lesson.getStartTime());
-			Date end = dateFormat.parse(date + " " + lesson.getEndTime());
+			Date start = DateParser.parse(date, lesson.getStartTime());
+			Date end = DateParser.parse(date, lesson.getEndTime());
 			Calendar beginTime = Calendar.getInstance();
 			Calendar endTime = Calendar.getInstance();
 			beginTime.setTime(start);
@@ -64,9 +59,8 @@ public class CalendarHelper {
 	
 	public static boolean anyEventExists(Activity act, String date) {
 		try {
-			Date start = dateFormat.parse(date + " 00:00");
-			Date end = dateFormat.parse(date + " 23:59");
-			
+			Date start = DateParser.parse(date, "00:00");
+			Date end = DateParser.parse(date, "23:59");
 			Calendar beginTime = Calendar.getInstance();
 			Calendar endTime = Calendar.getInstance();
 			beginTime.setTime(start);
@@ -93,9 +87,8 @@ public class CalendarHelper {
 		ArrayList<String> buffer = new ArrayList<String>();
 
 		try {
-			Date start = dateFormat.parse(date + " 00:00");
-			Date end = dateFormat.parse(date + " 23:59");
-			
+			Date start = DateParser.parse(date, "00:00");
+			Date end = DateParser.parse(date, "23:59");
 			Calendar beginTime = Calendar.getInstance();
 			Calendar endTime = Calendar.getInstance();
 			beginTime.setTime(start);
