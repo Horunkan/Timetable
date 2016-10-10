@@ -19,16 +19,11 @@ import android.provider.CalendarContract.Reminders;
 public class CalendarHelper {
 	public static boolean addToCalendar(Activity act, String date, Lesson lesson, boolean withAlarm) {
 		try {
-			Date start = DateParser.parse(date, lesson.getStartTime());
-			Date end = DateParser.parse(date, lesson.getEndTime());
-			Calendar beginTime = Calendar.getInstance();
-			Calendar endTime = Calendar.getInstance();
-			beginTime.setTime(start);
-			endTime.setTime(end);
+			Calendar beginTime = getCalendar(date, lesson.getStartTime());
+			Calendar endTime = getCalendar(date, lesson.getEndTime());
 			
 			ContentResolver content = act.getContentResolver();
 			ContentValues event = new ContentValues();
-			
 			event.put(Events.DTSTART, beginTime.getTimeInMillis());
 			event.put(Events.DTEND, endTime.getTimeInMillis());
 			event.put(Events.TITLE, lesson.getTitle());
@@ -59,18 +54,13 @@ public class CalendarHelper {
 	
 	public static boolean anyEventExists(Activity act, String date) {
 		try {
-			Date start = DateParser.parse(date, "00:00");
-			Date end = DateParser.parse(date, "23:59");
-			Calendar beginTime = Calendar.getInstance();
-			Calendar endTime = Calendar.getInstance();
-			beginTime.setTime(start);
-			endTime.setTime(end);
+			Calendar beginTime = getCalendar(date, "00:00");
+			Calendar endTime = getCalendar(date, "23:59");
 			
 			ContentResolver content = act.getContentResolver();
 			String queryProjection[] = {Events._ID};
 			String querySelection = "(deleted != 1 and dtstart>" + beginTime.getTimeInMillis() + " and dtend <" + endTime.getTimeInMillis() + ")";
 			Cursor cursor = content.query(Events.CONTENT_URI, queryProjection, querySelection, null, null);
-			
 			int count = cursor.getCount();
 			cursor.close();
 			
@@ -87,12 +77,8 @@ public class CalendarHelper {
 		ArrayList<String> buffer = new ArrayList<String>();
 
 		try {
-			Date start = DateParser.parse(date, "00:00");
-			Date end = DateParser.parse(date, "23:59");
-			Calendar beginTime = Calendar.getInstance();
-			Calendar endTime = Calendar.getInstance();
-			beginTime.setTime(start);
-			endTime.setTime(end);
+			Calendar beginTime = getCalendar(date, "00:00");
+			Calendar endTime = getCalendar(date, "23:59");
 			
 			ContentResolver content = act.getContentResolver();
 			String queryProjection[] = {Events._ID, Events.TITLE};
@@ -111,5 +97,12 @@ public class CalendarHelper {
 		ContentResolver content = act.getContentResolver();		
 		Uri toDelete = ContentUris.withAppendedId(Events.CONTENT_URI, id);
 		content.delete(toDelete, null, null);
+	}
+	
+	private static Calendar getCalendar(String date, String time) {
+		Date dat = DateParser.parse(date, time);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(dat);
+		return cal;
 	}
 }
