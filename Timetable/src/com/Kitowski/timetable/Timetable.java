@@ -2,6 +2,7 @@ package com.Kitowski.timetable;
 
 import java.util.ArrayList;
 
+import com.Kitowski.Settings.Settings;
 import com.Kitowski.timetable.Calendar.CalendarHelper;
 import com.Kitowski.timetable.date.DateLoader;
 import com.Kitowski.timetable.date.SelectDate;
@@ -18,6 +19,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -46,6 +49,29 @@ public class Timetable extends Activity {
 		LessonLegend.updateLessonType(this);
 		loadTimetable();
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.timetable, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.menu_settings) {
+			Intent intent = new Intent(this, Settings.class);
+			this.startActivityForResult(intent, 1);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if(resultCode == 0) addEvents(); //Finished DeleteEvents activity
+    }
 	
 	private void loadTimetable() {
 		if(isOnline()) {
@@ -145,14 +171,7 @@ public class Timetable extends Activity {
 			CalendarHelper.deleteEvent(this, Long.parseLong(str.split(",")[0]));
 		}
 	}
-	
-	//Add to calendar after return from DeleteEvents activity
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		addEvents();
-    }
-	
+
 	private void addLegend() {
 		 legend = new LessonLegend(this);
 		 legend.dispay(layout);
