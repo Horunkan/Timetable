@@ -60,6 +60,7 @@ public class Timetable extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.menu_settings) {
 			Intent intent = new Intent(this, Settings.class);
+			intent.putExtra("groups", groups.getGroupsNames());
 			this.startActivityForResult(intent, 1);
 			return true;
 		}

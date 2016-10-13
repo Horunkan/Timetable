@@ -12,8 +12,26 @@
         android:id="@+id/checkbox_displaylegend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
         android:layout_alignParentTop="true"
-        android:text="@string/settings_dislpaylegend" />
+        android:text="@string/settings_dislpaylegend"
+        android:textSize="25sp" />
+
+    <CheckBox
+        android:id="@+id/checkbox_displayyear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spinner_selectYear"
+        android:layout_below="@+id/checkbox_displaylegend"
+        android:layout_marginTop="44dp"
+        android:text="@string/settings_selectyear"
+        android:textSize="25sp" />
+
+    <Spinner
+        android:id="@+id/spinner_selectYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/checkbox_displaylegend"
+        android:layout_below="@+id/checkbox_displayyear"
+        android:layout_marginTop="22dp" />
 
 </RelativeLayout>

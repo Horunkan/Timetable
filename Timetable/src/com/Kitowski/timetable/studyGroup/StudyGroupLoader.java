@@ -13,7 +13,6 @@ public class StudyGroupLoader {
 	public boolean loaded = true;
 	
 	public StudyGroupLoader(String date) {
-		
 		toConvert = new ArrayList<String>();
 		groups = new ArrayList<StudyGroup>();
 		
@@ -26,6 +25,12 @@ public class StudyGroupLoader {
 	
 	public ArrayList<StudyGroup> getGroups() { return groups; }
 	public StudyGroup getGroup(int id) { return groups.get(id); }
+	
+	public String[] getGroupsNames() {
+		String buffer[] = new String[groups.size()];
+		for(int i = 0; i < buffer.length; ++i) buffer[i] = groups.get(i).getName();
+		return buffer;
+	}
 	
 	@SuppressWarnings("finally")
 	private boolean loadFromHttp(String date) {
