@@ -71,7 +71,7 @@ public class Timetable extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		
-		if(requestCode == 0) addEvents(); //Finished DeleteEvents activity
+		if(requestCode == 0 && resultCode == 1) addEvents(); //Finished DeleteEvents activity
     }
 	
 	private void loadTimetable() {

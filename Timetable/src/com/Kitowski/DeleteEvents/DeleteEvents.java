@@ -40,6 +40,12 @@ public class DeleteEvents extends Activity {
 		addDeleteButton();
 	}
 	
+	@Override
+	public void onBackPressed() {
+		this.setResult(0);
+	    super.onBackPressed();
+	}
+	
 	private void toggleAllCheckboxes() {
 		for(CheckBox ch : eventsCheckbox) ch.setChecked(selectAllCheckbox.isChecked());
 	}
@@ -70,6 +76,7 @@ public class DeleteEvents extends Activity {
 	private void delete() {
 		for(int i = 0; i < eventsCheckbox.size(); ++i) {
 			if(eventsCheckbox.get(i).isChecked()) CalendarHelper.deleteEvent(this, Long.parseLong(eventsNames.get(i).split(",")[0]));
+			this.setResult(1);
 			this.finish();
 		}
 	}
