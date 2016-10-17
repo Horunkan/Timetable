@@ -76,7 +76,8 @@ public class Timetable extends Activity {
 		else if(requestCode == 1 && resultCode == 1) { //Save settings
 			Toast.makeText(this, R.string.toast_settingsaved, Toast.LENGTH_SHORT).show();
 			Settings.saveSettings(this);
-			refresh(true);
+			layout.removeAllViews();
+			loadTimetable();
 		}
     }
 	

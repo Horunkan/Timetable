@@ -1,5 +1,6 @@
 package com.Kitowski.Settings;
 
+import com.Kitowski.Settings.Checkbox.checkboxType;
 import com.Kitowski.timetable.R;
 import android.app.Activity;
 import android.content.Context;
@@ -10,21 +11,19 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 
+@SuppressWarnings("unused")
 public class Settings extends Activity {
 	public static boolean displayLegend, selectYear;
 	
-	private CheckBox displayLegendCheckbox, selectYearCheckbox;
+	private Checkbox legendCheckbox, yearCheckbox;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 		
-		displayLegendCheckbox = (CheckBox)findViewById(R.id.checkbox_displaylegend);
-		displayLegendCheckbox.setChecked(displayLegend);
-		
-		selectYearCheckbox = (CheckBox)findViewById(R.id.checkbox_displayyear);
-		selectYearCheckbox.setChecked(selectYear);
+		legendCheckbox = new Checkbox(this, checkboxType.LEGEND, (CheckBox)findViewById(R.id.checkbox_displaylegend));
+		yearCheckbox = new Checkbox(this, checkboxType.SELECT_YEAR, (CheckBox)findViewById(R.id.checkbox_displayyear));
 		
 		updateSelectYearSpinnerValues();
 	}
@@ -54,6 +53,6 @@ public class Settings extends Activity {
 		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerArrayAdapter.addAll(getIntent().getStringArrayExtra("groups"));
 		spn.setAdapter(spinnerArrayAdapter);
-		if(!selectYearCheckbox.isChecked()) spn.setEnabled(false);
+		if(!yearCheckbox.isChecked()) spn.setEnabled(false);
 	}
 }

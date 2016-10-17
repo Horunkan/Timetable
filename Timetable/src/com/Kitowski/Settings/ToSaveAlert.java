@@ -21,6 +21,6 @@ public class ToSaveAlert  extends AlertDialog.Builder implements DialogInterface
 	public void onClick(DialogInterface dialog, int which) {
 		if(which == DialogInterface.BUTTON_POSITIVE) sett.setResult(1);
 		else sett.setResult(0);
-		sett.onBackPressed();
+		sett.finish();
 	}
 }
