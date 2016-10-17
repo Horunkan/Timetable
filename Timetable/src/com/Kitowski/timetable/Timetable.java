@@ -80,7 +80,7 @@ public class Timetable extends Activity {
 			addSelectDate();
 			addSelectGroup();
 			addLessons();
-			addLegend();
+			if(Settings.displayLegend) addLegend();
 		}
 		else {
 			setError(getResources().getString(R.string.error_nointernet));
@@ -92,7 +92,7 @@ public class Timetable extends Activity {
 		layout.removeView(errorText);
 		layout.removeView(refreshButton);
 		layout.removeView(calendarButton);
-		legend.remove(layout);
+		if(Settings.displayLegend) legend.remove(layout);
 		if(!lessonsOnly) {
 			layout.removeView(selectGroup);
 			addSelectGroup();
@@ -102,7 +102,7 @@ public class Timetable extends Activity {
 		if(groups.loaded) {
 			addLessons();
 			addCalendarButton();
-			addLegend();
+			if(Settings.displayLegend) addLegend();
 		}
 	}
 	
