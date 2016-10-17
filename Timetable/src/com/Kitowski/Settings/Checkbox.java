@@ -24,6 +24,7 @@ public class Checkbox implements OnClickListener {
 		if(type == checkboxType.LEGEND) Settings.displayLegend = !Settings.displayLegend;
 		else if(type == checkboxType.SELECT_YEAR) {
 			Settings.selectYear = !Settings.selectYear;
+			settings.updateSpinnersState();
 		}
 	}
 	

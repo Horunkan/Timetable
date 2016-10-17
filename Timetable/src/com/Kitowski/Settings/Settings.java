@@ -16,6 +16,7 @@ public class Settings extends Activity {
 	public static boolean displayLegend, selectYear;
 	
 	private Checkbox legendCheckbox, yearCheckbox;
+	private Spinner yearSpinner;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +48,16 @@ public class Settings extends Activity {
 	@Override
 	public void onBackPressed() { new ToSaveAlert(this).show(); }
 	
+	public void updateSpinnersState() {
+		yearSpinner.setEnabled(yearCheckbox.isChecked());
+	}
+	
 	private void updateSelectYearSpinnerValues() {
-		Spinner spn = (Spinner)findViewById(R.id.spinner_selectYear);
+		yearSpinner = (Spinner)findViewById(R.id.spinner_selectYear);
 		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item); //selected item will look like a spinner set from XML
 		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerArrayAdapter.addAll(getIntent().getStringArrayExtra("groups"));
-		spn.setAdapter(spinnerArrayAdapter);
-		if(!yearCheckbox.isChecked()) spn.setEnabled(false);
+		yearSpinner.setAdapter(spinnerArrayAdapter);
+		yearSpinner.setEnabled(yearCheckbox.isChecked());
 	}
 }
