@@ -73,6 +73,10 @@ public class Timetable extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 		
 		if(requestCode == 0 && resultCode == 1) addEvents(); //Finished DeleteEvents activity
+		else if(requestCode == 1 && resultCode == 1) { //Save settings
+			Toast.makeText(this, R.string.toast_addfailed, Toast.LENGTH_SHORT).show();
+			Settings.saveSettings(this);
+		}
     }
 	
 	private void loadTimetable() {
