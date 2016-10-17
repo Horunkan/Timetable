@@ -50,5 +50,6 @@
     <string name="toSave_message">Czy chcesz zapisać zmiany?</string>
     <string name="toSave_yes">Tak</string>
     <string name="toSave_no">Nie</string>
+    <string name="toast_settingsaved">Ustawienia zostały zapisane</string>
 
 </resources>
