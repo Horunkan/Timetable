@@ -2,17 +2,30 @@ package com.Kitowski.Settings;
 
 import com.Kitowski.timetable.R;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 
 public class Settings extends Activity {
+	private CheckBox legend;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
+		
+		legend = (CheckBox)findViewById(R.id.checkbox_displaylegend);
+		
+		load();
 		updateSelectYearSpinnerValues();
+	}
+	
+	private void load() {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);		
+		legend.setChecked(preferences.getBoolean("Legend", true));
 	}
 	
 	private void updateSelectYearSpinnerValues() {
