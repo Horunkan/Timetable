@@ -46,6 +46,7 @@ public class Timetable extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_timetable);
 		layout = (LinearLayout)findViewById(R.id.mainLayout);
+		Settings.loadSettings(this);
 		LessonLegend.updateLessonType(this);
 		loadTimetable();
 	}
