@@ -45,6 +45,9 @@ public class Settings extends Activity {
 		edit.apply();
 	}
 	
+	@Override
+	public void onBackPressed() { new ToSaveAlert(this).show(); }
+	
 	private void updateSelectYearSpinnerValues() {
 		Spinner spn = (Spinner)findViewById(R.id.spinner_selectYear);
 		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item); //selected item will look like a spinner set from XML

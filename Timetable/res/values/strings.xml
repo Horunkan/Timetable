@@ -47,5 +47,8 @@
     <string name="timetable_menu_settings">Ustawienia</string>
     <string name="settings_dislpaylegend">Wyświetlaj legendę</string>
     <string name="settings_selectyear">Tylko wybrany rok</string>
+    <string name="toSave_message">Czy chcesz zapisać zmiany?</string>
+    <string name="toSave_yes">Tak</string>
+    <string name="toSave_no">Nie</string>
 
 </resources>
