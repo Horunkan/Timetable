@@ -1,6 +1,8 @@
 package com.Kitowski.timetable.studyGroup;
 
 import java.util.ArrayList;
+
+import com.Kitowski.Settings.Settings;
 import com.Kitowski.timetable.utilities.HttpReader;
 import android.util.Log;
 
@@ -32,19 +34,17 @@ public class StudyGroupLoader {
 		return buffer;
 	}
 	
-	@SuppressWarnings("finally")
 	private boolean loadFromHttp(String date) {
 		try { 
 			HttpReader http = (HttpReader) new HttpReader().execute("https://inf.ug.edu.pl/plan-" + date + ".print", "body");
-			toConvert = http.get(); 
+			toConvert = http.get();
+			
+			if(toConvert.size() == 0) return false;
+			else return true;
 		}
 		catch(Exception e) {
 			Log.e(logcatTAG, "Failed to load");
 			return false;
-		}
-		finally {
-			if(toConvert.size() == 0) return false;
-			else return true;
 		}
 	}
 	
@@ -62,6 +62,14 @@ public class StudyGroupLoader {
 			if(str.contains("Studia")) {
 				if(buffer != null) groups.add(buffer);
 				buffer = new StudyGroup(str);
+			}
+			else if(Settings.selectGroup && str.contains("gr.")) {
+				if(str.contains("gr. " + Settings.selectGroupValueLetter.charAt(Settings.selectGroupValueLetter.length() - 1))) {
+					buffer.addLesson(str);
+				}
+				else if(str.contains("gr. " + Settings.selectGroupValueNumber.charAt(Settings.selectGroupValueNumber.length() - 1))) {
+					buffer.addLesson(str);
+				}
 			}
 			else buffer.addLesson(str);
 		}
