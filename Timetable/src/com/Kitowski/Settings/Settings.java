@@ -16,11 +16,11 @@ import android.widget.Spinner;
 
 @SuppressWarnings("unused")
 public class Settings extends Activity {
-	public static boolean displayLegend, selectYear;
-	public static String selectYearValue;
+	public static boolean displayLegend, selectGroup;
+	public static String selectGroupValue;
 	
 	private Checkbox legendCheckbox, yearCheckbox;
-	private Spinner yearSpinner;
+	private Spinner groupSpinner;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +37,8 @@ public class Settings extends Activity {
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(con);
 		
 		displayLegend = pref.getBoolean("Legend", true);
-		selectYear = pref.getBoolean("SelectYear", false);
-		selectYearValue = pref.getString("SelectYearValue", "NULL");
+		selectGroup = pref.getBoolean("SelectYear", false);
+		selectGroupValue = pref.getString("SelectYearValue", "NULL");
 	}
 	
 	public static void saveSettings(Context con) {
@@ -46,8 +46,8 @@ public class Settings extends Activity {
 		SharedPreferences.Editor edit = pref.edit();
 		
 		edit.putBoolean("Legend", displayLegend);
-		edit.putBoolean("SelectYear", selectYear);
-		edit.putString("SelectYearValue", selectYearValue);
+		edit.putBoolean("SelectGroup", selectGroup);
+		edit.putString("SelectGroupValue", selectGroupValue);
 		edit.apply();
 	}
 	
@@ -55,26 +55,26 @@ public class Settings extends Activity {
 	public void onBackPressed() { new ToSaveAlert(this).show(); }
 	
 	public void updateSpinnersState() {
-		yearSpinner.setEnabled(yearCheckbox.isChecked());
+		groupSpinner.setEnabled(yearCheckbox.isChecked());
 	}
 	
 	private void addSelectYearSpinner() {
-		yearSpinner = (Spinner)findViewById(R.id.spinner_selectYear);
+		groupSpinner = (Spinner)findViewById(R.id.spinner_selectYear);
 		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item); //selected item will look like a spinner set from XML
 		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerArrayAdapter.addAll(getIntent().getStringArrayExtra("groups"));
-		yearSpinner.setAdapter(spinnerArrayAdapter);
-		yearSpinner.setEnabled(yearCheckbox.isChecked());
+		groupSpinner.setAdapter(spinnerArrayAdapter);
+		groupSpinner.setEnabled(yearCheckbox.isChecked());
 		
 		for(int i = 0; i < spinnerArrayAdapter.getCount(); ++i) {
-			if(spinnerArrayAdapter.getItem(i).contentEquals(selectYearValue)) {
-				yearSpinner.setSelection(i);
+			if(spinnerArrayAdapter.getItem(i).contentEquals(selectGroupValue)) {
+				groupSpinner.setSelection(i);
 				break;
 			}
 		}
 		
-		yearSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { selectYearValue = (String)yearSpinner.getSelectedItem(); }
+		groupSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { selectGroupValue = (String)groupSpinner.getSelectedItem(); }
 			@Override public void onNothingSelected(AdapterView<?> parent) { }
 		});
 	}

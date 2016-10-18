@@ -23,14 +23,14 @@ public class Checkbox implements OnClickListener {
 	public void onClick(View v) {
 		if(type == checkboxType.LEGEND) Settings.displayLegend = !Settings.displayLegend;
 		else if(type == checkboxType.SELECT_YEAR) {
-			Settings.selectYear = !Settings.selectYear;
+			Settings.selectGroup = !Settings.selectGroup;
 			settings.updateSpinnersState();
 		}
 	}
 	
 	private void update() {
 		if(type == checkboxType.LEGEND) box.setChecked(Settings.displayLegend);
-		else if(type == checkboxType.SELECT_YEAR) box.setChecked(Settings.selectYear);
+		else if(type == checkboxType.SELECT_YEAR) box.setChecked(Settings.selectGroup);
 	}
 	
 	public boolean isChecked() { return box.isChecked(); }
