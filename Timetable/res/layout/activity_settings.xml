@@ -34,4 +34,30 @@
         android:layout_below="@+id/checkbox_displayyear"
         android:layout_marginTop="22dp" />
 
+    <CheckBox
+        android:id="@+id/checkbox_selectgroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spinner_selectYear"
+        android:layout_below="@+id/spinner_selectYear"
+        android:layout_marginTop="44dp"
+        android:text="@string/settings_selectgroup"
+        android:textSize="25sp" />
+
+    <Spinner
+        android:id="@+id/spinner_selectgroup_letter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/checkbox_selectgroup"
+        android:layout_below="@+id/checkbox_selectgroup"
+        android:layout_marginTop="22dp" />
+
+    <Spinner
+        android:id="@+id/spinner_selectgroup_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spinner_selectgroup_letter"
+        android:layout_below="@+id/spinner_selectgroup_letter"
+        android:layout_marginTop="22dp" />
+
 </RelativeLayout>
