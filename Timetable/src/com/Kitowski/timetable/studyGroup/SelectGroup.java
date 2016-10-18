@@ -28,7 +28,7 @@ public class SelectGroup extends Spinner implements OnItemSelectedListener {
 		this.setAdapter(spinnerArrayAdapter);
 		this.setOnItemSelectedListener(this);
 		
-		if(Settings.selectGroup) selectGroup();
+		if(Settings.selectYear) selectGroup();
 	}
 	
 	public int getSelectedGroup() { return (int) this.getSelectedItemId(); }
@@ -43,7 +43,7 @@ public class SelectGroup extends Spinner implements OnItemSelectedListener {
 	
 	private void selectGroup() {
 		for(int i = 0; i < spinnerArrayAdapter.getCount(); ++i) {
-			if(spinnerArrayAdapter.getItem(i).contentEquals(Settings.selectGroupValue)) {
+			if(spinnerArrayAdapter.getItem(i).contentEquals(Settings.selectYearValue)) {
 				this.setSelection(i);
 				break;
 			}

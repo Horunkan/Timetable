@@ -16,11 +16,11 @@ import android.widget.Spinner;
 
 @SuppressWarnings("unused")
 public class Settings extends Activity {
-	public static boolean displayLegend, selectGroup;
-	public static String selectGroupValue;
+	public static boolean displayLegend, selectYear, selectGroup;
+	public static String selectYearValue, selectGroupValueLetter, selectGroupValueNumber;
 	
-	private Checkbox legendCheckbox, yearCheckbox;
-	private Spinner groupSpinner;
+	private Checkbox legendCheckbox, yearCheckbox, groupCheckbox;
+	private Spinner yearSpinner, groupSpinnerLetter, groupSpinnerNumber;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +29,22 @@ public class Settings extends Activity {
 		
 		legendCheckbox = new Checkbox(this, checkboxType.LEGEND, (CheckBox)findViewById(R.id.checkbox_displaylegend));
 		yearCheckbox = new Checkbox(this, checkboxType.SELECT_YEAR, (CheckBox)findViewById(R.id.checkbox_displayyear));
+		groupCheckbox = new Checkbox(this, checkboxType.SELECT_GROUP, (CheckBox)findViewById(R.id.checkbox_selectgroup));
 		
 		addSelectYearSpinner();
+		addSelectGroupLetterSpinner();
+		addSelectGroupNumberSpinner();
 	}
 	
 	public static void loadSettings(Context con) {
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(con);
 		
 		displayLegend = pref.getBoolean("Legend", true);
-		selectGroup = pref.getBoolean("SelectYear", false);
-		selectGroupValue = pref.getString("SelectYearValue", "NULL");
+		selectYear = pref.getBoolean("SelectYear", false);
+		selectYearValue = pref.getString("SelectYearValue", "NULL");
+		selectGroup = pref.getBoolean("SelectGroup", false);
+		selectGroupValueLetter = pref.getString("SelectGroupValueLetter", "NULL");
+		selectGroupValueNumber = pref.getString("SelectGroupValueNumber", "NULL");
 	}
 	
 	public static void saveSettings(Context con) {
@@ -46,8 +52,11 @@ public class Settings extends Activity {
 		SharedPreferences.Editor edit = pref.edit();
 		
 		edit.putBoolean("Legend", displayLegend);
+		edit.putBoolean("SelectGroup", selectYear);
+		edit.putString("SelectYearValue", selectYearValue);
 		edit.putBoolean("SelectGroup", selectGroup);
-		edit.putString("SelectGroupValue", selectGroupValue);
+		edit.putString("SelectGroupValueLetter", selectGroupValueLetter);
+		edit.putString("SelectGroupValueNumber", selectGroupValueNumber);
 		edit.apply();
 	}
 	
@@ -55,26 +64,70 @@ public class Settings extends Activity {
 	public void onBackPressed() { new ToSaveAlert(this).show(); }
 	
 	public void updateSpinnersState() {
-		groupSpinner.setEnabled(yearCheckbox.isChecked());
+		yearSpinner.setEnabled(selectYear);
+		groupSpinnerLetter.setEnabled(selectGroup);
+		groupSpinnerNumber.setEnabled(selectGroup);
 	}
 	
 	private void addSelectYearSpinner() {
-		groupSpinner = (Spinner)findViewById(R.id.spinner_selectYear);
-		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item); //selected item will look like a spinner set from XML
+		yearSpinner = (Spinner)findViewById(R.id.spinner_selectYear);
+		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
 		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerArrayAdapter.addAll(getIntent().getStringArrayExtra("groups"));
-		groupSpinner.setAdapter(spinnerArrayAdapter);
-		groupSpinner.setEnabled(yearCheckbox.isChecked());
+		yearSpinner.setAdapter(spinnerArrayAdapter);
+		yearSpinner.setEnabled(yearCheckbox.isChecked());
 		
 		for(int i = 0; i < spinnerArrayAdapter.getCount(); ++i) {
-			if(spinnerArrayAdapter.getItem(i).contentEquals(selectGroupValue)) {
-				groupSpinner.setSelection(i);
+			if(spinnerArrayAdapter.getItem(i).contentEquals(selectYearValue)) {
+				yearSpinner.setSelection(i);
 				break;
 			}
 		}
 		
-		groupSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { selectGroupValue = (String)groupSpinner.getSelectedItem(); }
+		yearSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { selectYearValue = (String)yearSpinner.getSelectedItem(); }
+			@Override public void onNothingSelected(AdapterView<?> parent) { }
+		});
+	}
+	
+	private void addSelectGroupLetterSpinner() {
+		groupSpinnerLetter = (Spinner)findViewById(R.id.spinner_selectgroup_letter);
+		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinnerArrayAdapter.addAll(new String[] {"Grupa A", "Grupa B", "Grupa C"});
+		groupSpinnerLetter.setAdapter(spinnerArrayAdapter);
+		groupSpinnerLetter.setEnabled(groupCheckbox.isChecked());
+		
+		for(int i = 0; i < spinnerArrayAdapter.getCount(); ++i) {
+			if(spinnerArrayAdapter.getItem(i).contentEquals(selectGroupValueLetter)) {
+				groupSpinnerLetter.setSelection(i);
+				break;
+			}
+		}
+		
+		groupSpinnerLetter.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { selectGroupValueLetter = (String)groupSpinnerLetter.getSelectedItem(); }
+			@Override public void onNothingSelected(AdapterView<?> parent) { }
+		});
+	}
+	
+	private void addSelectGroupNumberSpinner() {
+		groupSpinnerNumber = (Spinner)findViewById(R.id.spinner_selectgroup_number);
+		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinnerArrayAdapter.addAll(new String[] {"Grupa 1", "Grupa 2", "Grupa 3", "Grupa 4"});
+		groupSpinnerNumber.setAdapter(spinnerArrayAdapter);
+		groupSpinnerNumber.setEnabled(groupCheckbox.isChecked());
+		
+		for(int i = 0; i < spinnerArrayAdapter.getCount(); ++i) {
+			if(spinnerArrayAdapter.getItem(i).contentEquals(selectGroupValueNumber)) {
+				groupSpinnerNumber.setSelection(i);
+				break;
+			}
+		}
+		
+		groupSpinnerNumber.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { selectGroupValueNumber = (String)groupSpinnerNumber.getSelectedItem(); }
 			@Override public void onNothingSelected(AdapterView<?> parent) { }
 		});
 	}
