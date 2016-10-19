@@ -1,7 +1,11 @@
 package com.Kitowski.timetable.date;
 
-import com.Kitowski.timetable.Timetable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import com.Kitowski.timetable.Timetable;
+import com.Kitowski.timetable.utilities.DateParser;
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +26,8 @@ public class SelectDate extends Spinner implements OnItemSelectedListener {
 		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		this.setAdapter(spinnerArrayAdapter);
 		this.setOnItemSelectedListener(this);
+		
+		updateCurrentSelection(date.getList().toArray(new String[0]));
 	}
 	
 	public String getSelected() { return (String)this.getSelectedItem(); }
@@ -33,4 +39,18 @@ public class SelectDate extends Spinner implements OnItemSelectedListener {
 	}
 
 	@Override public void onNothingSelected(AdapterView<?> parent) { }
+	
+	@SuppressLint("SimpleDateFormat")
+	private void updateCurrentSelection(String[] list) {		
+		Date currentDate = DateParser.parse(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+		
+		for(int i = 0; i < list.length; ++i) {
+			Date toCheck = DateParser.parse(list[i]);
+			
+			if(currentDate.before(toCheck) || currentDate.compareTo(toCheck) == 0) {
+				this.setSelection(i);
+				break;
+			}
+		}
+	}
 }
