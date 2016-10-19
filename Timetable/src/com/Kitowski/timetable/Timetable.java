@@ -2,6 +2,7 @@ package com.Kitowski.timetable;
 
 import java.util.ArrayList;
 
+import com.Kitowski.Settings.Settings;
 import com.Kitowski.timetable.Calendar.CalendarHelper;
 import com.Kitowski.timetable.date.DateLoader;
 import com.Kitowski.timetable.date.SelectDate;
@@ -18,6 +19,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -43,16 +46,47 @@ public class Timetable extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_timetable);
 		layout = (LinearLayout)findViewById(R.id.mainLayout);
+		Settings.loadSettings(this);
 		LessonLegend.updateLessonType(this);
 		loadTimetable();
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.timetable, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.menu_settings) {
+			Intent intent = new Intent(this, Settings.class);
+			intent.putExtra("groups", groups.getGroupsNames());
+			this.startActivityForResult(intent, 1);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if(requestCode == 0 && resultCode == 1) addEvents(); //Finished DeleteEvents activity
+		else if(requestCode == 1 && resultCode == 1) { //Save settings
+			Toast.makeText(this, R.string.toast_settingsaved, Toast.LENGTH_SHORT).show();
+			Settings.saveSettings(this);
+			layout.removeAllViews();
+			loadTimetable();
+		}
+    }
 	
 	private void loadTimetable() {
 		if(isOnline()) {
 			addSelectDate();
 			addSelectGroup();
 			addLessons();
-			addLegend();
+			if(Settings.displayLegend) addLegend();
 		}
 		else {
 			setError(getResources().getString(R.string.error_nointernet));
@@ -64,7 +98,7 @@ public class Timetable extends Activity {
 		layout.removeView(errorText);
 		layout.removeView(refreshButton);
 		layout.removeView(calendarButton);
-		legend.remove(layout);
+		if(Settings.displayLegend) legend.remove(layout);
 		if(!lessonsOnly) {
 			layout.removeView(selectGroup);
 			addSelectGroup();
@@ -74,7 +108,7 @@ public class Timetable extends Activity {
 		if(groups.loaded) {
 			addLessons();
 			addCalendarButton();
-			addLegend();
+			if(Settings.displayLegend) addLegend();
 		}
 	}
 	
@@ -145,14 +179,7 @@ public class Timetable extends Activity {
 			CalendarHelper.deleteEvent(this, Long.parseLong(str.split(",")[0]));
 		}
 	}
-	
-	//Add to calendar after return from DeleteEvents activity
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		addEvents();
-    }
-	
+
 	private void addLegend() {
 		 legend = new LessonLegend(this);
 		 legend.dispay(layout);

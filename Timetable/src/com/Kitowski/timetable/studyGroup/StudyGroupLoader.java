@@ -1,6 +1,8 @@
 package com.Kitowski.timetable.studyGroup;
 
 import java.util.ArrayList;
+
+import com.Kitowski.Settings.Settings;
 import com.Kitowski.timetable.utilities.HttpReader;
 import android.util.Log;
 
@@ -13,7 +15,6 @@ public class StudyGroupLoader {
 	public boolean loaded = true;
 	
 	public StudyGroupLoader(String date) {
-		
 		toConvert = new ArrayList<String>();
 		groups = new ArrayList<StudyGroup>();
 		
@@ -27,19 +28,23 @@ public class StudyGroupLoader {
 	public ArrayList<StudyGroup> getGroups() { return groups; }
 	public StudyGroup getGroup(int id) { return groups.get(id); }
 	
-	@SuppressWarnings("finally")
+	public String[] getGroupsNames() {
+		String buffer[] = new String[groups.size()];
+		for(int i = 0; i < buffer.length; ++i) buffer[i] = groups.get(i).getName();
+		return buffer;
+	}
+	
 	private boolean loadFromHttp(String date) {
 		try { 
 			HttpReader http = (HttpReader) new HttpReader().execute("https://inf.ug.edu.pl/plan-" + date + ".print", "body");
-			toConvert = http.get(); 
+			toConvert = http.get();
+			
+			if(toConvert.size() == 0) return false;
+			else return true;
 		}
 		catch(Exception e) {
 			Log.e(logcatTAG, "Failed to load");
 			return false;
-		}
-		finally {
-			if(toConvert.size() == 0) return false;
-			else return true;
 		}
 	}
 	
@@ -57,6 +62,13 @@ public class StudyGroupLoader {
 			if(str.contains("Studia")) {
 				if(buffer != null) groups.add(buffer);
 				buffer = new StudyGroup(str);
+			}
+			else if(Settings.selectGroup && str.contains("gr.")) {
+				char groupLetter = Settings.selectGroupValueLetter.charAt(Settings.selectGroupValueLetter.length() - 1);
+				char groupNumber = Settings.selectGroupValueNumber.charAt(Settings.selectGroupValueNumber.length() - 1);
+				
+				if(str.contains(" " + groupLetter + ",") || str.contains(" i " + groupLetter)) buffer.addLesson(str);
+				else if(str.contains(" " + groupNumber + ",") || str.contains(" i " + groupNumber)) buffer.addLesson(str);
 			}
 			else buffer.addLesson(str);
 		}
