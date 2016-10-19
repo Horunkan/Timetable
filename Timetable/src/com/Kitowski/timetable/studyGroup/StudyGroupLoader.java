@@ -70,10 +70,7 @@ public class StudyGroupLoader {
 				if(str.contains(" " + groupLetter + ",") || str.contains(" i " + groupLetter)) buffer.addLesson(str);
 				else if(str.contains(" " + groupNumber + ",") || str.contains(" i " + groupNumber)) buffer.addLesson(str);
 			}
-			else {
-				buffer.addLesson(str);
-				Log.i(logcatTAG, "Standard " + str);
-			}
+			else buffer.addLesson(str);
 		}
 		groups.add(buffer);
 	}
