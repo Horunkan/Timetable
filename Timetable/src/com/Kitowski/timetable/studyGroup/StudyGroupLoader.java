@@ -64,14 +64,16 @@ public class StudyGroupLoader {
 				buffer = new StudyGroup(str);
 			}
 			else if(Settings.selectGroup && str.contains("gr.")) {
-				if(str.contains("gr. " + Settings.selectGroupValueLetter.charAt(Settings.selectGroupValueLetter.length() - 1))) {
-					buffer.addLesson(str);
-				}
-				else if(str.contains("gr. " + Settings.selectGroupValueNumber.charAt(Settings.selectGroupValueNumber.length() - 1))) {
-					buffer.addLesson(str);
-				}
+				char groupLetter = Settings.selectGroupValueLetter.charAt(Settings.selectGroupValueLetter.length() - 1);
+				char groupNumber = Settings.selectGroupValueNumber.charAt(Settings.selectGroupValueNumber.length() - 1);
+				
+				if(str.contains(" " + groupLetter + ",") || str.contains(" i " + groupLetter)) buffer.addLesson(str);
+				else if(str.contains(" " + groupNumber + ",") || str.contains(" i " + groupNumber)) buffer.addLesson(str);
 			}
-			else buffer.addLesson(str);
+			else {
+				buffer.addLesson(str);
+				Log.i(logcatTAG, "Standard " + str);
+			}
 		}
 		groups.add(buffer);
 	}
