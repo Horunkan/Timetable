@@ -3,6 +3,7 @@ package com.Kitowski.timetable.studyGroup;
 import java.util.ArrayList;
 
 import com.Kitowski.timetable.Settings.Settings;
+import com.Kitowski.timetable.Settings.Settings.Setting;
 import com.Kitowski.timetable.utilities.HttpReader;
 import android.util.Log;
 
@@ -63,7 +64,7 @@ public class StudyGroupLoader {
 				if(buffer != null) groups.add(buffer);
 				buffer = new StudyGroup(str);
 			}
-			else if(Settings.selectGroup && str.contains("gr.")) {
+			else if(Settings.getBoolean(Setting.SELECT_GROUP) && str.contains("gr.")) {
 				char groupLetter = Settings.selectGroupValueLetter.charAt(Settings.selectGroupValueLetter.length() - 1);
 				char groupNumber = Settings.selectGroupValueNumber.charAt(Settings.selectGroupValueNumber.length() - 1);
 				

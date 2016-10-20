@@ -2,6 +2,7 @@ package com.Kitowski.timetable.Settings;
 
 import com.Kitowski.timetable.R;
 import com.Kitowski.timetable.Settings.Checkbox.checkboxType;
+import com.Kitowski.timetable.Settings.Settings.Setting;
 
 import android.app.Activity;
 import android.content.Context;
@@ -38,9 +39,9 @@ public class SettingsActivity extends Activity {
 	public void onBackPressed() { new ToSaveAlert(this).show(); }
 	
 	public void updateSpinnersState() {
-		yearSpinner.setEnabled(Settings.selectYear);
-		groupSpinnerLetter.setEnabled(Settings.selectGroup);
-		groupSpinnerNumber.setEnabled(Settings.selectGroup);
+		yearSpinner.setEnabled(Settings.getBoolean(Setting.SELECT_YEAR));
+		groupSpinnerLetter.setEnabled(Settings.getBoolean(Setting.SELECT_GROUP));
+		groupSpinnerNumber.setEnabled(Settings.getBoolean(Setting.SELECT_GROUP));
 	}
 	
 	private void addSelectYearSpinner() {

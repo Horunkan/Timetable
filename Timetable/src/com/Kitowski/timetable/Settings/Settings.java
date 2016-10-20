@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class Settings {
-	public static boolean displayLegend, selectYear, selectGroup;
+	public enum Setting { DISPLAY_LEGEND, SELECT_YEAR, SELECT_GROUP }
+	
+	private static boolean displayLegend, selectYear, selectGroup;
 	public static String selectYearValue, selectGroupValueLetter, selectGroupValueNumber;
 	
 	public static void loadSettings(Context con) {
@@ -30,5 +32,18 @@ public class Settings {
 		edit.putString("SelectGroupValueLetter", selectGroupValueLetter);
 		edit.putString("SelectGroupValueNumber", selectGroupValueNumber);
 		edit.apply();
+	}
+	
+	public static boolean getBoolean(Setting sett) {
+		if(sett == Setting.DISPLAY_LEGEND) return displayLegend;
+		else if(sett == Setting.SELECT_YEAR) return selectYear;
+		else if(sett == Setting.SELECT_GROUP) return selectGroup;
+		else return false;
+	}
+	
+	public static void toggleBoolean(Setting sett) {
+		if(sett == Setting.DISPLAY_LEGEND) displayLegend = !displayLegend;
+		else if(sett == Setting.SELECT_YEAR) selectYear = !selectYear;
+		else if(sett == Setting.SELECT_GROUP) selectGroup = !selectGroup;
 	}
 }

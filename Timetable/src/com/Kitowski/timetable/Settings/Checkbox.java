@@ -1,6 +1,9 @@
 package com.Kitowski.timetable.Settings;
 
 import android.widget.CheckBox;
+
+import com.Kitowski.timetable.Settings.Settings.Setting;
+
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -21,18 +24,18 @@ public class Checkbox implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		if(type == checkboxType.LEGEND) Settings.displayLegend = !Settings.displayLegend;
+		if(type == checkboxType.LEGEND) Settings.toggleBoolean(Setting.DISPLAY_LEGEND);
 		else {
-			if(type == checkboxType.SELECT_YEAR) Settings.selectYear = !Settings.selectYear;
-			else Settings.selectGroup = !Settings.selectGroup;
+			if(type == checkboxType.SELECT_YEAR) Settings.toggleBoolean(Setting.SELECT_YEAR);
+			else Settings.toggleBoolean(Setting.SELECT_GROUP);
 			settings.updateSpinnersState();
 		}
 	}
 	
 	private void update() {
-		if(type == checkboxType.LEGEND) box.setChecked(Settings.displayLegend);
-		else if(type == checkboxType.SELECT_YEAR) box.setChecked(Settings.selectYear);
-		else if(type == checkboxType.SELECT_GROUP) box.setChecked(Settings.selectGroup);
+		if(type == checkboxType.LEGEND) box.setChecked(Settings.getBoolean(Setting.DISPLAY_LEGEND));
+		else if(type == checkboxType.SELECT_YEAR) box.setChecked(Settings.getBoolean(Setting.SELECT_YEAR));
+		else if(type == checkboxType.SELECT_GROUP) box.setChecked(Settings.getBoolean(Setting.SELECT_GROUP));
 	}
 	
 	public boolean isChecked() { return box.isChecked(); }
