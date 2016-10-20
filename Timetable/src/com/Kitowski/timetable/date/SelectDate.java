@@ -1,5 +1,6 @@
 package com.Kitowski.timetable.date;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.Kitowski.timetable.Timetable;
@@ -25,7 +26,7 @@ public class SelectDate extends Spinner implements OnItemSelectedListener {
 		this.setAdapter(spinnerArrayAdapter);
 		this.setOnItemSelectedListener(this);
 		
-		updateCurrentSelection(date.getList().toArray(new String[0]));
+		updateCurrentSelection(date.getList());
 	}
 	
 	public String getSelected() { return (String)this.getSelectedItem(); }
@@ -37,12 +38,12 @@ public class SelectDate extends Spinner implements OnItemSelectedListener {
 	}
 
 	@Override public void onNothingSelected(AdapterView<?> parent) { }
-	
-	private void updateCurrentSelection(String[] list) {		
+		
+	private void updateCurrentSelection(ArrayList<String> list) {
 		Date currentDate = new Date();
 		
-		for(int i = 0; i < list.length; ++i) {
-			Date toCheck = DateParser.parse(list[i], "00:00");
+		for(int i = 0; i < list.size(); ++i) {
+			Date toCheck = DateParser.parse(list.get(i), "00:00");
 			
 			if(currentDate.before(toCheck) || currentDate.compareTo(toCheck) == 0) {
 				this.setSelection(i);
