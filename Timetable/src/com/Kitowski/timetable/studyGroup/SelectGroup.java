@@ -3,8 +3,8 @@ package com.Kitowski.timetable.studyGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.Kitowski.Settings.SettingsActivity;
 import com.Kitowski.timetable.Timetable;
+import com.Kitowski.timetable.Settings.SettingsActivity;
 
 import android.util.Log;
 import android.view.View;

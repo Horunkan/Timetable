@@ -2,8 +2,8 @@ package com.Kitowski.timetable;
 
 import java.util.ArrayList;
 
-import com.Kitowski.Settings.SettingsActivity;
 import com.Kitowski.timetable.Calendar.CalendarHelper;
+import com.Kitowski.timetable.Settings.SettingsActivity;
 import com.Kitowski.timetable.date.DateLoader;
 import com.Kitowski.timetable.date.SelectDate;
 import com.Kitowski.timetable.lessons.Lesson;

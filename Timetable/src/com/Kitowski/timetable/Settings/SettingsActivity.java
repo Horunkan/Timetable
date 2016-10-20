@@ -1,7 +1,8 @@
-package com.Kitowski.Settings;
+package com.Kitowski.timetable.Settings;
 
-import com.Kitowski.Settings.Checkbox.checkboxType;
 import com.Kitowski.timetable.R;
+import com.Kitowski.timetable.Settings.Checkbox.checkboxType;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;

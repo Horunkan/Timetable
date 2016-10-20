@@ -1,4 +1,4 @@
-package com.Kitowski.Settings;
+package com.Kitowski.timetable.Settings;
 
 import android.widget.CheckBox;
 import android.view.View;

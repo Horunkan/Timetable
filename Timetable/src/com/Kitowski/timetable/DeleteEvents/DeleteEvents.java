@@ -1,4 +1,4 @@
-package com.Kitowski.DeleteEvents;
+package com.Kitowski.timetable.DeleteEvents;
 
 import java.util.ArrayList;
 

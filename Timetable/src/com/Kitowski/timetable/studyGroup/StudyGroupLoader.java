@@ -2,7 +2,7 @@ package com.Kitowski.timetable.studyGroup;
 
 import java.util.ArrayList;
 
-import com.Kitowski.Settings.SettingsActivity;
+import com.Kitowski.timetable.Settings.SettingsActivity;
 import com.Kitowski.timetable.utilities.HttpReader;
 import android.util.Log;
 

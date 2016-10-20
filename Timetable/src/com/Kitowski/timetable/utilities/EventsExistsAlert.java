@@ -1,8 +1,8 @@
 package com.Kitowski.timetable.utilities;
 
-import com.Kitowski.DeleteEvents.DeleteEvents;
 import com.Kitowski.timetable.R;
 import com.Kitowski.timetable.Timetable;
+import com.Kitowski.timetable.DeleteEvents.DeleteEvents;
 import com.Kitowski.timetable.date.SelectDate;
 
 import android.app.AlertDialog;
