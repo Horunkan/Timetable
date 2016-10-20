@@ -65,8 +65,8 @@ public class StudyGroupLoader {
 				buffer = new StudyGroup(str);
 			}
 			else if(Settings.getBoolean(Setting.SELECT_GROUP) && str.contains("gr.")) {
-				char groupLetter = Settings.selectGroupValueLetter.charAt(Settings.selectGroupValueLetter.length() - 1);
-				char groupNumber = Settings.selectGroupValueNumber.charAt(Settings.selectGroupValueNumber.length() - 1);
+				char groupLetter = Settings.getGroup(Setting.SELECTED_GROUP_LETT);
+				char groupNumber = Settings.getGroup(Setting.SELECTED_GROUP_NUM);
 				
 				if(str.contains(" " + groupLetter + ",") || str.contains(" i " + groupLetter)) buffer.addLesson(str);
 				else if(str.contains(" " + groupNumber + ",") || str.contains(" i " + groupNumber)) buffer.addLesson(str);

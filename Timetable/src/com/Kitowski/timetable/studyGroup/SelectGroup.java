@@ -44,7 +44,7 @@ public class SelectGroup extends Spinner implements OnItemSelectedListener {
 	
 	private void updateCurrentSelection() {
 		for(int i = 0; i < spinnerArrayAdapter.getCount(); ++i) {
-			if(spinnerArrayAdapter.getItem(i).contentEquals(Settings.selectYearValue)) {
+			if(spinnerArrayAdapter.getItem(i).contentEquals(Settings.getString(Setting.SELECTED_YEAR))) {
 				this.setSelection(i);
 				break;
 			}
