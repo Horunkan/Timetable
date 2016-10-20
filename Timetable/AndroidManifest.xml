@@ -32,7 +32,7 @@
             android:label="@string/title_activity_delete_events" >
         </activity>
         <activity
-            android:name="com.Kitowski.Settings.Settings"
+            android:name="com.Kitowski.Settings.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
     </application>

@@ -2,7 +2,7 @@ package com.Kitowski.timetable;
 
 import java.util.ArrayList;
 
-import com.Kitowski.Settings.Settings;
+import com.Kitowski.Settings.SettingsActivity;
 import com.Kitowski.timetable.Calendar.CalendarHelper;
 import com.Kitowski.timetable.date.DateLoader;
 import com.Kitowski.timetable.date.SelectDate;
@@ -46,7 +46,7 @@ public class Timetable extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_timetable);
 		layout = (LinearLayout)findViewById(R.id.mainLayout);
-		Settings.loadSettings(this);
+		SettingsActivity.loadSettings(this);
 		LessonLegend.updateLessonType(this);
 		loadTimetable();
 	}
@@ -60,7 +60,7 @@ public class Timetable extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.menu_settings) {
-			Intent intent = new Intent(this, Settings.class);
+			Intent intent = new Intent(this, SettingsActivity.class);
 			intent.putExtra("groups", groups.getGroupsNames());
 			this.startActivityForResult(intent, 1);
 			return true;
@@ -75,7 +75,7 @@ public class Timetable extends Activity {
 		if(requestCode == 0 && resultCode == 1) addEvents(); //Finished DeleteEvents activity
 		else if(requestCode == 1 && resultCode == 1) { //Save settings
 			Toast.makeText(this, R.string.toast_settingsaved, Toast.LENGTH_SHORT).show();
-			Settings.saveSettings(this);
+			SettingsActivity.saveSettings(this);
 			layout.removeAllViews();
 			loadTimetable();
 		}
@@ -86,7 +86,7 @@ public class Timetable extends Activity {
 			addSelectDate();
 			addSelectGroup();
 			addLessons();
-			if(Settings.displayLegend) addLegend();
+			if(SettingsActivity.displayLegend) addLegend();
 		}
 		else {
 			setError(getResources().getString(R.string.error_nointernet));
@@ -98,7 +98,7 @@ public class Timetable extends Activity {
 		layout.removeView(errorText);
 		layout.removeView(refreshButton);
 		layout.removeView(calendarButton);
-		if(Settings.displayLegend) legend.remove(layout);
+		if(SettingsActivity.displayLegend) legend.remove(layout);
 		if(!lessonsOnly) {
 			layout.removeView(selectGroup);
 			addSelectGroup();
@@ -108,7 +108,7 @@ public class Timetable extends Activity {
 		if(groups.loaded) {
 			addLessons();
 			addCalendarButton();
-			if(Settings.displayLegend) addLegend();
+			if(SettingsActivity.displayLegend) addLegend();
 		}
 	}
 	

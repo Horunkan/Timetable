@@ -3,7 +3,7 @@ package com.Kitowski.timetable.studyGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.Kitowski.Settings.Settings;
+import com.Kitowski.Settings.SettingsActivity;
 import com.Kitowski.timetable.Timetable;
 
 import android.util.Log;
@@ -28,7 +28,7 @@ public class SelectGroup extends Spinner implements OnItemSelectedListener {
 		this.setAdapter(spinnerArrayAdapter);
 		this.setOnItemSelectedListener(this);
 		
-		if(Settings.selectYear) selectGroup();
+		if(SettingsActivity.selectYear) selectGroup();
 	}
 	
 	public int getSelectedGroup() { return (int) this.getSelectedItemId(); }
@@ -43,7 +43,7 @@ public class SelectGroup extends Spinner implements OnItemSelectedListener {
 	
 	private void selectGroup() {
 		for(int i = 0; i < spinnerArrayAdapter.getCount(); ++i) {
-			if(spinnerArrayAdapter.getItem(i).contentEquals(Settings.selectYearValue)) {
+			if(spinnerArrayAdapter.getItem(i).contentEquals(SettingsActivity.selectYearValue)) {
 				this.setSelection(i);
 				break;
 			}

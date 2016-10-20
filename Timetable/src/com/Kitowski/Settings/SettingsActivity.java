@@ -15,7 +15,7 @@ import android.widget.CheckBox;
 import android.widget.Spinner;
 
 @SuppressWarnings("unused")
-public class Settings extends Activity {
+public class SettingsActivity extends Activity {
 	public static boolean displayLegend, selectYear, selectGroup;
 	public static String selectYearValue, selectGroupValueLetter, selectGroupValueNumber;
 	

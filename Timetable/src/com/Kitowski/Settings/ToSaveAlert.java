@@ -6,9 +6,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 
 public class ToSaveAlert  extends AlertDialog.Builder implements DialogInterface.OnClickListener {
-	private Settings sett;
+	private SettingsActivity sett;
 	
-	public ToSaveAlert(Settings sett) {
+	public ToSaveAlert(SettingsActivity sett) {
 		super(sett);
 		this.sett = sett;
 		
