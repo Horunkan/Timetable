@@ -21,18 +21,18 @@ public class Checkbox implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		if(type == checkboxType.LEGEND) SettingsActivity.displayLegend = !SettingsActivity.displayLegend;
+		if(type == checkboxType.LEGEND) Settings.displayLegend = !Settings.displayLegend;
 		else {
-			if(type == checkboxType.SELECT_YEAR) SettingsActivity.selectYear = !SettingsActivity.selectYear;
-			else SettingsActivity.selectGroup = !SettingsActivity.selectGroup;
+			if(type == checkboxType.SELECT_YEAR) Settings.selectYear = !Settings.selectYear;
+			else Settings.selectGroup = !Settings.selectGroup;
 			settings.updateSpinnersState();
 		}
 	}
 	
 	private void update() {
-		if(type == checkboxType.LEGEND) box.setChecked(SettingsActivity.displayLegend);
-		else if(type == checkboxType.SELECT_YEAR) box.setChecked(SettingsActivity.selectYear);
-		else if(type == checkboxType.SELECT_GROUP) box.setChecked(SettingsActivity.selectGroup);
+		if(type == checkboxType.LEGEND) box.setChecked(Settings.displayLegend);
+		else if(type == checkboxType.SELECT_YEAR) box.setChecked(Settings.selectYear);
+		else if(type == checkboxType.SELECT_GROUP) box.setChecked(Settings.selectGroup);
 	}
 	
 	public boolean isChecked() { return box.isChecked(); }

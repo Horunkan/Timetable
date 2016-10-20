@@ -3,6 +3,7 @@ package com.Kitowski.timetable;
 import java.util.ArrayList;
 
 import com.Kitowski.timetable.Calendar.CalendarHelper;
+import com.Kitowski.timetable.Settings.Settings;
 import com.Kitowski.timetable.Settings.SettingsActivity;
 import com.Kitowski.timetable.date.DateLoader;
 import com.Kitowski.timetable.date.SelectDate;
@@ -46,7 +47,7 @@ public class Timetable extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_timetable);
 		layout = (LinearLayout)findViewById(R.id.mainLayout);
-		SettingsActivity.loadSettings(this);
+		Settings.loadSettings(this);
 		LessonLegend.updateLessonType(this);
 		loadTimetable();
 	}
@@ -75,7 +76,7 @@ public class Timetable extends Activity {
 		if(requestCode == 0 && resultCode == 1) addEvents(); //Finished DeleteEvents activity
 		else if(requestCode == 1 && resultCode == 1) { //Save settings
 			Toast.makeText(this, R.string.toast_settingsaved, Toast.LENGTH_SHORT).show();
-			SettingsActivity.saveSettings(this);
+			Settings.saveSettings(this);
 			layout.removeAllViews();
 			loadTimetable();
 		}
@@ -86,7 +87,7 @@ public class Timetable extends Activity {
 			addSelectDate();
 			addSelectGroup();
 			addLessons();
-			if(SettingsActivity.displayLegend) addLegend();
+			if(Settings.displayLegend) addLegend();
 		}
 		else {
 			setError(getResources().getString(R.string.error_nointernet));
@@ -98,7 +99,7 @@ public class Timetable extends Activity {
 		layout.removeView(errorText);
 		layout.removeView(refreshButton);
 		layout.removeView(calendarButton);
-		if(SettingsActivity.displayLegend) legend.remove(layout);
+		if(Settings.displayLegend) legend.remove(layout);
 		if(!lessonsOnly) {
 			layout.removeView(selectGroup);
 			addSelectGroup();
@@ -108,7 +109,7 @@ public class Timetable extends Activity {
 		if(groups.loaded) {
 			addLessons();
 			addCalendarButton();
-			if(SettingsActivity.displayLegend) addLegend();
+			if(Settings.displayLegend) addLegend();
 		}
 	}
 	

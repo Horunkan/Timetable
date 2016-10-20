@@ -4,8 +4,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.Kitowski.timetable.Timetable;
-import com.Kitowski.timetable.Settings.SettingsActivity;
-
+import com.Kitowski.timetable.Settings.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,7 +27,7 @@ public class SelectGroup extends Spinner implements OnItemSelectedListener {
 		this.setAdapter(spinnerArrayAdapter);
 		this.setOnItemSelectedListener(this);
 		
-		if(SettingsActivity.selectYear) selectGroup();
+		if(Settings.selectYear) selectGroup();
 	}
 	
 	public int getSelectedGroup() { return (int) this.getSelectedItemId(); }
@@ -43,7 +42,7 @@ public class SelectGroup extends Spinner implements OnItemSelectedListener {
 	
 	private void selectGroup() {
 		for(int i = 0; i < spinnerArrayAdapter.getCount(); ++i) {
-			if(spinnerArrayAdapter.getItem(i).contentEquals(SettingsActivity.selectYearValue)) {
+			if(spinnerArrayAdapter.getItem(i).contentEquals(Settings.selectYearValue)) {
 				this.setSelection(i);
 				break;
 			}
