@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.Kitowski.Settings.Settings" >
+    tools:context="com.Kitowski.timetable.Settings.SettingsActivity" >
 
     <CheckBox
         android:id="@+id/checkbox_displaylegend"
@@ -20,6 +20,7 @@
         android:id="@+id/checkbox_displayyear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/spinner_selectYear"
         android:layout_alignLeft="@+id/spinner_selectYear"
         android:layout_below="@+id/checkbox_displaylegend"
         android:layout_marginTop="44dp"
@@ -30,6 +31,7 @@
         android:id="@+id/spinner_selectYear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/checkbox_displaylegend"
         android:layout_alignLeft="@+id/checkbox_displaylegend"
         android:layout_below="@+id/checkbox_displayyear"
         android:layout_marginTop="22dp" />
@@ -38,6 +40,7 @@
         android:id="@+id/checkbox_selectgroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/spinner_selectYear"
         android:layout_alignLeft="@+id/spinner_selectYear"
         android:layout_below="@+id/spinner_selectYear"
         android:layout_marginTop="44dp"
@@ -48,6 +51,7 @@
         android:id="@+id/spinner_selectgroup_letter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/checkbox_selectgroup"
         android:layout_alignLeft="@+id/checkbox_selectgroup"
         android:layout_below="@+id/checkbox_selectgroup"
         android:layout_marginTop="22dp" />
@@ -56,6 +60,7 @@
         android:id="@+id/spinner_selectgroup_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/spinner_selectgroup_letter"
         android:layout_alignLeft="@+id/spinner_selectgroup_letter"
         android:layout_below="@+id/spinner_selectgroup_letter"
         android:layout_marginTop="22dp" />

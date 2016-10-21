@@ -1,4 +1,4 @@
-package com.Kitowski.Settings;
+package com.Kitowski.timetable.Settings;
 
 import com.Kitowski.timetable.R;
 
@@ -6,15 +6,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 
 public class ToSaveAlert  extends AlertDialog.Builder implements DialogInterface.OnClickListener {
-	private Settings sett;
+	private SettingsActivity sett;
 	
-	public ToSaveAlert(Settings sett) {
+	public ToSaveAlert(SettingsActivity sett) {
 		super(sett);
 		this.sett = sett;
 		
 		this.setMessage(R.string.toSave_message);
-		this.setPositiveButton(R.string.toSave_yes, this);
-		this.setNegativeButton(R.string.toSave_no, this);
+		this.setPositiveButton(R.string.yes, this);
+		this.setNegativeButton(R.string.no, this);
 	}
 
 	@Override

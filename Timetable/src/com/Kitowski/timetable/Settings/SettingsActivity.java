@@ -1,7 +1,9 @@
-package com.Kitowski.Settings;
+package com.Kitowski.timetable.Settings;
 
-import com.Kitowski.Settings.Checkbox.checkboxType;
 import com.Kitowski.timetable.R;
+import com.Kitowski.timetable.Settings.Checkbox.checkboxType;
+import com.Kitowski.timetable.Settings.Settings.Setting;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,10 +17,7 @@ import android.widget.CheckBox;
 import android.widget.Spinner;
 
 @SuppressWarnings("unused")
-public class Settings extends Activity {
-	public static boolean displayLegend, selectYear, selectGroup;
-	public static String selectYearValue, selectGroupValueLetter, selectGroupValueNumber;
-	
+public class SettingsActivity extends Activity {
 	private Checkbox legendCheckbox, yearCheckbox, groupCheckbox;
 	private Spinner yearSpinner, groupSpinnerLetter, groupSpinnerNumber;
 
@@ -36,37 +35,13 @@ public class Settings extends Activity {
 		addSelectGroupNumberSpinner();
 	}
 	
-	public static void loadSettings(Context con) {
-		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(con);
-		
-		displayLegend = pref.getBoolean("Legend", true);
-		selectYear = pref.getBoolean("SelectYear", false);
-		selectYearValue = pref.getString("SelectYearValue", "NULL");
-		selectGroup = pref.getBoolean("SelectGroup", false);
-		selectGroupValueLetter = pref.getString("SelectGroupValueLetter", "NULL");
-		selectGroupValueNumber = pref.getString("SelectGroupValueNumber", "NULL");
-	}
-	
-	public static void saveSettings(Context con) {
-		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(con);
-		SharedPreferences.Editor edit = pref.edit();
-		
-		edit.putBoolean("Legend", displayLegend);
-		edit.putBoolean("SelectGroup", selectYear);
-		edit.putString("SelectYearValue", selectYearValue);
-		edit.putBoolean("SelectGroup", selectGroup);
-		edit.putString("SelectGroupValueLetter", selectGroupValueLetter);
-		edit.putString("SelectGroupValueNumber", selectGroupValueNumber);
-		edit.apply();
-	}
-	
 	@Override
 	public void onBackPressed() { new ToSaveAlert(this).show(); }
 	
 	public void updateSpinnersState() {
-		yearSpinner.setEnabled(selectYear);
-		groupSpinnerLetter.setEnabled(selectGroup);
-		groupSpinnerNumber.setEnabled(selectGroup);
+		yearSpinner.setEnabled(Settings.getBoolean(Setting.SELECT_YEAR));
+		groupSpinnerLetter.setEnabled(Settings.getBoolean(Setting.SELECT_GROUP));
+		groupSpinnerNumber.setEnabled(Settings.getBoolean(Setting.SELECT_GROUP));
 	}
 	
 	private void addSelectYearSpinner() {
@@ -78,14 +53,14 @@ public class Settings extends Activity {
 		yearSpinner.setEnabled(yearCheckbox.isChecked());
 		
 		for(int i = 0; i < spinnerArrayAdapter.getCount(); ++i) {
-			if(spinnerArrayAdapter.getItem(i).contentEquals(selectYearValue)) {
+			if(spinnerArrayAdapter.getItem(i).contentEquals(Settings.getString(Setting.SELECTED_YEAR))) {
 				yearSpinner.setSelection(i);
 				break;
 			}
 		}
 		
 		yearSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { selectYearValue = (String)yearSpinner.getSelectedItem(); }
+			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { Settings.setString(Setting.SELECTED_YEAR, (String)yearSpinner.getSelectedItem()); }
 			@Override public void onNothingSelected(AdapterView<?> parent) { }
 		});
 	}
@@ -99,14 +74,14 @@ public class Settings extends Activity {
 		groupSpinnerLetter.setEnabled(groupCheckbox.isChecked());
 		
 		for(int i = 0; i < spinnerArrayAdapter.getCount(); ++i) {
-			if(spinnerArrayAdapter.getItem(i).contentEquals(selectGroupValueLetter)) {
+			if(spinnerArrayAdapter.getItem(i).contentEquals(Settings.getString(Setting.SELECTED_GROUP_LETT))) {
 				groupSpinnerLetter.setSelection(i);
 				break;
 			}
 		}
 		
 		groupSpinnerLetter.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { selectGroupValueLetter = (String)groupSpinnerLetter.getSelectedItem(); }
+			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { Settings.setString(Setting.SELECTED_GROUP_LETT, (String)groupSpinnerLetter.getSelectedItem()); }
 			@Override public void onNothingSelected(AdapterView<?> parent) { }
 		});
 	}
@@ -120,14 +95,14 @@ public class Settings extends Activity {
 		groupSpinnerNumber.setEnabled(groupCheckbox.isChecked());
 		
 		for(int i = 0; i < spinnerArrayAdapter.getCount(); ++i) {
-			if(spinnerArrayAdapter.getItem(i).contentEquals(selectGroupValueNumber)) {
+			if(spinnerArrayAdapter.getItem(i).contentEquals(Settings.getString(Setting.SELECTED_GROUP_NUM))) {
 				groupSpinnerNumber.setSelection(i);
 				break;
 			}
 		}
 		
 		groupSpinnerNumber.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { selectGroupValueNumber = (String)groupSpinnerNumber.getSelectedItem(); }
+			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { Settings.setString(Setting.SELECTED_GROUP_NUM, (String)groupSpinnerNumber.getSelectedItem()); }
 			@Override public void onNothingSelected(AdapterView<?> parent) { }
 		});
 	}

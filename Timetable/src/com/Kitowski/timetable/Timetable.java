@@ -2,15 +2,16 @@ package com.Kitowski.timetable;
 
 import java.util.ArrayList;
 
-import com.Kitowski.Settings.Settings;
 import com.Kitowski.timetable.Calendar.CalendarHelper;
+import com.Kitowski.timetable.Settings.Settings;
+import com.Kitowski.timetable.Settings.Settings.Setting;
+import com.Kitowski.timetable.Settings.SettingsActivity;
 import com.Kitowski.timetable.date.DateLoader;
 import com.Kitowski.timetable.date.SelectDate;
 import com.Kitowski.timetable.lessons.Lesson;
 import com.Kitowski.timetable.lessons.LessonLegend;
 import com.Kitowski.timetable.studyGroup.SelectGroup;
 import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
-import com.Kitowski.timetable.utilities.EventsExistsAlert;
 
 import android.app.Activity;
 import android.content.Context;
@@ -60,7 +61,7 @@ public class Timetable extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.menu_settings) {
-			Intent intent = new Intent(this, Settings.class);
+			Intent intent = new Intent(this, SettingsActivity.class);
 			intent.putExtra("groups", groups.getGroupsNames());
 			this.startActivityForResult(intent, 1);
 			return true;
@@ -86,7 +87,7 @@ public class Timetable extends Activity {
 			addSelectDate();
 			addSelectGroup();
 			addLessons();
-			if(Settings.displayLegend) addLegend();
+			if(Settings.getBoolean(Setting.DISPLAY_LEGEND)) addLegend();
 		}
 		else {
 			setError(getResources().getString(R.string.error_nointernet));
@@ -98,7 +99,7 @@ public class Timetable extends Activity {
 		layout.removeView(errorText);
 		layout.removeView(refreshButton);
 		layout.removeView(calendarButton);
-		if(Settings.displayLegend) legend.remove(layout);
+		if(Settings.getBoolean(Setting.DISPLAY_LEGEND)) legend.remove(layout);
 		if(!lessonsOnly) {
 			layout.removeView(selectGroup);
 			addSelectGroup();
@@ -108,7 +109,7 @@ public class Timetable extends Activity {
 		if(groups.loaded) {
 			addLessons();
 			addCalendarButton();
-			if(Settings.displayLegend) addLegend();
+			if(Settings.getBoolean(Setting.DISPLAY_LEGEND)) addLegend();
 		}
 	}
 	

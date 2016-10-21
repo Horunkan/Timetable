@@ -3,15 +3,14 @@
 
     <string name="app_name">Timetable</string>
     <string name="title_activity_timetable">Timetable</string>
-    <string name="title_activity_delete_events">DeleteEvents</string>
-    <string name="button_refresh">Odśwież</string>
-    <string name="button_delete">Usuń zaznaczone</string>
-    <string name="error_nointernet">Brak dostępu do internetu</string>
+    <string name="title_activity_delete_events">DeleteEvents</string><string name="title_activity_settings">Settings</string><string name="yes">Tak</string><string name="no">Nie</string><string name="toast_addsuccess">Plan został dodany do kalendarza</string>
+    <string name="toast_addfailed">Wystąpił błąd podczas dodawania planu do kalendarza</string><string name="toast_settingsaved">Ustawienia zostały zapisane</string><string name="button_addtocalendar">Dodaj do kalendarza</string><string name="button_refresh">Odśwież</string>
+    <string name="button_delete">Usuń zaznaczone</string><string name="error_nointernet">Brak dostępu do internetu</string>
+    
     <string name="error_notimetable">Plan na wybrany dzień nie został jeszcze opublikowany</string>
-    <string name="button_addtocalendar">Dodaj do kalendarza</string>
-    <string name="toast_addfailed">Wystąpił błąd podczas dodawania planu do kalendarza</string>
-    <string name="toast_addsuccess">Plan został dodany do kalendarza</string>
-    <string name="toast_addexists">Plan nie został dodany, ponieważ w danym dniu istnieją inne wydarzenia</string>
+    
+    
+    
     <string name="legend_title">Legenda</string>
 
     <string-array name="legend_values">
@@ -43,14 +42,14 @@
     <string name="eventExists_ignore">Ignoruj</string>
     <string name="eventExists_deleteall">Usuń wszystkie</string>
     <string name="eventExists_deleteselect">Usuń wybrane</string>
-    <string name="title_activity_settings">Settings</string>
+    
     <string name="timetable_menu_settings">Ustawienia</string>
     <string name="settings_dislpaylegend">Wyświetlaj legendę</string>
     <string name="settings_selectyear">Tylko wybrany rok</string>
-    <string name="toSave_message">Czy chcesz zapisać zmiany?</string>
-    <string name="toSave_yes">Tak</string>
-    <string name="toSave_no">Nie</string>
-    <string name="toast_settingsaved">Ustawienia zostały zapisane</string>
-    <string name="settings_selectgroup">Tylko wybrana grupa</string>
+    
+    
+    
+    
+    <string name="settings_selectgroup">Tylko wybrana grupa</string><string name="toSave_message">Czy chcesz zapisać zmiany?</string>
 
 </resources>

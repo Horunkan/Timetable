@@ -28,11 +28,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.Kitowski.DeleteEvents.DeleteEvents"
+            android:name="com.Kitowski.timetable.DeleteEvents.DeleteEvents"
             android:label="@string/title_activity_delete_events" >
         </activity>
         <activity
-            android:name="com.Kitowski.Settings.Settings"
+            android:name="com.Kitowski.timetable.Settings.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
     </application>
