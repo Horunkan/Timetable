@@ -12,7 +12,6 @@ import com.Kitowski.timetable.lessons.Lesson;
 import com.Kitowski.timetable.lessons.LessonLegend;
 import com.Kitowski.timetable.studyGroup.SelectGroup;
 import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
-import com.Kitowski.timetable.utilities.EventsExistsAlert;
 
 import android.app.Activity;
 import android.content.Context;
