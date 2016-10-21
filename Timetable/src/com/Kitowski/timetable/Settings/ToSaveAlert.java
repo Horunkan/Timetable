@@ -13,8 +13,8 @@ public class ToSaveAlert  extends AlertDialog.Builder implements DialogInterface
 		this.sett = sett;
 		
 		this.setMessage(R.string.toSave_message);
-		this.setPositiveButton(R.string.toSave_yes, this);
-		this.setNegativeButton(R.string.toSave_no, this);
+		this.setPositiveButton(R.string.yes, this);
+		this.setNegativeButton(R.string.no, this);
 	}
 
 	@Override
