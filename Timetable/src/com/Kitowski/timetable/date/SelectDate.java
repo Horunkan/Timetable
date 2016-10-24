@@ -1,10 +1,12 @@
 package com.Kitowski.timetable.date;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import com.Kitowski.timetable.Timetable;
 import com.Kitowski.timetable.utilities.DateParser;
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,8 +41,9 @@ public class SelectDate extends Spinner implements OnItemSelectedListener {
 
 	@Override public void onNothingSelected(AdapterView<?> parent) { }
 		
+	@SuppressLint("SimpleDateFormat")
 	private void updateCurrentSelection(ArrayList<String> list) {
-		Date currentDate = new Date();
+		Date currentDate = DateParser.parse(new SimpleDateFormat("yyyy-MM-dd").format(new Date()), "00:00");
 		
 		for(int i = 0; i < list.size(); ++i) {
 			Date toCheck = DateParser.parse(list.get(i), "00:00");
