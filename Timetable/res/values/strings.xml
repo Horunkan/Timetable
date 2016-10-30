@@ -20,6 +20,13 @@
         <item>laboratorium</item>
         <item>wykład</item>
     </string-array>
+    <string-array name="studyGroups">
+        <item>Studia I stopnia, 1 rok</item>
+        <item>Studia I stopnia, 2 rok</item>
+        <item>Studia I stopnia, 3 rok</item>
+        <item>Studia II stopnia, 1 rok</item>
+        <item>Studia II stopnia, 2 rok</item>
+    </string-array>
     <string-array name="month">
         <item>styczeń</item>
         <item>luty</item>

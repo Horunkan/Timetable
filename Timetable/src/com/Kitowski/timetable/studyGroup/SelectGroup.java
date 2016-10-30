@@ -3,6 +3,7 @@ package com.Kitowski.timetable.studyGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.Kitowski.timetable.R;
 import com.Kitowski.timetable.Timetable;
 import com.Kitowski.timetable.Settings.Settings;
 import com.Kitowski.timetable.Settings.Settings.Setting;
@@ -18,13 +19,12 @@ public class SelectGroup extends Spinner implements OnItemSelectedListener {
 	private ArrayAdapter<String> spinnerArrayAdapter;
 	private Timetable timetable;
 	
-	public SelectGroup(Timetable timetable, StudyGroupLoader loader) {
+	public SelectGroup(Timetable timetable) {
 		super(timetable);
 		this.timetable = timetable;
 		spinnerArrayAdapter = new ArrayAdapter<String>(timetable, android.R.layout.simple_spinner_item); //selected item will look like a spinner set from XML
 		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		
-		for(StudyGroup gr : loader.getGroups()) spinnerArrayAdapter.add(gr.getName());
+		spinnerArrayAdapter.addAll(timetable.getResources().getStringArray(R.array.studyGroups));
 		
 		this.setAdapter(spinnerArrayAdapter);
 		this.setOnItemSelectedListener(this);

@@ -62,7 +62,6 @@ public class Timetable extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.menu_settings) {
 			Intent intent = new Intent(this, SettingsActivity.class);
-			intent.putExtra("groups", groups.getGroupsNames());
 			this.startActivityForResult(intent, 1);
 			return true;
 		}
@@ -122,7 +121,7 @@ public class Timetable extends Activity {
 	private void addSelectGroup() {
 		groups = new StudyGroupLoader(selectDate.getSelected());	
 		if(groups.loaded) {
-			selectGroup = new SelectGroup(this, groups);
+			selectGroup = new SelectGroup(this);
 			layout.addView(selectGroup);
 		}
 		else {
