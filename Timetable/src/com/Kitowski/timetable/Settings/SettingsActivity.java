@@ -19,6 +19,8 @@ import android.widget.Spinner;
 
 @SuppressWarnings("unused")
 public class SettingsActivity extends Activity {
+	public static final int requestCode = 1;
+	
 	private Checkbox legendCheckbox, groupCheckbox, subgroupCheckbox;
 	private Spinner groupSpinner, subgroupSpinnerLetter, subgroupSpinnerNumber;
 

@@ -35,7 +35,7 @@ public class EventsExistsAlert extends AlertDialog.Builder implements DialogInte
 		else if(which == DialogInterface.BUTTON_POSITIVE) {
 			Intent intent = new Intent(timetable, DeleteEvents.class);
 			intent.putExtra("date", selectDate.getSelected());
-			timetable.startActivityForResult(intent,0);
+			timetable.startActivityForResult(intent,DeleteEvents.requestCode);
 		}
 	}
 }

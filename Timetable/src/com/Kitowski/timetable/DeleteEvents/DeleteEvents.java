@@ -16,6 +16,8 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 public class DeleteEvents extends Activity {
+	public static final int requestCode = 0;
+	
 	private LinearLayout layout;
 	private CheckBox selectAllCheckbox;
 	private ArrayList<String> eventsNames;

@@ -3,6 +3,7 @@ package com.Kitowski.timetable;
 import java.util.ArrayList;
 
 import com.Kitowski.timetable.Calendar.CalendarHelper;
+import com.Kitowski.timetable.DeleteEvents.DeleteEvents;
 import com.Kitowski.timetable.Settings.Settings;
 import com.Kitowski.timetable.Settings.Settings.Setting;
 import com.Kitowski.timetable.Settings.SettingsActivity;
@@ -62,7 +63,7 @@ public class Timetable extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.menu_settings) {
 			Intent intent = new Intent(this, SettingsActivity.class);
-			this.startActivityForResult(intent, 1);
+			this.startActivityForResult(intent, SettingsActivity.requestCode);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -72,8 +73,8 @@ public class Timetable extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		
-		if(requestCode == 0 && resultCode == 1) addEvents(); //Finished DeleteEvents activity
-		else if(requestCode == 1 && resultCode == 1) { //Save settings
+		if(requestCode == DeleteEvents.requestCode && resultCode == 1) addEvents();
+		else if(requestCode == SettingsActivity.requestCode && resultCode == 1) {
 			Toast.makeText(this, R.string.toast_settingsaved, Toast.LENGTH_SHORT).show();
 			Settings.saveSettings(this);
 			layout.removeAllViews();
