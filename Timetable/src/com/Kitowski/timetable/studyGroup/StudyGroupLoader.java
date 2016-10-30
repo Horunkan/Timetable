@@ -64,12 +64,12 @@ public class StudyGroupLoader {
 				if(buffer != null) groups.add(buffer);
 				buffer = new StudyGroup(str);
 			}
-			else if(Settings.getBoolean(Setting.SELECT_GROUP) && str.contains("gr.")) {
-				char groupLetter = Settings.getGroup(Setting.SELECTED_GROUP_LETT);
-				char groupNumber = Settings.getGroup(Setting.SELECTED_GROUP_NUM);
+			else if(Settings.getBoolean(Setting.SELECT_SUBGROUP) && str.contains("gr.")) {
+				char groupLetter = (char)('A' +  Settings.getInt(Setting.SELECTED_GROUP_LETT));
+				char groupNumber = (char)('1' + Settings.getInt(Setting.SELECTED_GROUP_NUM));
 				
-				if(str.contains(" " + groupLetter + ",") || str.contains(" i " + groupLetter)) buffer.addLesson(str);
-				else if(str.contains(" " + groupNumber + ",") || str.contains(" i " + groupNumber)) buffer.addLesson(str);
+				if(str.contains(" " + groupLetter + ",") || str.contains(" i " + groupLetter) || str.contains(groupLetter + " i ")) buffer.addLesson(str);
+				else if(str.contains(" " + groupNumber + ",") || str.contains(" i " + groupNumber) || str.contains(groupNumber + " i ")) buffer.addLesson(str);
 			}
 			else buffer.addLesson(str);
 		}

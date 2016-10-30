@@ -33,7 +33,7 @@ public class SelectGroup extends Spinner implements OnItemSelectedListener {
 		spinnerArrayAdapter.addAll(timetable.getResources().getStringArray(R.array.studyGroups));
 		this.setAdapter(spinnerArrayAdapter);
 		
-		if(Settings.getBoolean(Setting.SELECT_YEAR)) updateCurrentSelection();
+		if(Settings.getBoolean(Setting.SELECT_GROUP)) this.setSelection(Settings.getInt(Setting.SELECTED_GROUP));
 	}
 	
 	public int getSelectedGroup() { return (int) this.getSelectedItemId(); }
@@ -45,13 +45,4 @@ public class SelectGroup extends Spinner implements OnItemSelectedListener {
 	}
 
 	@Override public void onNothingSelected(AdapterView<?> parent) { }
-	
-	private void updateCurrentSelection() {
-		for(int i = 0; i < spinnerArrayAdapter.getCount(); ++i) {
-			if(spinnerArrayAdapter.getItem(i).contentEquals(Settings.getString(Setting.SELECTED_YEAR))) {
-				this.setSelection(i);
-				break;
-			}
-		}
-	}
 }

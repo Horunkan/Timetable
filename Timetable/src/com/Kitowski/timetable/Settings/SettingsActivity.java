@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -24,6 +25,7 @@ public class SettingsActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_settings);
 		
 		legendCheckbox = new Checkbox(this, checkboxType.LEGEND, (CheckBox)findViewById(R.id.checkbox_displaylegend));
@@ -39,9 +41,9 @@ public class SettingsActivity extends Activity {
 	public void onBackPressed() { new ToSaveAlert(this).show(); }
 	
 	public void updateSpinnersState() {
-		groupSpinner.setEnabled(Settings.getBoolean(Setting.SELECT_YEAR));
-		subgroupSpinnerLetter.setEnabled(Settings.getBoolean(Setting.SELECT_GROUP));
-		subgroupSpinnerNumber.setEnabled(Settings.getBoolean(Setting.SELECT_GROUP));
+		groupSpinner.setEnabled(Settings.getBoolean(Setting.SELECT_GROUP));
+		subgroupSpinnerLetter.setEnabled(Settings.getBoolean(Setting.SELECT_SUBGROUP));
+		subgroupSpinnerNumber.setEnabled(Settings.getBoolean(Setting.SELECT_SUBGROUP));
 	}
 	
 	private void addGroupYearSpinner() {
@@ -51,16 +53,10 @@ public class SettingsActivity extends Activity {
 		spinnerArrayAdapter.addAll(getResources().getStringArray(R.array.studyGroups));
 		groupSpinner.setAdapter(spinnerArrayAdapter);
 		groupSpinner.setEnabled(groupCheckbox.isChecked());
-		
-		for(int i = 0; i < spinnerArrayAdapter.getCount(); ++i) {
-			if(spinnerArrayAdapter.getItem(i).contentEquals(Settings.getString(Setting.SELECTED_YEAR))) {
-				groupSpinner.setSelection(i);
-				break;
-			}
-		}
+		groupSpinner.setSelection(Settings.getInt(Setting.SELECTED_GROUP));
 		
 		groupSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { Settings.setString(Setting.SELECTED_YEAR, (String)groupSpinner.getSelectedItem()); }
+			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { Settings.setInt(Setting.SELECTED_GROUP, groupSpinner.getSelectedItemPosition()); }
 			@Override public void onNothingSelected(AdapterView<?> parent) { }
 		});
 	}
@@ -72,16 +68,10 @@ public class SettingsActivity extends Activity {
 		spinnerArrayAdapter.addAll(new String[] {"Grupa A", "Grupa B", "Grupa C"});
 		subgroupSpinnerLetter.setAdapter(spinnerArrayAdapter);
 		subgroupSpinnerLetter.setEnabled(subgroupCheckbox.isChecked());
-		
-		for(int i = 0; i < spinnerArrayAdapter.getCount(); ++i) {
-			if(spinnerArrayAdapter.getItem(i).contentEquals(Settings.getString(Setting.SELECTED_GROUP_LETT))) {
-				subgroupSpinnerLetter.setSelection(i);
-				break;
-			}
-		}
-		
+		subgroupSpinnerLetter.setSelection(Settings.getInt(Setting.SELECTED_GROUP_LETT));
+
 		subgroupSpinnerLetter.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { Settings.setString(Setting.SELECTED_GROUP_LETT, (String)subgroupSpinnerLetter.getSelectedItem()); }
+			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { Settings.setInt(Setting.SELECTED_GROUP_LETT, subgroupSpinnerLetter.getSelectedItemPosition()); }
 			@Override public void onNothingSelected(AdapterView<?> parent) { }
 		});
 	}
@@ -93,16 +83,10 @@ public class SettingsActivity extends Activity {
 		spinnerArrayAdapter.addAll(new String[] {"Grupa 1", "Grupa 2", "Grupa 3", "Grupa 4"});
 		subgroupSpinnerNumber.setAdapter(spinnerArrayAdapter);
 		subgroupSpinnerNumber.setEnabled(subgroupCheckbox.isChecked());
-		
-		for(int i = 0; i < spinnerArrayAdapter.getCount(); ++i) {
-			if(spinnerArrayAdapter.getItem(i).contentEquals(Settings.getString(Setting.SELECTED_GROUP_NUM))) {
-				subgroupSpinnerNumber.setSelection(i);
-				break;
-			}
-		}
-		
+		subgroupSpinnerNumber.setSelection(Settings.getInt(Setting.SELECTED_GROUP_NUM));
+
 		subgroupSpinnerNumber.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { Settings.setString(Setting.SELECTED_GROUP_NUM, (String)subgroupSpinnerNumber.getSelectedItem()); }
+			@Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { Settings.setInt(Setting.SELECTED_GROUP_NUM, subgroupSpinnerNumber.getSelectedItemPosition()); }
 			@Override public void onNothingSelected(AdapterView<?> parent) { }
 		});
 	}
