@@ -6,11 +6,27 @@
     tools:context="${relativePackage}.${activityClass}" >
     
     <LinearLayout 
-	    android:id="@+id/mainLayout"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical">
-		
+
+        <com.Kitowski.timetable.date.SelectDate
+            android:id="@+id/selectDateSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        
+        <com.Kitowski.timetable.studyGroup.SelectGroup
+            android:id="@+id/selectGroupSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/mainLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </LinearLayout>
+       		
 	</LinearLayout>
 
 </ScrollView>

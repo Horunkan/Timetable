@@ -7,6 +7,8 @@ import java.util.Date;
 import com.Kitowski.timetable.Timetable;
 import com.Kitowski.timetable.utilities.DateParser;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,13 +22,16 @@ public class SelectDate extends Spinner implements OnItemSelectedListener {
 	private ArrayAdapter<String> spinnerArrayAdapter;
 	private Timetable timetable;
 	
-	public SelectDate(Timetable timetable, DateLoader date) {
-		super(timetable);
+	public SelectDate(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		this.setOnItemSelectedListener(this);
+	}
+	
+	public void update(Timetable timetable, DateLoader date) {
 		this.timetable = timetable;
-		spinnerArrayAdapter = new ArrayAdapter<String>(timetable, android.R.layout.simple_spinner_item, date.getList()); //selected item will look like a spinner set from XML
+		spinnerArrayAdapter = new ArrayAdapter<String>(timetable, android.R.layout.simple_spinner_item, date.getList());
 		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		this.setAdapter(spinnerArrayAdapter);
-		this.setOnItemSelectedListener(this);
 		
 		updateCurrentSelection(date.getList());
 	}
@@ -36,7 +41,7 @@ public class SelectDate extends Spinner implements OnItemSelectedListener {
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		Log.i(logcatTAG, getSelected());
-		timetable.refresh(false);
+		timetable.refresh();
 	}
 
 	@Override public void onNothingSelected(AdapterView<?> parent) { }

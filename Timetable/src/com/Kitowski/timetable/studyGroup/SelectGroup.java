@@ -8,6 +8,8 @@ import com.Kitowski.timetable.Timetable;
 import com.Kitowski.timetable.Settings.Settings;
 import com.Kitowski.timetable.Settings.Settings.Setting;
 
+import android.content.Context;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,15 +21,17 @@ public class SelectGroup extends Spinner implements OnItemSelectedListener {
 	private ArrayAdapter<String> spinnerArrayAdapter;
 	private Timetable timetable;
 	
-	public SelectGroup(Timetable timetable) {
-		super(timetable);
-		this.timetable = timetable;
-		spinnerArrayAdapter = new ArrayAdapter<String>(timetable, android.R.layout.simple_spinner_item); //selected item will look like a spinner set from XML
+	public SelectGroup(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		this.setOnItemSelectedListener(this);
+	}
+	
+	public void update(Timetable timetable) {
+		this.timetable = timetable; 
+		spinnerArrayAdapter = new ArrayAdapter<String>(timetable, android.R.layout.simple_spinner_item);
 		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerArrayAdapter.addAll(timetable.getResources().getStringArray(R.array.studyGroups));
-		
 		this.setAdapter(spinnerArrayAdapter);
-		this.setOnItemSelectedListener(this);
 		
 		if(Settings.getBoolean(Setting.SELECT_YEAR)) updateCurrentSelection();
 	}
@@ -37,7 +41,7 @@ public class SelectGroup extends Spinner implements OnItemSelectedListener {
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		Log.i(logcatTAG, (String)this.getSelectedItem());
-		timetable.refresh(true);
+		timetable.refresh();
 	}
 
 	@Override public void onNothingSelected(AdapterView<?> parent) { }

@@ -94,40 +94,38 @@ public class Timetable extends Activity {
 		}
 	}
 	
-	public void refresh(boolean lessonsOnly) {
+	public void removeFromLayout() {
 		layout.removeView(errorText);
 		layout.removeView(refreshButton);
 		layout.removeView(calendarButton);
 		if(Settings.getBoolean(Setting.DISPLAY_LEGEND)) legend.remove(layout);
-		if(!lessonsOnly) {
-			layout.removeView(selectGroup);
-			addSelectGroup();
-		}
-		
+	}
+	
+	public void refresh() {
+		removeFromLayout();
+		groups = new StudyGroupLoader(selectDate.getSelected());
 		for(TextView txt : lessons) layout.removeView(txt);
 		if(groups.loaded) {
 			addLessons();
 			addCalendarButton();
 			if(Settings.getBoolean(Setting.DISPLAY_LEGEND)) addLegend();
 		}
-	}
-	
-	private void addSelectDate() {
-		DateLoader date = new DateLoader(this);
-		selectDate = new SelectDate(this, date);
-		layout.addView(selectDate);	
-	}
-	
-	private void addSelectGroup() {
-		groups = new StudyGroupLoader(selectDate.getSelected());	
-		if(groups.loaded) {
-			selectGroup = new SelectGroup(this);
-			layout.addView(selectGroup);
-		}
 		else {
 			if(!isOnline()) setError(getResources().getString(R.string.error_nointernet));
 			else setError(getResources().getString(R.string.error_notimetable));
 		}
+	}
+	
+	private void addSelectDate() {
+		DateLoader date = new DateLoader(this);
+		selectDate = (SelectDate)findViewById(R.id.selectDateSpinner);
+		selectDate.update(this, date);
+	}
+	
+	private void addSelectGroup() {
+		groups = new StudyGroupLoader(selectDate.getSelected());
+		selectGroup = (SelectGroup)findViewById(R.id.selectGroupSpinner);
+		selectGroup.update(this);
 	}
 	
 	private void addLessons() {
