@@ -38,6 +38,4 @@ public class Checkbox extends CheckBox implements OnClickListener {
 		else if(type == checkboxType.SELECT_GROUP) this.setChecked(Settings.getBoolean(Setting.SELECT_GROUP));
 		else if(type == checkboxType.SELECT_SUBGROUP) this.setChecked(Settings.getBoolean(Setting.SELECT_SUBGROUP));
 	}
-	
-	//public boolean isChecked() { return box.isChecked(); }
 }
