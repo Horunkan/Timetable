@@ -28,9 +28,14 @@ public class SettingsActivity extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_settings);
 		
-		legendCheckbox = new Checkbox(this, checkboxType.LEGEND, (CheckBox)findViewById(R.id.checkbox_displaylegend));
-		groupCheckbox = new Checkbox(this, checkboxType.SELECT_YEAR, (CheckBox)findViewById(R.id.checkbox_displayyear));
-		subgroupCheckbox = new Checkbox(this, checkboxType.SELECT_GROUP, (CheckBox)findViewById(R.id.checkbox_selectgroup));
+		legendCheckbox = (Checkbox)findViewById(R.id.checkbox_displaylegend);
+		groupCheckbox = (Checkbox)findViewById(R.id.checkbox_selectGroup);
+		subgroupCheckbox = (Checkbox)findViewById(R.id.checkbox_selectSubgroup);
+		
+		legendCheckbox.update(this, checkboxType.LEGEND);
+		groupCheckbox.update(this, checkboxType.SELECT_GROUP);
+		subgroupCheckbox.update(this, checkboxType.SELECT_SUBGROUP);
+		
 		
 		addGroupYearSpinner();
 		addSelectGroupLetterSpinner();
@@ -47,7 +52,7 @@ public class SettingsActivity extends Activity {
 	}
 	
 	private void addGroupYearSpinner() {
-		groupSpinner = (Spinner)findViewById(R.id.spinner_selectYear);
+		groupSpinner = (Spinner)findViewById(R.id.spinner_selectGroup);
 		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
 		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerArrayAdapter.addAll(getResources().getStringArray(R.array.studyGroups));
@@ -62,7 +67,7 @@ public class SettingsActivity extends Activity {
 	}
 	
 	private void addSelectGroupLetterSpinner() {
-		subgroupSpinnerLetter = (Spinner)findViewById(R.id.spinner_selectgroup_letter);
+		subgroupSpinnerLetter = (Spinner)findViewById(R.id.spinner_selectSubgroup_letter);
 		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
 		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerArrayAdapter.addAll(new String[] {"Grupa A", "Grupa B", "Grupa C"});
@@ -77,7 +82,7 @@ public class SettingsActivity extends Activity {
 	}
 	
 	private void addSelectGroupNumberSpinner() {
-		subgroupSpinnerNumber = (Spinner)findViewById(R.id.spinner_selectgroup_number);
+		subgroupSpinnerNumber = (Spinner)findViewById(R.id.spinner_selectSubgroup_number);
 		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
 		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerArrayAdapter.addAll(new String[] {"Grupa 1", "Grupa 2", "Grupa 3", "Grupa 4"});
