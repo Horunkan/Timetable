@@ -24,16 +24,16 @@ public class DateLoader {
 		if(loadFromHttp(http)) convertDate();
 	}
 	
-	@SuppressWarnings("finally")
 	private boolean loadFromHttp(HttpReader http) {
-		try { toConvert = http.get(); }
+		try { 
+			toConvert = http.get();
+			
+			if(toConvert.size() == 0) return false;
+			else return true;
+		}
 		catch(Exception e) {
 			Log.e(logcatTAG, "Failed to load");
 			return false;
-		}
-		finally {
-			if(toConvert.size() == 0) return false;
-			else return true;
 		}
 	}
 	
