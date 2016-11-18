@@ -10,6 +10,7 @@ import android.util.Log;
 
 public class DateLoader {
 	private final static String logcatTAG = "Date loader";
+	private final static String dateStringFormat = "%1$s-%2$02d-%3$02d";
 
 	private ArrayList<String> toConvert;
 	private ArrayList<String> dateList;
@@ -40,20 +41,17 @@ public class DateLoader {
 	public ArrayList<String> getList() { return dateList; }
 	
 	private void convertDate() {
-		String buffer = "";
+		String year = "", month = "";
 		
 		for(String str : toConvert) {
 			if(!str.contains("/")) {
-				if(buffer != "") buffer = "";
-				String st[] = str.split(" ");
-				buffer = st[1] + "-" + Integer.toString(getMonth(st[0]));
+				year = str.split(" ")[1];
+				month = str.split(" ")[0];
 			}
 			else {
-				String st[] = str.split("/");
-				if(st[0].length() < 2) st[0] = "0" + st[0];
-				if(st[1].length() < 2) st[1] = "0" + st[1];
-				dateList.add(buffer + "-" + st[0]);
-				dateList.add(buffer + "-" + st[1]);
+				String day[] = str.split("/");
+				dateList.add(String.format(dateStringFormat, year, getMonth(month), Integer.parseInt(day[0])));
+				dateList.add(String.format(dateStringFormat, year, getMonth(month), Integer.parseInt(day[1])));
 			}
 		}
 	}
