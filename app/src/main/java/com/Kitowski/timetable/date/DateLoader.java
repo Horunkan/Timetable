@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DateLoader {
+    private final static String[] dateSources = {"https://inf.ug.edu.pl/terminy-zjazdow-semestr-zimowy-201617", "https://inf.ug.edu.pl/terminy-zjazdow-sem-letni-2016-17"};
 	private final static String logcatTAG = "Date loader";
 	private final static String dateStringFormat = "%1$s-%2$02d-%3$02d";
 
@@ -19,18 +20,20 @@ public class DateLoader {
 	private final String monthList[];
 	
 	public DateLoader(Timetable timetable) {
-		HttpReader http = (HttpReader) new HttpReader().execute("https://inf.ug.edu.pl/terminy-zjazdow-semestr-zimowy-201617", "table");
 		toConvert = new ArrayList<String>();
 		dateList = new ArrayList<String>();
 		monthList = timetable.getResources().getStringArray(R.array.month);
 		
-		if(loadFromHttp(http)) convertDate();
+		if(loadFromHttp()) convertDate();
 	}
 	
-	private boolean loadFromHttp(HttpReader http) {
-		try { 
-			toConvert = http.get();
-			
+	private boolean loadFromHttp() {
+		try {
+            for(String date : dateSources) {
+                HttpReader http = (HttpReader) new HttpReader().execute(date, "table");
+                toConvert.addAll(http.get());
+            }
+
 			if(toConvert.size() == 0) return false;
 			else return true;
 		}
