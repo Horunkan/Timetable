@@ -1,19 +1,5 @@
 package com.Kitowski.timetable;
 
-import java.util.ArrayList;
-
-import com.Kitowski.timetable.Calendar.CalendarHelper;
-import com.Kitowski.timetable.DeleteEvents.DeleteEvents;
-import com.Kitowski.timetable.Settings.Settings;
-import com.Kitowski.timetable.Settings.Settings.Setting;
-import com.Kitowski.timetable.Settings.SettingsActivity;
-import com.Kitowski.timetable.date.DateLoader;
-import com.Kitowski.timetable.date.SelectDate;
-import com.Kitowski.timetable.lessons.Lesson;
-import com.Kitowski.timetable.lessons.LessonLegend;
-import com.Kitowski.timetable.studyGroup.SelectGroup;
-import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +16,20 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.Kitowski.timetable.Calendar.CalendarHelper;
+import com.Kitowski.timetable.DeleteEvents.DeleteEvents;
+import com.Kitowski.timetable.Settings.Settings;
+import com.Kitowski.timetable.Settings.Settings.Setting;
+import com.Kitowski.timetable.Settings.SettingsActivity;
+import com.Kitowski.timetable.date.DateLoader;
+import com.Kitowski.timetable.date.SelectDate;
+import com.Kitowski.timetable.lessons.Lesson;
+import com.Kitowski.timetable.lessons.LessonLegend;
+import com.Kitowski.timetable.studyGroup.SelectGroup;
+import com.Kitowski.timetable.studyGroup.StudyGroupLoader;
+
+import java.util.ArrayList;
 
 public class Timetable extends Activity {
 	private LinearLayout layout;
@@ -51,6 +51,8 @@ public class Timetable extends Activity {
 		Settings.loadSettings(this);
 		LessonLegend.updateLessonType(this);
 		loadTimetable();
+
+		new SelectCalendarAlert(this, CalendarHelper.getAvailableCalendars(this)).show();
 	}
 	
 	@Override
@@ -160,12 +162,12 @@ public class Timetable extends Activity {
 		Toast toastBad = Toast.makeText(this, R.string.toast_addfailed, Toast.LENGTH_SHORT);
 		Toast toastGood = Toast.makeText(this, R.string.toast_addsuccess, Toast.LENGTH_SHORT);
 		
-		if(!CalendarHelper.addToCalendar(this, selectDate.getSelected(), lessons.get(0), true)) {
+		if(!CalendarHelper.addToCalendar(this, selectDate.getSelected(), lessons.get(0), true, SelectCalendarAlert.selectedCalendar)) {
 			toastBad.show();
 			return;
 		}
 		for(int i = 1; i < lessons.size(); ++i) {
-			if(!CalendarHelper.addToCalendar(this, selectDate.getSelected(), lessons.get(i), false)) {
+			if(!CalendarHelper.addToCalendar(this, selectDate.getSelected(), lessons.get(i), false, SelectCalendarAlert.selectedCalendar)) {
 				toastBad.show();
 				return;
 			}

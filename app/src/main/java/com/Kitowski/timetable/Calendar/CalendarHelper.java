@@ -7,10 +7,12 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.provider.CalendarContract.Reminders;
 import android.util.Log;
 
+import com.Kitowski.timetable.Timetable;
 import com.Kitowski.timetable.lessons.Lesson;
 import com.Kitowski.timetable.utilities.DateParser;
 
@@ -22,7 +24,7 @@ import java.util.TimeZone;
 public class CalendarHelper {
 	private static String logcatTAG = "CalendarLoader";
 
-	public static boolean addToCalendar(Activity act, String date, Lesson lesson, boolean withAlarm) {
+	public static boolean addToCalendar(Activity act, String date, Lesson lesson, boolean withAlarm, int calendarID) {
 		try {
 			Calendar beginTime = getCalendar(date, lesson.getStartTime());
 			Calendar endTime = getCalendar(date, lesson.getEndTime());
@@ -33,7 +35,7 @@ public class CalendarHelper {
 			event.put(Events.DTEND, endTime.getTimeInMillis());
 			event.put(Events.TITLE, lesson.getTitle());
 			event.put(Events.DESCRIPTION, lesson.getDescription());
-			event.put(Events.CALENDAR_ID, 3);
+			event.put(Events.CALENDAR_ID, calendarID);
 			event.put(Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
 			event.put(Events.HAS_ALARM, withAlarm);
 			Uri uri = content.insert(Events.CONTENT_URI, event);
@@ -112,21 +114,13 @@ public class CalendarHelper {
 		return cal;
 	}
 
-	//TODO Create alert/settings for calendar ID select
-	/*private static void getAvailableCalendars() {
+	public static Cursor getAvailableCalendars(Timetable timetable) {
 		Uri CALENDAR_URI = Uri.parse("content://com.android.calendar/calendars");
 		String[] fields = {CalendarContract.Calendars._ID, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME};
 
-		ContentResolver cnt = activity.getContentResolver();
+		ContentResolver cnt = timetable.getContentResolver();
 		Cursor crs = cnt.query(CALENDAR_URI, fields, null, null, null);
 
-		if(crs.getCount() > 0) {
-			while(crs.moveToNext()) {
-				Log.i(logcatTAG, crs.getString(0) + ", " + crs.getString(1));
-			}
-		}
-		else Log.i(logcatTAG, "CALENDARS NOT FOUND");
-
-		crs.close();
-	}*/
+		return crs;
+	}
 }
