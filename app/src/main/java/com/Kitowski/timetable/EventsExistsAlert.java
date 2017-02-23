@@ -1,12 +1,11 @@
 package com.Kitowski.timetable;
 
-import com.Kitowski.timetable.R;
-import com.Kitowski.timetable.DeleteEvents.DeleteEvents;
-import com.Kitowski.timetable.date.SelectDate;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+
+import com.Kitowski.timetable.DeleteEvents.DeleteEvents;
+import com.Kitowski.timetable.date.SelectDate;
 
 public class EventsExistsAlert extends AlertDialog.Builder implements DialogInterface.OnClickListener {
 	private final Timetable timetable;
@@ -25,17 +24,14 @@ public class EventsExistsAlert extends AlertDialog.Builder implements DialogInte
 	
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
-		if(which == DialogInterface.BUTTON_NEGATIVE) {
-			timetable.deleteAllEvents();
-			timetable.addEvents();
-		}
-		else if(which == DialogInterface.BUTTON_NEUTRAL) {
-			timetable.addEvents();
-		}
-		else if(which == DialogInterface.BUTTON_POSITIVE) {
+		if(which == DialogInterface.BUTTON_POSITIVE) {
 			Intent intent = new Intent(timetable, DeleteEvents.class);
 			intent.putExtra("date", selectDate.getSelected());
 			timetable.startActivityForResult(intent,DeleteEvents.requestCode);
+		}
+		else {
+			if(which == DialogInterface.BUTTON_NEGATIVE) timetable.deleteAllEvents();
+			timetable.addEvents();
 		}
 	}
 }
