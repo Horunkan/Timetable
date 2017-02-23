@@ -1,14 +1,6 @@
 package com.Kitowski.timetable.Calendar;
 
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
-
-import com.Kitowski.timetable.lessons.Lesson;
-import com.Kitowski.timetable.utilities.DateParser;
-
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -17,8 +9,19 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract.Events;
 import android.provider.CalendarContract.Reminders;
+import android.util.Log;
+
+import com.Kitowski.timetable.lessons.Lesson;
+import com.Kitowski.timetable.utilities.DateParser;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class CalendarHelper {
+	private static String logcatTAG = "CalendarLoader";
+
 	public static boolean addToCalendar(Activity act, String date, Lesson lesson, boolean withAlarm) {
 		try {
 			Calendar beginTime = getCalendar(date, lesson.getStartTime());
@@ -30,7 +33,7 @@ public class CalendarHelper {
 			event.put(Events.DTEND, endTime.getTimeInMillis());
 			event.put(Events.TITLE, lesson.getTitle());
 			event.put(Events.DESCRIPTION, lesson.getDescription());
-			event.put(Events.CALENDAR_ID, 1);
+			event.put(Events.CALENDAR_ID, 3);
 			event.put(Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
 			event.put(Events.HAS_ALARM, withAlarm);
 			Uri uri = content.insert(Events.CONTENT_URI, event);
@@ -41,6 +44,7 @@ public class CalendarHelper {
 			}
 			return true;
 		} catch (Exception e) {
+			Log.e(logcatTAG, e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
