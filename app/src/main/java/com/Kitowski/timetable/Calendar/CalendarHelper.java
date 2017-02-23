@@ -111,4 +111,22 @@ public class CalendarHelper {
 		cal.setTime(dat);
 		return cal;
 	}
+
+	//TODO Create alert/settings for calendar ID select
+	/*private static void getAvailableCalendars() {
+		Uri CALENDAR_URI = Uri.parse("content://com.android.calendar/calendars");
+		String[] fields = {CalendarContract.Calendars._ID, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME};
+
+		ContentResolver cnt = activity.getContentResolver();
+		Cursor crs = cnt.query(CALENDAR_URI, fields, null, null, null);
+
+		if(crs.getCount() > 0) {
+			while(crs.moveToNext()) {
+				Log.i(logcatTAG, crs.getString(0) + ", " + crs.getString(1));
+			}
+		}
+		else Log.i(logcatTAG, "CALENDARS NOT FOUND");
+
+		crs.close();
+	}*/
 }
