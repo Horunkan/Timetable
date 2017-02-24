@@ -18,7 +18,7 @@ public class HttpLoader extends AsyncTask<String, Void, ArrayList<String>> {
 
     @Override
     protected ArrayList<String> doInBackground(String... http) {
-        content = new ArrayList<String>();
+        content = new ArrayList<>();
 
         for(String source : http) content.addAll(loadWebsite(source));
 
@@ -29,7 +29,7 @@ public class HttpLoader extends AsyncTask<String, Void, ArrayList<String>> {
     private ArrayList<String> loadWebsite(String source) {
         Log.i(logcat, String.format("Started load from: %s", source));
 
-        ArrayList<String> buffer = new ArrayList<String>();
+        ArrayList<String> buffer = new ArrayList<>();
         URL url;
         InputStream input;
         BufferedReader reader;
@@ -52,7 +52,7 @@ public class HttpLoader extends AsyncTask<String, Void, ArrayList<String>> {
             Log.e(logcat, e.getMessage());
         }
 
-        Log.i(logcat, String.format("Finished load from: %s\n\tTotal lines: %d", source, buffer.size()));
+        Log.i(logcat, String.format("Finished load from: %s\nTotal lines: %d", source, buffer.size()));
         return buffer;
     }
 }
