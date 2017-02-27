@@ -17,8 +17,7 @@ public class MeetingsDates {
     private final String dateFormat = "%s-%02d-%02d";
     private final String monthYearRegex = "^[A-Za-ż]+ [0-9]{4}$";
     private final String dayRegex = "^[0-9]+/*[0-9]*$";
-
-    final String[] months = {"styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec", "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień"};
+    private final String[] months;
 
     private final String[] meetingTable;
     private ArrayList<String> dates;
@@ -27,6 +26,7 @@ public class MeetingsDates {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(con);
         meetingTable = new String[2];
         dates = new ArrayList<>();
+        months = con.getResources().getStringArray(R.array.months);
 
         meetingTable[0] = pref.getString("MeetingTableWinter", "https://inf.ug.edu.pl/terminy-zjazdow-semestr-zimowy-201617.print");
         meetingTable[1] = pref.getString("MeetingTableSummer", "https://inf.ug.edu.pl/terminy-zjazdow-sem-letni-2016-17.print");
