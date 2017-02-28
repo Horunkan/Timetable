@@ -12,6 +12,7 @@ public class DateParser {
     public static Date parse(String date, String time) {
         try {
             Date buffer = dateFormat.parse(date + " " + time);
+            Log.i(logcat, String.format("Parsed date: %s", dateFormat.format(buffer)));
             return buffer;
         }
         catch (Exception e) {
