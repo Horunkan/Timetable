@@ -40,7 +40,6 @@ public class DateSpinner implements AdapterView.OnItemSelectedListener {
     private void updateSelection(ArrayList<String> dates) {
         Date currentDate = DateParser.parse(new Date(), "00:00");
 
-
         for(int i = 0; i < dates.size(); ++i) {
             Date buffer = DateParser.parse(dates.get(i), "00:00");
 

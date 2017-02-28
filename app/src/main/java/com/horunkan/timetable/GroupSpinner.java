@@ -6,12 +6,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-public class Group implements AdapterView.OnItemSelectedListener {
-    private static final String logcat = "Group";
+public class GroupSpinner implements AdapterView.OnItemSelectedListener {
+    private static final String logcat = "GroupSpinner";
 
     private Spinner spinner;
 
-    public Group(Timetable activity) {
+    public GroupSpinner(Timetable activity) {
         spinner = (Spinner) activity.findViewById(R.id.Group);
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, activity.getResources().getStringArray(R.array.groups));
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

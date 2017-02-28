@@ -15,7 +15,7 @@ public class Timetable extends AppCompatActivity {
         setContentView(R.layout.activity_timetable);
 
         refreshButton = new RefreshButton(this);
-        new Group(this);
+        new GroupSpinner(this);
 
         refresh();
     }
