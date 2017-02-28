@@ -10,6 +10,8 @@ public class Timetable extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
 
+        new Group(this);
+
         new MeetingsDates(this);
     }
 }
