@@ -34,6 +34,8 @@ public class MeetingsDates {
         loadDates();
     }
 
+    public ArrayList<String> get() { return dates; }
+
     private void loadDates() {
         HttpLoader http = (HttpLoader) new HttpLoader().execute(meetingTable[0], meetingTable[1]);
 

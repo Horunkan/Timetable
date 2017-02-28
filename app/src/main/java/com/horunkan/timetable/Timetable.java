@@ -22,7 +22,8 @@ public class Timetable extends AppCompatActivity {
 
     public void refresh() {
         if(isConnectedToInternet()) {
-            new MeetingsDates(this);
+            MeetingsDates meetingsDates = new MeetingsDates(this);
+            new DateSpinner(this, meetingsDates.get());
         }
         else refreshButton.display();
     }

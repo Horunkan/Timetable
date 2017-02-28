@@ -3,6 +3,7 @@ package com.horunkan.timetable;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class RefreshButton implements View.OnClickListener {
@@ -11,10 +12,12 @@ public class RefreshButton implements View.OnClickListener {
     private Timetable timetable;
     private FloatingActionButton button;
     private TextView errorText;
+    private Spinner dateSpinner;
 
     public RefreshButton(Timetable activity) {
         timetable = activity;
         button = (FloatingActionButton) activity.findViewById(R.id.RefreshButton);
+        dateSpinner = (Spinner) activity.findViewById(R.id.Date);
         errorText = (TextView) activity.findViewById(R.id.ErrorText);
         button.setOnClickListener(this);
     }
@@ -23,6 +26,7 @@ public class RefreshButton implements View.OnClickListener {
         Log.i(logcat, "Button displayed");
         errorText.setText(timetable.getString(R.string.error_noInternet));
         errorText.setVisibility(View.VISIBLE);
+        dateSpinner.setVisibility(View.INVISIBLE);
         button.show();
     }
 

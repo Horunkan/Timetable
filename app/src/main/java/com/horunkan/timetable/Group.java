@@ -14,8 +14,8 @@ public class Group implements AdapterView.OnItemSelectedListener {
     public Group(Timetable activity) {
         spinner = (Spinner) activity.findViewById(R.id.Group);
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, activity.getResources().getStringArray(R.array.groups));
-
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         spinner.setAdapter(spinnerArrayAdapter);
         spinner.setOnItemSelectedListener(this);
         spinner.setSelection(0);
