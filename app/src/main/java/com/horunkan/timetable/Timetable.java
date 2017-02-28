@@ -24,9 +24,7 @@ public class Timetable extends AppCompatActivity {
         if(isConnectedToInternet()) {
             new MeetingsDates(this);
         }
-        else {
-            refreshButton.display();
-        }
+        else refreshButton.display();
     }
 
     private boolean isConnectedToInternet() {

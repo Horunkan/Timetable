@@ -21,4 +21,5 @@
         <item>Studia II stopnia, 1 rok</item>
         <item>Studia II stopnia, 2 rok</item>
     </string-array>
+    <string name="error_noInternet">Brak dostępu do internetu.</string>
 </resources>

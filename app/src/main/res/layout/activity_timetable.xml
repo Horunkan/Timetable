@@ -39,13 +39,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/ErrorText"
-        android:layout_below="@+id/Group"
         android:paddingTop="15dp"
         android:textSize="9pt"
         android:textStyle="bold"
         android:paddingBottom="15dp"
+        android:visibility="invisible"
+        android:layout_below="@+id/Group"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:visibility="invisible" />
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
