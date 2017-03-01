@@ -32,7 +32,7 @@ public class DateParser {
         long difference = endDate.getTime() - startDate.getTime();
         long diffMinutes = difference / (60 * 1000);
 
-        Log.i(logcat, String.format("Duration in minutes between %s and %s is: %d", start, end, diffMinutes));
+        Log.i(logcat, String.format("Duration between %s and %s: %d minutes", start, end, diffMinutes));
         return diffMinutes;
     }
 }
