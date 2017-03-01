@@ -66,11 +66,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/Date">
-        <LinearLayout
-            android:orientation="vertical"
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/Date"
-            android:id="@+id/LessonLayout"></LinearLayout>
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="100px"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/TimeStamp"></LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/LessonLayout"
+                android:layout_toEndOf="@+id/TimeStamp"></LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 </RelativeLayout>
