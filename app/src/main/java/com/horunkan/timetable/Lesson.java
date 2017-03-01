@@ -5,6 +5,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.horunkan.timetable.utilities.DateParser;
+
 public class Lesson extends TextView {
     private static final String logcat = "Lesson";
     private String startTime, endTime, title, description;
@@ -17,7 +19,7 @@ public class Lesson extends TextView {
         createBackground();
 
         this.setText(String.format("%s—%s %s", startTime, endTime, title));
-        this.setPadding(15, 15, 15, 15);
+        this.setPadding(15, 15, 15, (int)DateParser.getDurationMin(startTime, endTime));
         this.setBackground(background);
     }
 
