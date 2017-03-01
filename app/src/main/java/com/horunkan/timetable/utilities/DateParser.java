@@ -24,4 +24,15 @@ public class DateParser {
     public static Date parse(Date date, String time) {
         return parse(new SimpleDateFormat("yyyy-MM-dd").format(date), time);
     }
+
+    public static long getDurationMin(String start, String end) {
+        Date startDate = parse(new Date(), start);
+        Date endDate = parse(new Date(), end);
+
+        long difference = endDate.getTime() - startDate.getTime();
+        long diffMinutes = difference / (60 * 1000);
+
+        Log.i(logcat, String.format("Duration in minutes between %s and %s is: %d", start, end, diffMinutes));
+        return diffMinutes;
+    }
 }

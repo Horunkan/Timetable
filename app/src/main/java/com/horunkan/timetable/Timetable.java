@@ -28,12 +28,12 @@ public class Timetable extends AppCompatActivity {
 
             new LessonsLoader(this, meetingsDates.get());
 
-
+            //TODO Change to tableLayout?
             LinearLayout la = (LinearLayout)findViewById(R.id.LessonLayout);
 
-
-
-            la.addView(new Lesson(this, "9:00—10:00, Tytuł, dr Test, gr. 2, sala: 000"));
+            la.addView(new Lesson(this, "8:00—11:15, Lekcja 1, dr Test, gr. 2, sala: 000"));
+            la.addView(new Lesson(this, "11:30—13:00, Lekcja 2, dr Test, gr. 2, sala: 000"));
+            la.addView(new Lesson(this, "13:30—15:40, Lekcja 3, dr Test, gr. 2, sala: 000"));
         }
         else refreshButton.display();
     }
