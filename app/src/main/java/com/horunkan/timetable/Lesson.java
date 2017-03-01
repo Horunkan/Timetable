@@ -1,20 +1,24 @@
 package com.horunkan.timetable;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.widget.TextView;
 
 public class Lesson extends TextView {
     private static final String logcat = "Lesson";
     private String startTime, endTime, title, description;
-
-
+    private GradientDrawable background;
+    
     public Lesson(Timetable activity, String rawLesson) {
         super(activity);
 
         formatString(rawLesson);
+        createBackground();
 
         this.setText(String.format("%s—%s %s", startTime, endTime, title));
         this.setPadding(15, 15, 15, 15);
+        this.setBackground(background);
     }
 
     private void formatString(String rawLesson) {
@@ -37,5 +41,11 @@ public class Lesson extends TextView {
             else buffer += lessonData[i];
         }
         return buffer;
+    }
+
+    private void createBackground() {
+        background = new GradientDrawable();
+        background.setColor(Color.GREEN);
+        background.setStroke(4, Color.LTGRAY);
     }
 }
