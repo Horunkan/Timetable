@@ -13,11 +13,9 @@ public class Timestamp {
 
     private final int startHour = 8;
     private final int endHour = 19;
-
     private LinearLayout layout;
 
     public Timestamp(Timetable activity) {
-        //stamps = new ArrayList<>();
         layout = (LinearLayout) activity.findViewById(R.id.Timestamp);
 
         GradientDrawable background;
