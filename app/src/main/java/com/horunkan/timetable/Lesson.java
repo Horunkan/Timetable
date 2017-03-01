@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.horunkan.timetable.utilities.DateParser;
+import com.horunkan.timetable.utilities.Timestamp;
 
 public class Lesson extends TextView {
     private static final String logcat = "Lesson";
@@ -18,8 +19,13 @@ public class Lesson extends TextView {
         formatString(rawLesson);
         createBackground();
 
+        int duration = (int)DateParser.getDurationMin(startTime, endTime);
+        int height = Timestamp.hourHeight * (duration/Timestamp.hourHeight) + (duration%Timestamp.hourHeight);
+
         this.setText(String.format("%s—%s %s", startTime, endTime, title));
-        this.setPadding(15, 15, 15, (int)DateParser.getDurationMin(startTime, endTime));
+        this.setTextSize(13f);
+        this.setPadding(15, 15, 15, 15);
+        this.setHeight(height * 2);
         this.setBackground(background);
     }
 

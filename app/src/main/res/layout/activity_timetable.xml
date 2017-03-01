@@ -78,14 +78,14 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:id="@+id/TimeStamp"></LinearLayout>
+                android:id="@+id/Timestamp"></LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/LessonLayout"
-                android:layout_toEndOf="@+id/TimeStamp"></LinearLayout>
+                android:layout_toEndOf="@+id/Timestamp"></LinearLayout>
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

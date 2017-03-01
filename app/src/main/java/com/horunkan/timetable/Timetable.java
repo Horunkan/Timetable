@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 
+import com.horunkan.timetable.utilities.Timestamp;
+
 public class Timetable extends AppCompatActivity {
     private RefreshButton refreshButton;
 
@@ -24,6 +26,10 @@ public class Timetable extends AppCompatActivity {
     public void refresh() {
         if(isConnectedToInternet()) {
             MeetingsDates meetingsDates = new MeetingsDates(this);
+
+            new Timestamp(this);
+
+
             new DateSpinner(this, meetingsDates.get());
 
             new LessonsLoader(this, meetingsDates.get());
@@ -31,11 +37,11 @@ public class Timetable extends AppCompatActivity {
             //TODO Change to tableLayout?
             LinearLayout la = (LinearLayout)findViewById(R.id.LessonLayout);
 
-            la.addView(new Lesson(this, "8:00—11:15, Lekcja 1, dr Test, gr. 2, sala: 000"));
-            la.addView(new Lesson(this, "11:30—13:00, Lekcja 2, dr Test, gr. 2, sala: 000"));
-            la.addView(new Lesson(this, "13:30—15:40, Lekcja 3, dr Test, gr. 2, sala: 000"));
-            la.addView(new Lesson(this, "15:45—17:40, Lekcja 4, dr Test, gr. 2, sala: 000"));
-            la.addView(new Lesson(this, "17:45—19:40, Lekcja 5, dr Test, gr. 2, sala: 000"));
+            la.addView(new Lesson(this, "8:00—19:00, Lekcja 1, dr Test, gr. 2, sala: 000"));
+            //la.addView(new Lesson(this, "9:00—10:00, Lekcja 2, dr Test, gr. 2, sala: 000"));
+            //la.addView(new Lesson(this, "10:00—11:00, Lekcja 3, dr Test, gr. 2, sala: 000"));
+            //la.addView(new Lesson(this, "15:45—17:40, Lekcja 4, dr Test, gr. 2, sala: 000"));
+            //la.addView(new Lesson(this, "17:45—19:40, Lekcja 5, dr Test, gr. 2, sala: 000"));
         }
         else refreshButton.display();
     }
