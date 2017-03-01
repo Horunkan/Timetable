@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.LinearLayout;
 
 public class Timetable extends AppCompatActivity {
     private RefreshButton refreshButton;
@@ -26,6 +27,13 @@ public class Timetable extends AppCompatActivity {
             new DateSpinner(this, meetingsDates.get());
 
             new LessonsLoader(this, meetingsDates.get());
+
+
+            LinearLayout la = (LinearLayout)findViewById(R.id.LessonLayout);
+
+
+
+            la.addView(new Lesson(this, "9:00—10:00, Tytuł, dr Test, gr. 2, sala: 000"));
         }
         else refreshButton.display();
     }
