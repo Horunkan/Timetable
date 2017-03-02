@@ -25,17 +25,19 @@ public class TimestampLine {
     private static ImageView imageView;
 
     public TimestampLine(Timetable activity, int posY) {
-        if(bitmap == null) {
-            Log.i(logcat, "Initialize TimestampLine");
-            initializeBitmap(activity);
-            initializePaint();
-            initializeImageView(activity);
-        }
+        if(bitmap == null) init(activity);
 
         canvas.drawLine(0, posY, windowWidth, posY, paint);
     }
 
-    private void initializeBitmap(Timetable activity) {
+    public static void init(Timetable activity) {
+        Log.i(logcat, "Initialize TimestampLine");
+        initializeBitmap(activity);
+        initializePaint();
+        initializeImageView(activity);
+    }
+
+    private static void initializeBitmap(Timetable activity) {
         DisplayMetrics display = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(display);
 
@@ -46,13 +48,13 @@ public class TimestampLine {
         canvas = new Canvas(bitmap);
     }
 
-    private void initializePaint() {
+    private static void initializePaint() {
         paint = new Paint();
         paint.setColor(lineColor);
         paint.setStrokeWidth(lineStroke);
     }
 
-    private void initializeImageView(Timetable activity) {
+    private static void initializeImageView(Timetable activity) {
         imageView = new ImageView(activity);
         imageView.setImageBitmap(bitmap);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);

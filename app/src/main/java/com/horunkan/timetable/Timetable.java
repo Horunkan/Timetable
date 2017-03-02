@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 
 import com.horunkan.timetable.utilities.Timestamp;
+import com.horunkan.timetable.utilities.TimestampLine;
 
 public class Timetable extends AppCompatActivity {
     private RefreshButton refreshButton;
@@ -28,12 +29,15 @@ public class Timetable extends AppCompatActivity {
     public void refresh() {
         if(isConnectedToInternet()) {
             MeetingsDates meetingsDates = new MeetingsDates(this);
+            TimestampLine.init(this);
 
             new Timestamp(this);
             new DateSpinner(this, meetingsDates.get());
             new LessonsLoader(this, meetingsDates.get());
 
             LinearLayout la = (LinearLayout)findViewById(R.id.LessonLayout);
+
+            //refreshButton.display();
 
             la.addView(new Lesson(this, "8:00—9:00, Lekcja 1, laboratorium, dr Naucz1, gr. 1, 000, mgr Naucz2, gr. 2, 001, mgr Naucz3, gr. 3, 003"));
             //la.addView(new Lesson(this, "9:10—10:00, Lekcja 2, laboratorium, dr Naucz1, gr. 1, 000, mgr Naucz2, gr. 2, 001, mgr Naucz3, gr. 3, 003"));
