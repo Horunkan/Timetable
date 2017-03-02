@@ -1,6 +1,7 @@
 package com.horunkan.timetable;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ public class Timetable extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         refreshButton = new RefreshButton(this);
         new GroupSpinner(this);
@@ -31,7 +33,6 @@ public class Timetable extends AppCompatActivity {
             new DateSpinner(this, meetingsDates.get());
             new LessonsLoader(this, meetingsDates.get());
 
-            //TODO Change to tableLayout?
             LinearLayout la = (LinearLayout)findViewById(R.id.LessonLayout);
 
             la.addView(new Lesson(this, "8:00—9:00, Lekcja 1, laboratorium, dr Naucz1, gr. 1, 000, mgr Naucz2, gr. 2, 001, mgr Naucz3, gr. 3, 003"));

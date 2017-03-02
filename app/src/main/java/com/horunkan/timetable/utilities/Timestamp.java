@@ -25,5 +25,11 @@ public class Timestamp {
             buffer.setTextSize(13f);
             layout.addView(buffer);
         }
+
+        addLines(activity, endHour - startHour);
+    }
+
+    private void addLines(Timetable activity, int lineCount) {
+        for(int i = 0; i <= lineCount; ++i) new TimestampLine(activity, i * hourHeight);
     }
 }
