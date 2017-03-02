@@ -1,7 +1,5 @@
 package com.horunkan.timetable.utilities;
 
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,10 +16,6 @@ public class Timestamp {
     public Timestamp(Timetable activity) {
         layout = (LinearLayout) activity.findViewById(R.id.Timestamp);
 
-        GradientDrawable background;
-        background = new GradientDrawable();
-        background.setStroke(1, Color.BLACK);
-
         for(int i = startHour; i <= endHour; ++i) {
             TextView buffer = new TextView(activity);
 
@@ -29,7 +23,6 @@ public class Timestamp {
             buffer.setPadding(10, 0, 10, 0);
             buffer.setHeight(hourHeight);
             buffer.setTextSize(13f);
-            buffer.setBackground(background);
             layout.addView(buffer);
         }
     }

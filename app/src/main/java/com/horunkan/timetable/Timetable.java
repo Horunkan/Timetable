@@ -34,11 +34,11 @@ public class Timetable extends AppCompatActivity {
             //TODO Change to tableLayout?
             LinearLayout la = (LinearLayout)findViewById(R.id.LessonLayout);
 
-            la.addView(new Lesson(this, "8:00—9:00, Lekcja 1, dr Test, gr. 2, sala: 000"));
-            //la.addView(new Lesson(this, "9:10—10:00, Lekcja 2, dr Test, gr. 2, sala: 000"));
-            //la.addView(new Lesson(this, "10:30—12:00, Lekcja 3, dr Test, gr. 2, sala: 000"));
-            //la.addView(new Lesson(this, "12:05—15:00, Lekcja 4, dr Test, gr. 2, sala: 000"));
-            //la.addView(new Lesson(this, "16:30—19:40, Lekcja 5, dr Test, gr. 2, sala: 000"));
+            la.addView(new Lesson(this, "8:00—9:00, Lekcja 1, laboratorium, dr Naucz1, gr. 1, 000, mgr Naucz2, gr. 2, 001, mgr Naucz3, gr. 3, 003"));
+            //la.addView(new Lesson(this, "9:10—10:00, Lekcja 2, laboratorium, dr Naucz1, gr. 1, 000, mgr Naucz2, gr. 2, 001, mgr Naucz3, gr. 3, 003"));
+            //la.addView(new Lesson(this, "10:30—12:00, Lekcja 3, laboratorium, dr Naucz1, gr. 1, 000, mgr Naucz2, gr. 2, 001, mgr Naucz3, gr. 3, 003"));
+            //la.addView(new Lesson(this, "12:05—15:00, Lekcja 4, laboratorium, dr Naucz1, gr. 1, 000, mgr Naucz2, gr. 2, 001, mgr Naucz3, gr. 3, 003"));
+            //la.addView(new Lesson(this, "16:30—19:40, Lekcja 5, laboratorium, dr Naucz1, gr. 1, 000, mgr Naucz2, gr. 2, 001, mgr Naucz3, gr. 3, 003"));
         }
         else refreshButton.display();
     }
