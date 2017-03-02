@@ -29,6 +29,9 @@ public class Lesson extends TextView {
         this.setBackground(background);
     }
 
+    public String getStartTime() { return startTime; }
+    public String getEndTime() { return endTime; }
+
     private void formatString(String rawLesson) {
         String lessonData[] = rawLesson.split(",");
 
