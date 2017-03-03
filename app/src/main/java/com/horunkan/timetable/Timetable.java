@@ -41,13 +41,13 @@ public class Timetable extends AppCompatActivity {
 
             date = new DateSpinner(this, meetingsDates.get());
             refreshSelectedDate();
-            refreshLessons();
         }
         else refreshButton.display();
     }
 
     public void refreshSelectedDate() {
         lessons = new LessonsLoader(this, date.get());
+        refreshLessons();
     }
 
     public void refreshLessons() {

@@ -15,10 +15,12 @@ public class DateSpinner implements AdapterView.OnItemSelectedListener {
     private static final String logcat = "DateSpinner";
 
     private Spinner spinner;
+    private Timetable activity;
 
     public DateSpinner(Timetable activity, ArrayList<String> dates) {
         spinner = (Spinner) activity.findViewById(R.id.Date);
         spinner.setVisibility(View.VISIBLE);
+        this.activity = activity;
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, dates);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -34,6 +36,7 @@ public class DateSpinner implements AdapterView.OnItemSelectedListener {
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Log.i(logcat, String.format("Selected date: %s", spinner.getSelectedItem()));
+        activity.refreshSelectedDate();
     }
 
     @Override
