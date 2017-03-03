@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.horunkan.timetable.Lesson.Lesson;
+
 public class SelectGroup extends AlertDialog.Builder implements DialogInterface.OnMultiChoiceClickListener, DialogInterface.OnClickListener {
     private static String logcat = "SelectGroup";
     private static String logcatVal = logcat + "-value";
@@ -58,6 +60,33 @@ public class SelectGroup extends AlertDialog.Builder implements DialogInterface.
 
         edit.apply();
         Log.i(logcat, "SelectGroup prefs saved");
+    }
+
+    public static Boolean canAddLesson(Lesson lesson) {
+        String lessonDescription = lesson.getDescription();
+
+        if(lessonDescription.contains("gr.")) {
+            for(int i = 0; i < groupLetters.length; ++i) {
+                if(selected[i]) {
+                    if(lessonDescription.contains(String.format(" %s,", groupLetters[i]))) return true;
+                    else if(lessonDescription.contains(String.format(" %s ", groupLetters[i]))) return true;
+                    else if(lessonDescription.contains(String.format(" i %s", groupLetters[i]))) return true;
+                    else if(lessonDescription.contains(String.format("%s i ", groupLetters[i]))) return true;
+                }
+            }
+
+            for(int i = 0; i < groupNumbers.length; ++i) {
+                if(selected[i + groupLetters.length]) {
+                    if(lessonDescription.contains(String.format(" %s,", groupNumbers[i]))) return true;
+                    else if(lessonDescription.contains(String.format(" %s ", groupNumbers[i]))) return true;
+                    else if(lessonDescription.contains(String.format(" i %s", groupNumbers[i]))) return true;
+                    else if(lessonDescription.contains(String.format("%s i ", groupNumbers[i]))) return true;
+                }
+            }
+        }
+        else return true;
+
+        return false;
     }
 
     private void setChoices() {

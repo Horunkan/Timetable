@@ -21,6 +21,7 @@ import com.horunkan.timetable.utilities.RefreshButton;
 import com.horunkan.timetable.utilities.Timestamp;
 import com.horunkan.timetable.utilities.TimestampLine;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Timetable extends AppCompatActivity {
@@ -66,10 +67,13 @@ public class Timetable extends AppCompatActivity {
 
     public void refreshLessons() {
         lessonLayout.removeAllViewsInLayout();
-        List<Lesson> buffer = lessons.getLessons(group.get());
+        List<Lesson> buffer = new ArrayList<>();
+
+        for(Lesson less : lessons.getLessons(group.get())) if(SelectGroup.canAddLesson(less)) buffer.add(less);
 
         lessonLayout.addView(new FreeTime(this, "8:00", buffer.get(0).getStartTime()));
         lessonLayout.addView(buffer.get(0));
+
         for(int i = 1; i < buffer.size(); ++i) {
             lessonLayout.addView(new FreeTime(this, buffer.get(i-1).getEndTime(), buffer.get(i).getStartTime()));
             lessonLayout.addView(buffer.get(i));
