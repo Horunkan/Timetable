@@ -21,6 +21,8 @@ public class GroupSpinner implements AdapterView.OnItemSelectedListener {
         spinner.setSelection(0);
     }
 
+    public int get() { return (int)spinner.getSelectedItemId(); }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Log.i(logcat, String.format("Selected group: %s", (String)spinner.getSelectedItem()));

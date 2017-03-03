@@ -15,11 +15,13 @@ public class LessonsLoader {
     private List<Lesson>[] lessons;
     private Timetable activity;
 
-    public LessonsLoader(Timetable activity, ArrayList<String> dates) {
+    public LessonsLoader(Timetable activity, String date) {
         this.activity = activity;
         lessons = new List[5];
-        loadLessons("2017-03-04");
+        loadLessons(date);
     }
+
+    public List<Lesson> getLessons(int index) { return lessons[index]; }
 
     private void loadLessons(String date) {
         HttpLoader http = (HttpLoader) new HttpLoader().execute(String.format("https://inf.ug.edu.pl/plan-%s.print", date));

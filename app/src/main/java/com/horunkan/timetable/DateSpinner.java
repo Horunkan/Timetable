@@ -29,6 +29,8 @@ public class DateSpinner implements AdapterView.OnItemSelectedListener {
         updateSelection(dates);
     }
 
+    public String get() { return (String) spinner.getSelectedItem(); }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Log.i(logcat, String.format("Selected date: %s", spinner.getSelectedItem()));
