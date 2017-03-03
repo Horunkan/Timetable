@@ -6,6 +6,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import com.horunkan.timetable.Date.DateSpinner;
@@ -21,6 +24,8 @@ import com.horunkan.timetable.utilities.TimestampLine;
 import java.util.List;
 
 public class Timetable extends AppCompatActivity {
+    private static final String logcat = "Timetable";
+
     private RefreshButton refreshButton;
     private GroupSpinner group;
     private DateSpinner date;
@@ -32,6 +37,7 @@ public class Timetable extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        Log.i(logcat, "Start application");
 
         refreshButton = new RefreshButton(this);
         group = new GroupSpinner(this);
@@ -73,5 +79,24 @@ public class Timetable extends AppCompatActivity {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnected();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.timetable, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_timetable_group) {
+            Log.i(logcat, "Selected 'select group' menu item");
+            return true;
+        }
+        else if(item.getItemId() == R.id.menu_timetable_calendar) {
+            Log.i(logcat, "Selected 'select calendar' menu item");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
