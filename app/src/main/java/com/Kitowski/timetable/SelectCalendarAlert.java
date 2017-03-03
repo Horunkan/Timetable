@@ -9,6 +9,7 @@ public class SelectCalendarAlert extends AlertDialog.Builder implements DialogIn
     public static int selectedCalendar = 0;
 
     public SelectCalendarAlert(Timetable timetable, Cursor calendars) {
+        //Test
         super(timetable);
         this.setTitle(R.string.eventExists_title);
 
