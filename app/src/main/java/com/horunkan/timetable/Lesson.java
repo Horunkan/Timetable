@@ -42,6 +42,7 @@ public class Lesson extends TextView implements View.OnClickListener {
         this.setOnClickListener(this);
 
         Log.i(logcat, String.format("Start: %s, End: %s, Title: %s, Descrpition: %s", startTime, endTime, title, description));
+        setBackgroundColor();
     }
 
     public String getStartTime() { return startTime; }
@@ -69,8 +70,16 @@ public class Lesson extends TextView implements View.OnClickListener {
 
     private void createBackground() {
         background = new GradientDrawable();
-        background.setColor(Color.GREEN);
+        background.setColor(Color.LTGRAY);
         background.setStroke(4, Color.LTGRAY);
+    }
+
+    private void setBackgroundColor() {
+        if(description.contains("laboratorium")) background.setColor(Color.GREEN);
+        else if(description.contains("ćwiczenia")) background.setColor(Color.YELLOW);
+        else if(description.contains("wykład")) background.setColor(Color.GRAY);
+        else if(description.contains("wykład")) background.setColor(Color.CYAN);
+        else if(description.contains("wykład")) background.setColor(Color.MAGENTA);
     }
 
     @Override public void onClick(View v) { displayDetails(); }
