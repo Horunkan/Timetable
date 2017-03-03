@@ -38,6 +38,7 @@ public class Timetable extends AppCompatActivity {
         setContentView(R.layout.activity_timetable);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Log.i(logcat, "Start application");
+        SelectGroup.load(this);
 
         refreshButton = new RefreshButton(this);
         group = new GroupSpinner(this);

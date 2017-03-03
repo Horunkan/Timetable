@@ -25,4 +25,6 @@
     <string name="info_noLesson">Brak zajęć</string>
     <string name="menu_timetable_setCalendar">Wybierz kalendarz</string>
     <string name="menu_timetable_setGroup">Wybierz grupę</string>
+    <string name="selectGroup_title">Wybierz grupę</string>
+    <string name="selectGroup_confirm">Potwierdź</string>
 </resources>
