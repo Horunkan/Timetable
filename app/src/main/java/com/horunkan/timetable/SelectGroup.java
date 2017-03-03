@@ -15,8 +15,11 @@ public class SelectGroup extends AlertDialog.Builder implements DialogInterface.
     private static Boolean firstRun = false;
     private static Boolean[] selected = new Boolean[groupLetters.length + groupNumbers.length];
 
+    private Timetable activity;
+
     public SelectGroup(Timetable activity) {
         super(activity);
+        this.activity = activity;
         Log.i(logcat, "Display menu");
 
         this.setTitle(activity.getResources().getString(R.string.selectGroup_title));
@@ -39,6 +42,22 @@ public class SelectGroup extends AlertDialog.Builder implements DialogInterface.
         Log.i(logcatVal, "Loaded values:");
         for(Boolean bool : selected) Log.i(logcatVal, bool.toString());
         if(firstRun) new SelectGroup(activity).create().show();
+        Log.i(logcat, "SelectGroup prefs loaded");
+    }
+
+    public static void save(Timetable activity) {
+        Log.i(logcat, "Save SelectGroup prefs");
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor edit = pref.edit();
+        int lettersSize = groupLetters.length;
+        int numberSize = groupNumbers.length;
+
+        edit.putBoolean("FirstRun_Group", false);
+        for(int i = 0; i < lettersSize; ++i) edit.putBoolean(String.format("DisplayGroup %s", groupLetters[i]), selected[i]);
+        for(int i = 0; i < numberSize; ++i) edit.putBoolean(String.format("DisplayGroup %s", groupNumbers[i]), selected[i + lettersSize]);
+
+        edit.apply();
+        Log.i(logcat, "SelectGroup prefs saved");
     }
 
     private void setChoices() {
@@ -55,7 +74,7 @@ public class SelectGroup extends AlertDialog.Builder implements DialogInterface.
         this.setMultiChoiceItems(buffer, boolBuffer, this);
     }
 
-    @Override //Multicheck
+    @Override //Multi check
     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
         Log.i(logcat, String.format("Changed value: index - %d, value: %s", which, isChecked));
         selected[which] = isChecked;
@@ -64,5 +83,6 @@ public class SelectGroup extends AlertDialog.Builder implements DialogInterface.
     @Override //Confirm button
     public void onClick(DialogInterface dialog, int which) {
         Log.i(logcat, "Pressed confirm button");
+        save(activity);
     }
 }
