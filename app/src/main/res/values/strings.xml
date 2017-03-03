@@ -22,4 +22,5 @@
         <item>Studia II stopnia, 2 rok</item>
     </string-array>
     <string name="error_noInternet">Brak dostępu do internetu.</string>
+    <string name="info_noLesson">Brak zajęć</string>
 </resources>

@@ -16,8 +16,16 @@ public class Lesson extends TextView {
     public Lesson(Timetable activity, String rawLesson) {
         super(activity);
 
-        formatString(rawLesson);
-        createBackground();
+        if(rawLesson.contains("brak zajęć")) {
+            startTime = "8:00";
+            endTime = "19:00";
+            title = activity.getResources().getString(R.string.info_noLesson);
+            description = activity.getResources().getString(R.string.info_noLesson);
+        }
+        else {
+            formatString(rawLesson);
+            createBackground();
+        }
 
         int duration = (int)DateParser.getDurationMin(startTime, endTime);
         int height = Timestamp.hourHeight * (duration/Timestamp.hourHeight) + (duration%Timestamp.hourHeight);
@@ -27,6 +35,8 @@ public class Lesson extends TextView {
         this.setPadding(15, 15, 15, 15);
         this.setHeight(height * 2);
         this.setBackground(background);
+
+        Log.i(logcat, String.format("Start: %s, End: %s, Title: %s, Descrpition: %s", startTime, endTime, title, description));
     }
 
     public String getStartTime() { return startTime; }
@@ -39,8 +49,6 @@ public class Lesson extends TextView {
         endTime = lessonData[0].split("—")[1];
         title = lessonData[1];
         description = formatDetails(lessonData);
-
-        Log.i(logcat, String.format("Start: %s, End: %s, Title: %s, Descrpition: %s", startTime, endTime, title, description));
     }
 
     private String formatDetails(String lessonData[]) {
