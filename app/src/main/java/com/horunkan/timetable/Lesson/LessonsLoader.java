@@ -56,13 +56,10 @@ public class LessonsLoader {
 
     private void formatLessons(ArrayList<String> arr) {
         ArrayList<String> buffer = new ArrayList<>();
-        //Boolean lessonContent = false;
         int index = 0;
 
         for(String line : arr) {
-            /*if(line.matches("<ul>")) lessonContent = true;
-            if(lessonContent) buffer.add(line);*/
-            if(line.matches("</ul>")) {
+            if(line.matches("</ul>") && index < 5) {
                 assignLessonsToGroups(buffer, index);
                 ++index;
                 buffer = new ArrayList<>();
@@ -79,7 +76,8 @@ public class LessonsLoader {
         arr = HtmlFormatter.getCleanWebsite(arr);
 
         for(String str : arr) {
-            lessons[index].add(new Lesson(activity, str));
+            //Log.i(logcatVal, str);
+            if(!str.contains("zajęcia zostały")) lessons[index].add(new Lesson(activity, str)); //TODO Canceled lessons generate bugs with lessons loading
             Log.i(logcatVal, str);
         }
 
