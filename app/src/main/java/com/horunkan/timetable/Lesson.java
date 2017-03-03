@@ -1,20 +1,24 @@
 package com.horunkan.timetable;
 
+import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.horunkan.timetable.utilities.DateParser;
 import com.horunkan.timetable.utilities.Timestamp;
 
-public class Lesson extends TextView {
+public class Lesson extends TextView implements View.OnClickListener {
     private static final String logcat = "Lesson";
     private String startTime, endTime, title, description;
     private GradientDrawable background;
+    private Timetable activity;
     
     public Lesson(Timetable activity, String rawLesson) {
         super(activity);
+        this.activity = activity;
 
         if(rawLesson.contains("brak zajęć")) {
             startTime = "8:00";
@@ -35,6 +39,7 @@ public class Lesson extends TextView {
         this.setPadding(15, 15, 15, 15);
         this.setHeight(height * 2);
         this.setBackground(background);
+        this.setOnClickListener(this);
 
         Log.i(logcat, String.format("Start: %s, End: %s, Title: %s, Descrpition: %s", startTime, endTime, title, description));
     }
@@ -66,5 +71,17 @@ public class Lesson extends TextView {
         background = new GradientDrawable();
         background.setColor(Color.GREEN);
         background.setStroke(4, Color.LTGRAY);
+    }
+
+    @Override public void onClick(View v) { displayDetails(); }
+
+    private void displayDetails() {
+        Log.i(logcat, String.format("Display description of lesson: %s", title));
+
+        AlertDialog.Builder det  = new AlertDialog.Builder(activity);
+        det.setTitle(title);
+        det.setMessage(description);
+        det.setCancelable(true);
+        det.create().show();
     }
 }
