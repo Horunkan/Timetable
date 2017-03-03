@@ -1,8 +1,9 @@
-package com.horunkan.timetable;
+package com.horunkan.timetable.Lesson;
 
 import android.util.Log;
 import android.widget.TextView;
 
+import com.horunkan.timetable.Timetable;
 import com.horunkan.timetable.utilities.DateParser;
 import com.horunkan.timetable.utilities.Timestamp;
 

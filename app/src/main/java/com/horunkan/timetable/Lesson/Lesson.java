@@ -1,4 +1,4 @@
-package com.horunkan.timetable;
+package com.horunkan.timetable.Lesson;
 
 import android.app.AlertDialog;
 import android.graphics.Color;
@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.horunkan.timetable.R;
+import com.horunkan.timetable.Timetable;
 import com.horunkan.timetable.utilities.DateParser;
 import com.horunkan.timetable.utilities.Timestamp;
 

@@ -1,10 +1,13 @@
-package com.horunkan.timetable;
+package com.horunkan.timetable.utilities;
 
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import com.horunkan.timetable.R;
+import com.horunkan.timetable.Timetable;
 
 public class GroupSpinner implements AdapterView.OnItemSelectedListener {
     private static final String logcat = "GroupSpinner";

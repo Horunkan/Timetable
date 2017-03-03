@@ -8,6 +8,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 
+import com.horunkan.timetable.Date.DateSpinner;
+import com.horunkan.timetable.Date.MeetingsDates;
+import com.horunkan.timetable.Lesson.FreeTime;
+import com.horunkan.timetable.Lesson.Lesson;
+import com.horunkan.timetable.Lesson.LessonsLoader;
+import com.horunkan.timetable.utilities.GroupSpinner;
+import com.horunkan.timetable.utilities.RefreshButton;
 import com.horunkan.timetable.utilities.Timestamp;
 import com.horunkan.timetable.utilities.TimestampLine;
 

@@ -1,7 +1,8 @@
-package com.horunkan.timetable;
+package com.horunkan.timetable.Lesson;
 
 import android.util.Log;
 
+import com.horunkan.timetable.Timetable;
 import com.horunkan.timetable.utilities.HtmlFormatter;
 import com.horunkan.timetable.utilities.HttpLoader;
 

@@ -1,10 +1,13 @@
-package com.horunkan.timetable;
+package com.horunkan.timetable.utilities;
 
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.horunkan.timetable.R;
+import com.horunkan.timetable.Timetable;
 
 public class RefreshButton implements View.OnClickListener {
     private static final String logcat = "RefreshButton";
