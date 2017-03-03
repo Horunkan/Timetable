@@ -67,20 +67,23 @@ public class Timetable extends AppCompatActivity {
 
     public void refreshLessons() {
         lessonLayout.removeAllViewsInLayout();
-        List<Lesson> buffer = new ArrayList<>();
 
-        if(lessons.getLessons(group.get()) != null) {
-            for(Lesson less : lessons.getLessons(group.get())) if(SelectGroup.canAddLesson(less)) buffer.add(less);
+        if(isConnectedToInternet()) {
+            List<Lesson> buffer = new ArrayList<>();
 
-            lessonLayout.addView(new FreeTime(this, "8:00", buffer.get(0).getStartTime()));
-            lessonLayout.addView(buffer.get(0));
+            if(lessons.getLessons(group.get()) != null) {
+                for(Lesson less : lessons.getLessons(group.get())) if(SelectGroup.canAddLesson(less)) buffer.add(less);
 
-            for(int i = 1; i < buffer.size(); ++i) {
-                lessonLayout.addView(new FreeTime(this, buffer.get(i-1).getEndTime(), buffer.get(i).getStartTime()));
-                lessonLayout.addView(buffer.get(i));
+                lessonLayout.addView(new FreeTime(this, "8:00", buffer.get(0).getStartTime()));
+                lessonLayout.addView(buffer.get(0));
+
+                for(int i = 1; i < buffer.size(); ++i) {
+                    lessonLayout.addView(new FreeTime(this, buffer.get(i-1).getEndTime(), buffer.get(i).getStartTime()));
+                    lessonLayout.addView(buffer.get(i));
+                }
             }
+            else lessonLayout.addView(new Lesson(this, "brak zajęć"));
         }
-        else lessonLayout.addView(new Lesson(this, "brak zajęć"));
     }
 
     private boolean isConnectedToInternet() {
