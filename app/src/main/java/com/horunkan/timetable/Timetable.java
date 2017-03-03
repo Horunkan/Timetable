@@ -92,6 +92,7 @@ public class Timetable extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_timetable_group) {
             Log.i(logcat, "Selected 'select group' menu item");
+            new SelectGroup(this).create().show();
             return true;
         }
         else if(item.getItemId() == R.id.menu_timetable_calendar) {
