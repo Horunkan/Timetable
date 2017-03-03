@@ -54,6 +54,7 @@ public class Timetable extends AppCompatActivity {
         lessonLayout.removeAllViewsInLayout();
         List<Lesson> buffer = lessons.getLessons(group.get());
 
+        lessonLayout.addView(new FreeTime(this, "8:00", buffer.get(0).getStartTime()));
         lessonLayout.addView(buffer.get(0));
         for(int i = 1; i < buffer.size(); ++i) {
             lessonLayout.addView(new FreeTime(this, buffer.get(i-1).getEndTime(), buffer.get(i).getStartTime()));
