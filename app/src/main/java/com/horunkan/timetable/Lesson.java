@@ -78,8 +78,8 @@ public class Lesson extends TextView implements View.OnClickListener {
         if(description.contains("laboratorium")) background.setColor(Color.GREEN);
         else if(description.contains("ćwiczenia")) background.setColor(Color.YELLOW);
         else if(description.contains("wykład")) background.setColor(Color.GRAY);
-        else if(description.contains("wykład")) background.setColor(Color.CYAN);
-        else if(description.contains("wykład")) background.setColor(Color.MAGENTA);
+        else if(description.contains("wykład+laboratorium")) background.setColor(Color.CYAN);
+        else if(description.contains("wykład+ćwiczenia")) background.setColor(Color.MAGENTA);
     }
 
     @Override public void onClick(View v) { displayDetails(); }
