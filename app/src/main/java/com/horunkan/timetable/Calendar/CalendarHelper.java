@@ -1,5 +1,6 @@
 package com.horunkan.timetable.Calendar;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -47,6 +48,35 @@ public class CalendarHelper {
         }
         catch (Exception e) {
             Log.e(logcat, e.getMessage());
+        }
+    }
+
+    public static Boolean anyEventExists(Activity act, String date) {
+        try {
+            Calendar startTime = getCalendar(date, "00:00");
+            Calendar endTime = getCalendar(date, "23:59");
+
+            ContentResolver content = act.getContentResolver();
+            String queryProjection[] = {Events._ID};
+            String querySelection = String.format("(deleted != 1 and dtstart>%s and dtend <%s)", startTime.getTimeInMillis(), endTime.getTimeInMillis());
+            //String querySelection = "(deleted != 1 and dtstart>" + startTime.getTimeInMillis() + " and dtend <" + endTime.getTimeInMillis() + ")";
+
+            Cursor cursor = content.query(Events.CONTENT_URI, queryProjection, querySelection, null, null);
+            int count = cursor.getCount();
+            cursor.close();
+
+            Log.i(logcat, String.format("Found %d events.", count));
+
+            if(count > 0) return true;
+            else return false;
+        }
+        catch (SecurityException e) {
+            Log.e(logcat, "NO PERMISSIONS FOR CALENDAR");
+            return false;
+        }
+        catch (Exception e) {
+            Log.e(logcat, e.getMessage());
+            return false;
         }
     }
 
