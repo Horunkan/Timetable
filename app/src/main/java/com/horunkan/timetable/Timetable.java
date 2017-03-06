@@ -18,7 +18,7 @@ import com.horunkan.timetable.Lesson.FreeTime;
 import com.horunkan.timetable.Lesson.Lesson;
 import com.horunkan.timetable.Lesson.LessonsLoader;
 import com.horunkan.timetable.Group.GroupSpinner;
-import com.horunkan.timetable.utilities.CalendarButton;
+import com.horunkan.timetable.Calendar.CalendarButton;
 import com.horunkan.timetable.utilities.RefreshButton;
 import com.horunkan.timetable.Timestamp.Timestamp;
 import com.horunkan.timetable.Timestamp.TimestampLine;

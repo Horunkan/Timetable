@@ -1,4 +1,4 @@
-package com.horunkan.timetable.utilities;
+package com.horunkan.timetable.Calendar;
 
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
