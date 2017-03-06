@@ -15,9 +15,11 @@ public class SelectCalendar extends AlertDialog.Builder implements DialogInterfa
     private static int selectedCalendar = 0;
 
     private static Boolean firstRun = false;
+    private Timetable activity;
 
     public SelectCalendar(Timetable activity) {
         super(activity);
+        this.activity = activity;
 
         this.setSingleChoiceItems(CalendarHelper.getAvailableCalendars(activity), selectedCalendar, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, this);
         this.setTitle(activity.getResources().getString(R.string.selectCalendar_title));
@@ -35,6 +37,18 @@ public class SelectCalendar extends AlertDialog.Builder implements DialogInterfa
         Log.i(logcat, "SelectCalendar prefs loaded");
     }
 
+    public static void save(Timetable activity) {
+        Log.i(logcat, "Save SelectCalendar prefs");
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor edit = pref.edit();
+
+        edit.putBoolean("FirstRun_Calendar", false);
+        edit.putInt("DefaultCalendar_ID", selectedCalendar);
+
+        edit.apply();
+        Log.i(logcat, "SelectCalendar prefs saved");
+    }
+
     public static int get() { return selectedCalendar; }
 
     @Override
@@ -42,5 +56,6 @@ public class SelectCalendar extends AlertDialog.Builder implements DialogInterfa
         Log.i(logcat, String.format("Selected calendar ID: %d", which+1));
         selectedCalendar = ++which;
         dialog.dismiss();
+        save(activity);
     }
 }

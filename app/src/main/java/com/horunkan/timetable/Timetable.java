@@ -2,7 +2,6 @@ package com.horunkan.timetable;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -12,19 +11,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 
-import com.horunkan.timetable.Calendar.CalendarHelper;
+import com.horunkan.timetable.Calendar.CalendarButton;
 import com.horunkan.timetable.Calendar.SelectCalendar;
 import com.horunkan.timetable.Date.DateSpinner;
 import com.horunkan.timetable.Date.MeetingsDates;
+import com.horunkan.timetable.Group.GroupSpinner;
 import com.horunkan.timetable.Group.SelectGroup;
 import com.horunkan.timetable.Lesson.FreeTime;
 import com.horunkan.timetable.Lesson.Lesson;
 import com.horunkan.timetable.Lesson.LessonsLoader;
-import com.horunkan.timetable.Group.GroupSpinner;
-import com.horunkan.timetable.Calendar.CalendarButton;
-import com.horunkan.timetable.utilities.RefreshButton;
 import com.horunkan.timetable.Timestamp.Timestamp;
 import com.horunkan.timetable.Timestamp.TimestampLine;
+import com.horunkan.timetable.utilities.RefreshButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,10 +51,6 @@ public class Timetable extends AppCompatActivity {
         calendarButton = new CalendarButton(this);
         group = new GroupSpinner(this);
         lessonLayout = (LinearLayout)findViewById(R.id.LessonLayout);
-
-
-        Cursor test = CalendarHelper.getAvailableCalendars(this);
-        test.close();
 
         refresh();
     }
