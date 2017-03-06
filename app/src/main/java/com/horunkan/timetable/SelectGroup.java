@@ -112,6 +112,7 @@ public class SelectGroup extends AlertDialog.Builder implements DialogInterface.
     @Override //Confirm button
     public void onClick(DialogInterface dialog, int which) {
         Log.i(logcat, "Pressed confirm button");
+        activity.refreshLessons();
         save(activity);
     }
 }
