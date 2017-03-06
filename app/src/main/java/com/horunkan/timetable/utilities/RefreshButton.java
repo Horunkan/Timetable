@@ -26,7 +26,7 @@ public class RefreshButton implements View.OnClickListener {
     }
 
     public void display() {
-        Log.i(logcat, "Button displayed");
+        Log.i(logcat, "No internet connection! - Refresh button displayed");
         errorText.setText(timetable.getString(R.string.error_noInternet));
         errorText.setVisibility(View.VISIBLE);
         dateSpinner.setVisibility(View.INVISIBLE);

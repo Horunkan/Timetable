@@ -33,6 +33,7 @@ public class Timetable extends AppCompatActivity {
     private DateSpinner date;
     private LinearLayout lessonLayout;
     private LessonsLoader lessons;
+    private Timestamp timestamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class Timetable extends AppCompatActivity {
         if(isConnectedToInternet()) {
             MeetingsDates meetingsDates = new MeetingsDates(this);
             TimestampLine.init(this);
-            new Timestamp(this);
+            if(timestamp == null) timestamp = new Timestamp(this);
 
             date = new DateSpinner(this, meetingsDates.get());
             refreshSelectedDate();
@@ -85,6 +86,7 @@ public class Timetable extends AppCompatActivity {
             }
             else lessonLayout.addView(new Lesson(this, "brak zajęć"));
         }
+        else refreshButton.display();
     }
 
     private boolean isConnectedToInternet() {

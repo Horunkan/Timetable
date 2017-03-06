@@ -36,6 +36,19 @@
         app:backgroundTint="@android:color/holo_red_dark"
         android:visibility="invisible" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/CalendarButton"
+        android:layout_alignParentBottom="true"
+        app:backgroundTint="@android:color/holo_blue_bright"
+        android:visibility="invisible" />
+
     <TextView
         android:text="[DISPLAY INFO]"
         android:layout_width="match_parent"
