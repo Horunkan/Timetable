@@ -27,4 +27,5 @@
     <string name="menu_timetable_setGroup">Wybierz grupę</string>
     <string name="selectGroup_title">Wybierz grupę</string>
     <string name="selectGroup_confirm">Potwierdź</string>
+    <string name="selectCalendar_title">Wybierz kalendarz</string>
 </resources>

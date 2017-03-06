@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import com.horunkan.timetable.Calendar.CalendarHelper;
+import com.horunkan.timetable.Calendar.SelectCalendar;
 import com.horunkan.timetable.Date.DateSpinner;
 import com.horunkan.timetable.Date.MeetingsDates;
 import com.horunkan.timetable.Group.SelectGroup;
@@ -46,6 +47,7 @@ public class Timetable extends AppCompatActivity {
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Log.i(logcat, "Start application");
         SelectGroup.load(this);
+        SelectCalendar.load(this);
 
         refreshButton = new RefreshButton(this);
         calendarButton = new CalendarButton(this);
