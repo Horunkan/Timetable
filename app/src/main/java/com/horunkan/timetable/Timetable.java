@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.horunkan.timetable.Calendar.CalendarButton;
 import com.horunkan.timetable.Calendar.CalendarHelper;
+import com.horunkan.timetable.Calendar.DeleteEvents;
 import com.horunkan.timetable.Calendar.SelectCalendar;
 import com.horunkan.timetable.Date.DateSpinner;
 import com.horunkan.timetable.Date.MeetingsDates;
@@ -109,6 +110,9 @@ public class Timetable extends AppCompatActivity {
 
             for(Lesson less : lessons.getLessons(group.get())) if(SelectGroup.canAddLesson(less)) buffer.add(less);
             for(int i = 0; i < buffer.size(); ++i) CalendarHelper.addToCalendar(this, date.get(), buffer.get(i), i);
+        }
+        else {
+            new DeleteEvents(this, CalendarHelper.getEvents(this, date.get())).create().show();
         }
     }
 

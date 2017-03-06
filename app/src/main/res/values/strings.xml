@@ -28,4 +28,7 @@
     <string name="selectGroup_title">Wybierz grupę</string>
     <string name="selectGroup_confirm">Potwierdź</string>
     <string name="selectCalendar_title">Wybierz kalendarz</string>
+    <string name="DeleteEvents_title">Usuń zbędne wydarzenia</string>
+    <string name="DeleteEvents_confirm">Potwierdź</string>
+    <string name="DeleteEvents_cancel">Anuluj</string>
 </resources>

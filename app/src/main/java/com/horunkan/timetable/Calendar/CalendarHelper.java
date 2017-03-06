@@ -14,6 +14,7 @@ import com.horunkan.timetable.Lesson.Lesson;
 import com.horunkan.timetable.Timetable;
 import com.horunkan.timetable.utilities.DateParser;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -76,6 +77,31 @@ public class CalendarHelper {
             Log.e(logcat, e.getMessage());
             return false;
         }
+    }
+
+    public static ArrayList<String> getEvents(Timetable activity, String date) {
+        ArrayList<String> buffer = new ArrayList<>();
+
+        try {
+            Calendar startTime = getCalendar(date, "00:00");
+            Calendar endTime = getCalendar(date, "23:59");
+
+            ContentResolver content = activity.getContentResolver();
+            String queryProjection[] = {Events._ID, Events.TITLE};
+            String querySelection = String.format("(deleted != 1 and dtstart>%s and dtend <%s)", startTime.getTimeInMillis(), endTime.getTimeInMillis());
+            Cursor cursor = content.query(Events.CONTENT_URI, queryProjection, querySelection, null, null);
+
+            while(cursor.moveToNext()) buffer.add(cursor.getString(0) + "," + cursor.getString(1));
+            cursor.close();
+        }
+        catch (SecurityException e) {
+            Log.e(logcat, "NO PERMISSIONS FOR CALENDAR");
+        }
+        catch (Exception e) {
+            Log.e(logcat, e.getMessage());
+        }
+
+        return buffer;
     }
 
     private static void addAlarm(ContentResolver content, long eventID, int lessonIndex) throws SecurityException {
