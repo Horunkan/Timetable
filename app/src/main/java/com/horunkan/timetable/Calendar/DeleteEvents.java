@@ -50,6 +50,7 @@ public class DeleteEvents extends AlertDialog.Builder  implements DialogInterfac
         if(which == AlertDialog.BUTTON_POSITIVE) {
             Log.i(logcat, "Pressed confirm");
             delete();
+            activity.forceAddToCalendar();
         }
         else if(which == AlertDialog.BUTTON_NEGATIVE) {
             Log.i(logcat, "Pressed cancel");
