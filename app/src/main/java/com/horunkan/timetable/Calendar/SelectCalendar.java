@@ -21,7 +21,7 @@ public class SelectCalendar extends AlertDialog.Builder implements DialogInterfa
         super(activity);
         this.activity = activity;
 
-        this.setSingleChoiceItems(CalendarHelper.getAvailableCalendars(activity), selectedCalendar, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, this);
+        this.setSingleChoiceItems(CalendarHelper.getAvailableCalendars(activity), selectedCalendar-1, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, this);
         this.setTitle(activity.getResources().getString(R.string.selectCalendar_title));
         if(firstRun) this.setCancelable(false);
     }

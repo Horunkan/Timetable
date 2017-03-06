@@ -123,6 +123,7 @@ public class Timetable extends AppCompatActivity {
         }
         else if(item.getItemId() == R.id.menu_timetable_calendar) {
             Log.i(logcat, "Selected 'select calendar' menu item");
+            new SelectCalendar(this).create().show();
             return true;
         }
         return super.onOptionsItemSelected(item);
