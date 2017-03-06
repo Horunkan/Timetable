@@ -49,6 +49,7 @@ public class Lesson extends TextView implements View.OnClickListener {
 
     public String getStartTime() { return startTime; }
     public String getEndTime() { return endTime; }
+    public String getTitle() { return title; }
     public String getDescription() { return description; }
 
     private void formatString(String rawLesson) {

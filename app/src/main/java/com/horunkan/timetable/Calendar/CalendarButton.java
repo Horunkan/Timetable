@@ -32,5 +32,6 @@ public class CalendarButton implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Log.i(logcat, "Clicked");
+        timetable.addToCalendar();
     }
 }

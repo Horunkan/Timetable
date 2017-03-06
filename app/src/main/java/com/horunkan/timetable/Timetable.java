@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import com.horunkan.timetable.Calendar.CalendarButton;
+import com.horunkan.timetable.Calendar.CalendarHelper;
 import com.horunkan.timetable.Calendar.SelectCalendar;
 import com.horunkan.timetable.Date.DateSpinner;
 import com.horunkan.timetable.Date.MeetingsDates;
@@ -100,6 +101,13 @@ public class Timetable extends AppCompatActivity {
             refreshButton.display();
             calendarButton.hide();
         }
+    }
+
+    public void addToCalendar() {
+        List<Lesson> buffer = new ArrayList<>();
+
+        for(Lesson less : lessons.getLessons(group.get())) if(SelectGroup.canAddLesson(less)) buffer.add(less);
+        for(int i = 0; i < buffer.size(); ++i) CalendarHelper.addToCalendar(this, date.get(), buffer.get(i), i);
     }
 
     private boolean isConnectedToInternet() {
