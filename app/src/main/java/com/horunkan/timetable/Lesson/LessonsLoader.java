@@ -59,7 +59,7 @@ public class LessonsLoader {
         lessons[index] = new ArrayList<>();
 
         for(String str : arr) {
-            if(!str.contains("zajęcia zostały")) lessons[index].add(new Lesson(activity, str)); //TODO Canceled lessons generate bugs with lessons loading
+            lessons[index].add(new Lesson(activity, str));
             Log.i(logcatVal, str);
         }
 
