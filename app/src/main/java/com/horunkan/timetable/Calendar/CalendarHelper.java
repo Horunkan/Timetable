@@ -59,14 +59,12 @@ public class CalendarHelper {
             ContentResolver content = act.getContentResolver();
             String queryProjection[] = {Events._ID};
             String querySelection = String.format("(deleted != 1 and dtstart>%s and dtend <%s)", startTime.getTimeInMillis(), endTime.getTimeInMillis());
-            //String querySelection = "(deleted != 1 and dtstart>" + startTime.getTimeInMillis() + " and dtend <" + endTime.getTimeInMillis() + ")";
 
             Cursor cursor = content.query(Events.CONTENT_URI, queryProjection, querySelection, null, null);
             int count = cursor.getCount();
             cursor.close();
 
             Log.i(logcat, String.format("Found %d events.", count));
-
             if(count > 0) return true;
             else return false;
         }

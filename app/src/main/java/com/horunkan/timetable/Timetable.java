@@ -104,10 +104,12 @@ public class Timetable extends AppCompatActivity {
     }
 
     public void addToCalendar() {
-        List<Lesson> buffer = new ArrayList<>();
+        if(!CalendarHelper.anyEventExists(this, date.get())) {
+            List<Lesson> buffer = new ArrayList<>();
 
-        for(Lesson less : lessons.getLessons(group.get())) if(SelectGroup.canAddLesson(less)) buffer.add(less);
-        for(int i = 0; i < buffer.size(); ++i) CalendarHelper.addToCalendar(this, date.get(), buffer.get(i), i);
+            for(Lesson less : lessons.getLessons(group.get())) if(SelectGroup.canAddLesson(less)) buffer.add(less);
+            for(int i = 0; i < buffer.size(); ++i) CalendarHelper.addToCalendar(this, date.get(), buffer.get(i), i);
+        }
     }
 
     private boolean isConnectedToInternet() {
