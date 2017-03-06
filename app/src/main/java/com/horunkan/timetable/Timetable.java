@@ -18,6 +18,7 @@ import com.horunkan.timetable.Lesson.FreeTime;
 import com.horunkan.timetable.Lesson.Lesson;
 import com.horunkan.timetable.Lesson.LessonsLoader;
 import com.horunkan.timetable.Group.GroupSpinner;
+import com.horunkan.timetable.utilities.CalendarButton;
 import com.horunkan.timetable.utilities.RefreshButton;
 import com.horunkan.timetable.Timestamp.Timestamp;
 import com.horunkan.timetable.Timestamp.TimestampLine;
@@ -29,6 +30,7 @@ public class Timetable extends AppCompatActivity {
     private static final String logcat = "Timetable";
 
     private RefreshButton refreshButton;
+    private CalendarButton calendarButton;
     private GroupSpinner group;
     private DateSpinner date;
     private LinearLayout lessonLayout;
@@ -44,6 +46,7 @@ public class Timetable extends AppCompatActivity {
         SelectGroup.load(this);
 
         refreshButton = new RefreshButton(this);
+        calendarButton = new CalendarButton(this);
         group = new GroupSpinner(this);
         lessonLayout = (LinearLayout)findViewById(R.id.LessonLayout);
 
@@ -59,7 +62,10 @@ public class Timetable extends AppCompatActivity {
             date = new DateSpinner(this, meetingsDates.get());
             refreshSelectedDate();
         }
-        else refreshButton.display();
+        else {
+            refreshButton.display();
+            calendarButton.hide();
+        }
     }
 
     public void refreshSelectedDate() {
@@ -85,8 +91,13 @@ public class Timetable extends AppCompatActivity {
                 }
             }
             else lessonLayout.addView(new Lesson(this, "brak zajęć"));
+
+            calendarButton.display();
         }
-        else refreshButton.display();
+        else {
+            refreshButton.display();
+            calendarButton.hide();
+        }
     }
 
     private boolean isConnectedToInternet() {
