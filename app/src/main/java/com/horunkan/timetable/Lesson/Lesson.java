@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.horunkan.timetable.R;
 import com.horunkan.timetable.Timetable;
 import com.horunkan.timetable.utilities.DateParser;
-import com.horunkan.timetable.utilities.Timestamp;
+import com.horunkan.timetable.Timestamp.Timestamp;
 
 public class Lesson extends TextView implements View.OnClickListener {
     private static final String logcat = "Lesson";

@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.horunkan.timetable.Timetable;
 import com.horunkan.timetable.utilities.DateParser;
-import com.horunkan.timetable.utilities.Timestamp;
+import com.horunkan.timetable.Timestamp.Timestamp;
 
 public class FreeTime extends TextView {
     private static final String logcat = "FreeTime";

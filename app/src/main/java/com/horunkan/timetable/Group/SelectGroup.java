@@ -1,4 +1,4 @@
-package com.horunkan.timetable;
+package com.horunkan.timetable.Group;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -7,6 +7,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.horunkan.timetable.Lesson.Lesson;
+import com.horunkan.timetable.R;
+import com.horunkan.timetable.Timetable;
 
 public class SelectGroup extends AlertDialog.Builder implements DialogInterface.OnMultiChoiceClickListener, DialogInterface.OnClickListener {
     private static String logcat = "SelectGroup";

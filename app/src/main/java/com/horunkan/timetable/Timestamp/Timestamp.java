@@ -1,4 +1,4 @@
-package com.horunkan.timetable.utilities;
+package com.horunkan.timetable.Timestamp;
 
 import android.widget.LinearLayout;
 import android.widget.TextView;

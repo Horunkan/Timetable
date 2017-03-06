@@ -1,4 +1,4 @@
-package com.horunkan.timetable.utilities;
+package com.horunkan.timetable.Group;
 
 import android.util.Log;
 import android.view.View;
