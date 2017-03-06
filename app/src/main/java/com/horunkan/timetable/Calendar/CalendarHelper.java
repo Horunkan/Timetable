@@ -2,6 +2,7 @@ package com.horunkan.timetable.Calendar;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
@@ -102,6 +103,12 @@ public class CalendarHelper {
         }
 
         return buffer;
+    }
+
+    public static void deleteEvent(Timetable activity, long id) {
+        ContentResolver content = activity.getContentResolver();
+        Uri toDelete = ContentUris.withAppendedId(Events.CONTENT_URI, id);
+        content.delete(toDelete, null, null);
     }
 
     private static void addAlarm(ContentResolver content, long eventID, int lessonIndex) throws SecurityException {
