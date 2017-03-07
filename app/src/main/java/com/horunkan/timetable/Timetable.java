@@ -1,15 +1,20 @@
 package com.horunkan.timetable;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.horunkan.timetable.Calendar.CalendarButton;
 import com.horunkan.timetable.Calendar.CalendarHelper;
@@ -38,25 +43,16 @@ public class Timetable extends AppCompatActivity {
     private DateSpinner date;
     private LinearLayout lessonLayout;
     private LessonsLoader lessons;
-    private Timestamp timestamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         Log.i(logcat, "Start application");
-        TimestampLine.init(this);
-        SelectCalendar.load(this);
-        SelectGroup.load(this);
-
-        refreshButton = new RefreshButton(this);
-        calendarButton = new CalendarButton(this);
-        group = new GroupSpinner(this);
-        lessonLayout = (LinearLayout)findViewById(R.id.LessonLayout);
-        timestamp = new Timestamp(this);
-
-        refresh();
+        if(checkCalendarPermissions()) initialize();
+        Log.i(logcat, "Finished initialization");
     }
 
     public void refresh() {
@@ -122,10 +118,40 @@ public class Timetable extends AppCompatActivity {
         for(int i = 0; i < buffer.size(); ++i) CalendarHelper.addToCalendar(this, date.get(), buffer.get(i), i);
     }
 
+    private void initialize() {
+        TimestampLine.init(this);
+        SelectCalendar.load(this);
+        SelectGroup.load(this);
+
+        refreshButton = new RefreshButton(this);
+        calendarButton = new CalendarButton(this);
+        group = new GroupSpinner(this);
+        lessonLayout = (LinearLayout)findViewById(R.id.LessonLayout);
+        new Timestamp(this);
+
+        refresh();
+    }
+
     private boolean isConnectedToInternet() {
+        Log.i(logcat, "Check internet connection");
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        Log.i(logcat, String.format("Network connection: %s", netInfo.isConnected()));
         return netInfo != null && netInfo.isConnected();
+    }
+
+    private boolean checkCalendarPermissions() {
+        Log.i(logcat, "Check permissions for calendar");
+        String[] permissions = {Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR};
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_DENIED) {
+            Log.i(logcat, "No permissions for the calendar");
+            ActivityCompat.requestPermissions(this, permissions, 1);
+            return false;
+        }
+
+        Log.i(logcat, "Granted access to calendar");
+        return true;
     }
 
     @Override
@@ -147,5 +173,21 @@ public class Timetable extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if(requestCode == 1) {
+            if(grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                Log.i(logcat, "Denied permissions for calendar");
+                Toast.makeText(this, R.string.Toast_permissionsAreNeeded, Toast.LENGTH_LONG).show();
+                this.finishAffinity();
+            }
+            else {
+                Log.i(logcat, "Granted access to calendar");
+                initialize();
+            }
+        }
+        else onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
