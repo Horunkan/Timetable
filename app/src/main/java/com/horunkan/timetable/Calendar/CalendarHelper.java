@@ -46,7 +46,7 @@ public class CalendarHelper {
             addAlarm(content, eventID, lessonIndex);
         }
         catch (SecurityException e) {
-            Log.e(logcat, "NO PERMISSIONS FOR CALENDAR");
+            Log.w(logcat, "No permissions for calendar");
         }
         catch (Exception e) {
             Log.e(logcat, e.getMessage());
@@ -71,7 +71,7 @@ public class CalendarHelper {
             else return false;
         }
         catch (SecurityException e) {
-            Log.e(logcat, "NO PERMISSIONS FOR CALENDAR");
+            Log.w(logcat, "No permissions for calendar");
             return false;
         }
         catch (Exception e) {
@@ -96,7 +96,7 @@ public class CalendarHelper {
             cursor.close();
         }
         catch (SecurityException e) {
-            Log.e(logcat, "NO PERMISSIONS FOR CALENDAR");
+            Log.w(logcat, "No permissions for calendar");
         }
         catch (Exception e) {
             Log.e(logcat, e.getMessage());
@@ -129,17 +129,31 @@ public class CalendarHelper {
     }
 
     public static Cursor getAvailableCalendars(Timetable activity) {
-        Uri CALENDAR_URI = Uri.parse("content://com.android.calendar/calendars");
-        String[] fields = {CalendarContract.Calendars._ID, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME};
+        try {
+            Uri CALENDAR_URI = Uri.parse("content://com.android.calendar/calendars");
+            String[] fields = {CalendarContract.Calendars._ID, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME};
 
-        ContentResolver contentResolver = activity.getContentResolver();
-        Cursor cursor = contentResolver.query(CALENDAR_URI, fields, null, null, null);
+            ContentResolver contentResolver = activity.getContentResolver();
+            Cursor cursor = contentResolver.query(CALENDAR_URI, fields, null, null, null);
 
-        Log.i(logcatVal, "Found calendars: ");
-        while (cursor.moveToNext()) Log.i(logcatVal, String.format("ID: %s, Name: %s", cursor.getString(0), cursor.getString(1)));
-        Log.i(logcat, String.format("Total calendars found: %d", cursor.getCount()));
-        cursor.moveToFirst();
+            Log.i(logcatVal, "Found calendars: ");
+            while (cursor.moveToNext()) Log.i(logcatVal, String.format("ID: %s, Name: %s", cursor.getString(0), cursor.getString(1)));
+            Log.i(logcat, String.format("Total calendars found: %d", cursor.getCount()));
+            cursor.moveToFirst();
 
-        return cursor;
+            return cursor;
+        }
+        catch (SecurityException e) {
+            Log.w(logcat, "No permissions for calendar");
+            return null;
+        }
+        catch (Exception e) {
+            Log.e(logcat, e.getMessage());
+            return null;
+        }
+
+
+
+
     }
 }
