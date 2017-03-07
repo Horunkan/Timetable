@@ -46,13 +46,15 @@ public class Timetable extends AppCompatActivity {
         setContentView(R.layout.activity_timetable);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Log.i(logcat, "Start application");
-        SelectGroup.load(this);
+        TimestampLine.init(this);
         SelectCalendar.load(this);
+        SelectGroup.load(this);
 
         refreshButton = new RefreshButton(this);
         calendarButton = new CalendarButton(this);
         group = new GroupSpinner(this);
         lessonLayout = (LinearLayout)findViewById(R.id.LessonLayout);
+        timestamp = new Timestamp(this);
 
         refresh();
     }
@@ -60,9 +62,6 @@ public class Timetable extends AppCompatActivity {
     public void refresh() {
         if(isConnectedToInternet()) {
             MeetingsDates meetingsDates = new MeetingsDates(this);
-            TimestampLine.init(this);
-            if(timestamp == null) timestamp = new Timestamp(this);
-
             date = new DateSpinner(this, meetingsDates.get());
             refreshSelectedDate();
         }
