@@ -137,7 +137,7 @@ public class Timetable extends AppCompatActivity {
         Log.i(logcat, "Check internet connection");
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        Log.i(logcat, String.format("Network connection: %s", netInfo.isConnected()));
+        if(netInfo != null) Log.i(logcat, String.format("Network connection: %s", netInfo.isConnected()));
         return netInfo != null && netInfo.isConnected();
     }
 
