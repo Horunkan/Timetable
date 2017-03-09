@@ -105,6 +105,7 @@ public class Timetable extends AppCompatActivity {
 
             for(Lesson less : lessons.getLessons(group.get())) if(SelectGroup.canAddLesson(less)) buffer.add(less);
             for(int i = 0; i < buffer.size(); ++i) CalendarHelper.addToCalendar(this, date.get(), buffer.get(i), i);
+            Toast.makeText(this, R.string.Toast_addedToCalendar, Toast.LENGTH_LONG).show();
         }
         else {
             new DeleteEvents(this, CalendarHelper.getEvents(this, date.get())).create().show();

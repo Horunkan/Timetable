@@ -32,4 +32,5 @@
     <string name="DeleteEvents_confirm">Potwierdź</string>
     <string name="DeleteEvents_cancel">Anuluj</string>
     <string name="Toast_permissionsAreNeeded">Dostęp do kalendarza jest wymagany do korzystania z aplikacji.</string>
+    <string name="Toast_addedToCalendar">Dodano do kalendarza</string>
 </resources>

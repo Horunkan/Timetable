@@ -3,6 +3,7 @@ package com.horunkan.timetable.Calendar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.horunkan.timetable.R;
 import com.horunkan.timetable.Timetable;
@@ -37,6 +38,7 @@ public class DeleteEvents extends AlertDialog.Builder  implements DialogInterfac
         for(int i = 0; i < events.size(); ++i) {
             if(selected[i]) CalendarHelper.deleteEvent(activity, Long.parseLong(events.get(i).split(",")[0]));
         }
+        Toast.makeText(activity, R.string.Toast_addedToCalendar, Toast.LENGTH_LONG).show();
     }
 
     @Override  //Multi check
