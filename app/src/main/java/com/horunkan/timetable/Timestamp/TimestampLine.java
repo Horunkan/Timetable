@@ -14,47 +14,55 @@ import com.horunkan.timetable.Timetable;
 
 public class TimestampLine {
     private static final String logcat = "TimestampLine";
-    private static final int lineColor = Color.LTGRAY;
-    private static final int lineStroke = 3;
+    private static final String logcatVal = logcat + "-value";
 
-    private static Bitmap bitmap;
-    private static int windowWidth, windowHeight;
-    private static Canvas canvas;
-    private static Paint paint;
-    private static RelativeLayout layout;
-    private static ImageView imageView;
+    private final int lineStroke;
+    private final int lineColor;
 
-    public TimestampLine(Timetable activity, int posY) {
-        if(bitmap == null) init(activity);
+    private int windowWidth;
+    private int windowHeight;
+    private ImageView imageView;
+    private RelativeLayout layout;
+    private Bitmap bitmap;
+    private Canvas canvas;
+    private Paint paint;
 
-        canvas.drawLine(0, posY, windowWidth, posY, paint);
-    }
-
-    public static void init(Timetable activity) {
+    public TimestampLine(Timetable activity, int count, float startPosY) {
         Log.i(logcat, "Initialize TimestampLine");
-        initializeBitmap(activity);
+        lineStroke = 3;
+        lineColor = Color.LTGRAY;
+        initializeBitmap(activity, count);
         initializePaint();
         initializeImageView(activity);
+        ++count;
+
+        for(int i = 0; i < count; ++i) {
+            float posY = startPosY + (i * Timestamp.hourHeight);
+            Log.i(logcatVal, String.format("Add line on position: %.2f", posY));
+            canvas.drawLine(0, posY, windowWidth, posY, paint);
+        }
+
+        Log.i(logcat, String.format("Timestamp lines added. Total count: %d", count));
     }
 
-    private static void initializeBitmap(Timetable activity) {
+    private void initializeBitmap(Timetable activity, int lineCount) {
         DisplayMetrics display = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(display);
 
         windowWidth = display.widthPixels;
-        windowHeight = display.heightPixels;
+        windowHeight = lineCount * Timestamp.hourHeight;
 
-        bitmap = Bitmap.createBitmap(windowWidth, windowHeight + 150, Bitmap.Config.ARGB_8888);
+        bitmap = Bitmap.createBitmap(windowWidth, windowHeight, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
     }
 
-    private static void initializePaint() {
+    private void initializePaint() {
         paint = new Paint();
         paint.setColor(lineColor);
         paint.setStrokeWidth(lineStroke);
     }
 
-    private static void initializeImageView(Timetable activity) {
+    private void initializeImageView(Timetable activity) {
         imageView = new ImageView(activity);
         imageView.setImageBitmap(bitmap);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);

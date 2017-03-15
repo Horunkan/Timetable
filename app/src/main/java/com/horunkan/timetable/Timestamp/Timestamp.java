@@ -26,10 +26,6 @@ public class Timestamp {
             layout.addView(buffer);
         }
 
-        addLines(activity, endHour - startHour);
-    }
-
-    private void addLines(Timetable activity, int lineCount) {
-        for(int i = 0; i <= lineCount; ++i) new TimestampLine(activity, i * hourHeight);
+        new TimestampLine(activity, endHour - startHour + 1, 0);
     }
 }
