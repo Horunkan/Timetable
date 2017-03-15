@@ -26,25 +26,31 @@ public class TimestampLine {
     private Bitmap bitmap;
     private Canvas canvas;
     private Paint paint;
-
-    public TimestampLine(Timetable activity, int count, float startPosY) { this(activity, count, startPosY, 3, Color.LTGRAY); }
-
-    public TimestampLine(Timetable activity, int count, float startPosY, int stroke, int color) {
+    
+    //Default constructor
+    public TimestampLine(Timetable activity, int count, int stroke, int color) {
         Log.i(logcat, "Initialize TimestampLine");
         lineStroke = stroke;
         lineColor = color;
         initializeBitmap(activity, count);
         initializePaint();
         initializeImageView(activity);
-        ++count;
+        Log.i(logcat, "Finished TimestampLine initialization");
+    }
 
+    public TimestampLine(Timetable activity, int count, float startPosY) {
+        this(activity, count, 3, Color.LTGRAY);
+        addLines(count, startPosY);
+    }
+
+    private void addLines(int count, float startPosY) {
         for(int i = 0; i < count; ++i) {
             float posY = startPosY + (i * Timestamp.hourHeight);
             Log.i(logcatVal, String.format("Add line on position: %.2f", posY));
             canvas.drawLine(0, posY, windowWidth, posY, paint);
         }
 
-        Log.i(logcat, String.format("Timestamp lines added. Total count: %d", count));
+        Log.i(logcat, String.format("Lines added: %d", count));
     }
 
     private void initializeBitmap(Timetable activity, int lineCount) {
@@ -52,7 +58,7 @@ public class TimestampLine {
         activity.getWindowManager().getDefaultDisplay().getMetrics(display);
 
         windowWidth = display.widthPixels;
-        windowHeight = lineCount * Timestamp.hourHeight;
+        windowHeight = lineCount * Timestamp.hourHeight + lineStroke;
 
         bitmap = Bitmap.createBitmap(windowWidth, windowHeight, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
