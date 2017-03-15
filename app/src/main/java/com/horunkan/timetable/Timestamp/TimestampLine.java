@@ -27,10 +27,12 @@ public class TimestampLine {
     private Canvas canvas;
     private Paint paint;
 
-    public TimestampLine(Timetable activity, int count, float startPosY) {
+    public TimestampLine(Timetable activity, int count, float startPosY) { this(activity, count, startPosY, 3, Color.LTGRAY); }
+
+    public TimestampLine(Timetable activity, int count, float startPosY, int stroke, int color) {
         Log.i(logcat, "Initialize TimestampLine");
-        lineStroke = 3;
-        lineColor = Color.LTGRAY;
+        lineStroke = stroke;
+        lineColor = color;
         initializeBitmap(activity, count);
         initializePaint();
         initializeImageView(activity);
