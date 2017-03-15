@@ -16,17 +16,17 @@ public class TimestampLine {
     private static final String logcat = "TimestampLine";
     private static final String logcatVal = logcat + "-value";
 
-    private final int lineStroke;
-    private final int lineColor;
+    protected final int lineStroke;
+    protected final int lineColor;
 
-    private int windowWidth;
-    private int windowHeight;
-    private ImageView imageView;
-    private RelativeLayout layout;
-    private Bitmap bitmap;
-    private Canvas canvas;
-    private Paint paint;
-    
+    protected int windowWidth;
+    protected int windowHeight;
+    protected ImageView imageView;
+    protected RelativeLayout layout;
+    protected Bitmap bitmap;
+    protected Canvas canvas;
+    protected Paint paint;
+
     //Default constructor
     public TimestampLine(Timetable activity, int count, int stroke, int color) {
         Log.i(logcat, "Initialize TimestampLine");
