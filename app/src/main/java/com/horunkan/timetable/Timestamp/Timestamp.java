@@ -27,5 +27,6 @@ public class Timestamp {
         }
 
         new TimestampLine(activity, endHour - startHour + 1, 0);
+        new ActiveTimeLine(activity);
     }
 }
