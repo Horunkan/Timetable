@@ -14,47 +14,63 @@ import com.horunkan.timetable.Timetable;
 
 public class TimestampLine {
     private static final String logcat = "TimestampLine";
-    private static final int lineColor = Color.LTGRAY;
-    private static final int lineStroke = 3;
+    private static final String logcatVal = logcat + "-value";
 
-    private static Bitmap bitmap;
-    private static int windowWidth, windowHeight;
-    private static Canvas canvas;
-    private static Paint paint;
-    private static RelativeLayout layout;
-    private static ImageView imageView;
+    protected final int lineStroke;
+    protected final int lineColor;
 
-    public TimestampLine(Timetable activity, int posY) {
-        if(bitmap == null) init(activity);
+    protected int windowWidth;
+    protected int windowHeight;
+    protected ImageView imageView;
+    protected RelativeLayout layout;
+    protected Bitmap bitmap;
+    protected Canvas canvas;
+    protected Paint paint;
 
-        canvas.drawLine(0, posY, windowWidth, posY, paint);
-    }
-
-    public static void init(Timetable activity) {
+    //Default constructor
+    public TimestampLine(Timetable activity, int count, int stroke, int color) {
         Log.i(logcat, "Initialize TimestampLine");
-        initializeBitmap(activity);
+        lineStroke = stroke;
+        lineColor = color;
+        initializeBitmap(activity, count);
         initializePaint();
         initializeImageView(activity);
+        Log.i(logcat, "Finished TimestampLine initialization");
     }
 
-    private static void initializeBitmap(Timetable activity) {
+    public TimestampLine(Timetable activity, int count, float startPosY) {
+        this(activity, count, 3, Color.LTGRAY);
+        addLines(count, startPosY);
+    }
+
+    private void addLines(int count, float startPosY) {
+        for(int i = 0; i < count; ++i) {
+            float posY = startPosY + (i * Timestamp.hourHeight);
+            Log.i(logcatVal, String.format("Add line on position: %.2f", posY));
+            canvas.drawLine(0, posY, windowWidth, posY, paint);
+        }
+
+        Log.i(logcat, String.format("Lines added: %d", count));
+    }
+
+    private void initializeBitmap(Timetable activity, int lineCount) {
         DisplayMetrics display = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(display);
 
         windowWidth = display.widthPixels;
-        windowHeight = display.heightPixels;
+        windowHeight = lineCount * Timestamp.hourHeight + lineStroke;
 
-        bitmap = Bitmap.createBitmap(windowWidth, windowHeight + 150, Bitmap.Config.ARGB_8888);
+        bitmap = Bitmap.createBitmap(windowWidth, windowHeight, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
     }
 
-    private static void initializePaint() {
+    private void initializePaint() {
         paint = new Paint();
         paint.setColor(lineColor);
         paint.setStrokeWidth(lineStroke);
     }
 
-    private static void initializeImageView(Timetable activity) {
+    private void initializeImageView(Timetable activity) {
         imageView = new ImageView(activity);
         imageView.setImageBitmap(bitmap);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);

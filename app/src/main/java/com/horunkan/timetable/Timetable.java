@@ -28,7 +28,6 @@ import com.horunkan.timetable.Lesson.FreeTime;
 import com.horunkan.timetable.Lesson.Lesson;
 import com.horunkan.timetable.Lesson.LessonsLoader;
 import com.horunkan.timetable.Timestamp.Timestamp;
-import com.horunkan.timetable.Timestamp.TimestampLine;
 import com.horunkan.timetable.utilities.RefreshButton;
 
 import java.util.ArrayList;
@@ -120,7 +119,6 @@ public class Timetable extends AppCompatActivity {
     }
 
     private void initialize() {
-        TimestampLine.init(this);
         SelectCalendar.load(this);
         SelectGroup.load(this);
 

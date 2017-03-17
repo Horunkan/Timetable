@@ -8,9 +8,9 @@ import com.horunkan.timetable.Timetable;
 
 public class Timestamp {
     public static final int hourHeight = 60 * 2;
+    public static final int startHour = 8;
+    public static final int endHour = 19;
 
-    private final int startHour = 8;
-    private final int endHour = 19;
     private LinearLayout layout;
 
     public Timestamp(Timetable activity) {
@@ -26,10 +26,7 @@ public class Timestamp {
             layout.addView(buffer);
         }
 
-        addLines(activity, endHour - startHour);
-    }
-
-    private void addLines(Timetable activity, int lineCount) {
-        for(int i = 0; i <= lineCount; ++i) new TimestampLine(activity, i * hourHeight);
+        new TimestampLine(activity, endHour - startHour + 1, 0);
+        new ActiveTimeLine(activity);
     }
 }
