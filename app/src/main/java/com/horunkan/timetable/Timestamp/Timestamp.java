@@ -1,5 +1,6 @@
 package com.horunkan.timetable.Timestamp;
 
+import android.icu.util.Calendar;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,6 +28,9 @@ public class Timestamp {
         }
 
         new TimestampLine(activity, endHour - startHour + 1, 0);
-        new ActiveTimeLine(activity);
+
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY) + 1;
+        if( hour <= endHour + 1 && hour >= startHour) new ActiveTimeLine(activity);
     }
 }
