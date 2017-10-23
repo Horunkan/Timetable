@@ -29,7 +29,8 @@ public class MeetingsDates {
         dates = new ArrayList<>();
         months = con.getResources().getStringArray(R.array.months);
 
-        meetingTable[0] = pref.getString("MeetingTableWinter", "https://inf.ug.edu.pl/terminy-zjazdow-semestr-zimowy-201617.print");
+        //meetingTable[0] = pref.getString("MeetingTableWinter", "https://inf.ug.edu.pl/terminy-zjazdow-semestr-zimowy-201617.print");
+        meetingTable[0] = "https://inf.ug.edu.pl/terminy-zjazdow-semestr-zimowy-2017-18.print";
         meetingTable[1] = pref.getString("MeetingTableSummer", "https://inf.ug.edu.pl/terminy-zjazdow-sem-letni-2016-17.print");
 
         loadDates();
