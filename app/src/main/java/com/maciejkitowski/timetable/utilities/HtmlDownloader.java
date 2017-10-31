@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
-//TODO Not tested yet, prepare Unit tests
 public final class HtmlDownloader extends AsyncTask<String, Integer, String[]> {
     private static final String logcat = "HTML-downloader";
 
@@ -25,7 +24,7 @@ public final class HtmlDownloader extends AsyncTask<String, Integer, String[]> {
         if(downloaded.size() == source.length) Log.i(logcat, "Downloading pages finished");
         else Log.w(logcat, String.format("Downloaded %d pages, should: %d", downloaded.size(), source.length));
 
-        return (String[])downloaded.toArray();
+        return downloaded.toArray(new String[downloaded.size()]);
     }
 
     private String loadPage(String source) {
