@@ -1,4 +1,4 @@
-package com.maciejkitowski.timetable;
+package com.maciejkitowski.timetable.utilities;
 
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
