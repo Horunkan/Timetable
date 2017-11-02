@@ -3,14 +3,14 @@ package com.maciejkitowski.timetable.utilities;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
-import com.maciejkitowski.timetable.utilities.HtmlDownloader;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Arrays;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class HtmlDownloaderTest {
