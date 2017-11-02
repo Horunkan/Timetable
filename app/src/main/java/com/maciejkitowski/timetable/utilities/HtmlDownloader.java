@@ -12,6 +12,21 @@ import java.util.ArrayList;
 public final class HtmlDownloader extends AsyncTask<String, Integer, String[]> {
     private static final String logcat = "HTML-downloader";
 
+    private IDownloadable callSource = null;
+    private boolean downloadFailed = false;
+
+    public HtmlDownloader() { }
+
+    public HtmlDownloader(IDownloadable source) {
+        callSource = source;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        Log.i(logcat, "Start download.");
+        if(callSource != null) callSource.downloadStarted();
+    }
+
     @Override
     protected String[] doInBackground(String... source) {
         Log.i(logcat, String.format("Start downloading %d HTML pages.", source.length));
@@ -25,6 +40,20 @@ public final class HtmlDownloader extends AsyncTask<String, Integer, String[]> {
         else Log.w(logcat, String.format("Downloaded %d pages, should: %d", downloaded.size(), source.length));
 
         return downloaded.toArray(new String[downloaded.size()]);
+    }
+
+    @Override
+    protected void onPostExecute(String[] strings) {
+        if(downloadFailed) {
+            Log.w(logcat, "Download failed!");
+            if(callSource != null) callSource.downloadFailed();
+        }
+        else {
+            Log.i(logcat, "Download finished!");
+            if(callSource != null) callSource.downloadSuccessful();
+        }
+
+        super.onPostExecute(strings);
     }
 
     private String loadPage(String source) {
@@ -42,6 +71,7 @@ public final class HtmlDownloader extends AsyncTask<String, Integer, String[]> {
         }
         catch (Exception ex) {
             Log.e(logcat, ex.getMessage());
+            downloadFailed = true;
 
             return null;
         }

@@ -3,9 +3,11 @@ package com.maciejkitowski.timetable.Date;
 import android.content.Context;
 import android.util.Log;
 
+import com.maciejkitowski.timetable.utilities.IDownloadable;
+
 import java.io.File;
 
-final class DateFileLoader implements ILoader {
+final class DateFileLoader implements ILoader, IDownloadable {
     private static final String logcat = "DateFileLoader";
     static final String filename = "dates.json";
 
@@ -21,5 +23,20 @@ final class DateFileLoader implements ILoader {
 
         Log.i(logcat, String.format("File %s found: %s", filename, file.exists()));
         return file.exists();
+    }
+
+    @Override
+    public void downloadStarted() {
+
+    }
+
+    @Override
+    public void downloadSuccessful() {
+
+    }
+
+    @Override
+    public void downloadFailed() {
+
     }
 }
