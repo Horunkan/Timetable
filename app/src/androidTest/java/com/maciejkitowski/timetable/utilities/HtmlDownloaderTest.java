@@ -22,7 +22,6 @@ public class HtmlDownloaderTest {
         downloader.execute("http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php");
         String[] content = downloader.get();
 
-        for(String str : content) Log.i(logcat, str);
         assertNotNull(content);
     }
 
@@ -53,5 +52,38 @@ public class HtmlDownloaderTest {
         String[] pattern = new String[] {content[0], content[0], content[0]};
 
         assertTrue(Arrays.equals(content, pattern));
+    }
+
+    //Tests with response after finish
+    private static class DownloadInterfaceTest implements IDownloadable {
+        enum runResult {STARTED, SUCCESS, FAIL }
+        runResult result = null;
+        @Override
+        public void downloadStarted() {
+            Log.i(logcat, "Download started");
+            result = runResult.STARTED;
+        }
+
+        @Override
+        public void downloadSuccessful() {
+            Log.i(logcat, "Download finished");
+            result = runResult.SUCCESS;
+        }
+
+        @Override
+        public void downloadFailed() {
+            Log.i(logcat, "Download failed");
+            result = runResult.FAIL;
+        }
+    }
+
+    @Test
+    public void interfaceDownloadStatus() throws Exception {
+        DownloadInterfaceTest inter = new DownloadInterfaceTest();
+        HtmlDownloader downloader = new HtmlDownloader(inter);
+        downloader.execute("http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php");
+        downloader.get();
+
+        assertTrue(inter.result != null);
     }
 }
