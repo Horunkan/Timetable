@@ -16,16 +16,16 @@ final class DateWwwLoader implements ILoader, IDownloadable {
 
     @Override
     public void downloadStarted() {
-
+        Log.i(logcat, "Download started");
     }
 
     @Override
     public void downloadSuccessful() {
-
+        Log.i(logcat, "Download success");
     }
 
     @Override
-    public void downloadFailed() {
-
+    public void downloadFailed(Exception exception) {
+        Log.i(logcat, String.format("Download failed with exception: %s", exception.getLocalizedMessage()));
     }
 }

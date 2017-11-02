@@ -14,6 +14,7 @@ public final class HtmlDownloader extends AsyncTask<String, Integer, String[]> {
 
     private IDownloadable callSource = null;
     private boolean downloadFailed = false;
+    private Exception failException = null;
 
     public HtmlDownloader() { }
 
@@ -46,7 +47,7 @@ public final class HtmlDownloader extends AsyncTask<String, Integer, String[]> {
     protected void onPostExecute(String[] strings) {
         if(downloadFailed) {
             Log.w(logcat, "Download failed!");
-            if(callSource != null) callSource.downloadFailed();
+            if(callSource != null) callSource.downloadFailed(failException);
         }
         else {
             Log.i(logcat, "Download finished!");
@@ -72,6 +73,7 @@ public final class HtmlDownloader extends AsyncTask<String, Integer, String[]> {
         catch (Exception ex) {
             Log.e(logcat, ex.getMessage());
             downloadFailed = true;
+            failException = ex;
 
             return null;
         }

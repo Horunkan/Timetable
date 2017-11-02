@@ -71,8 +71,8 @@ public class HtmlDownloaderTest {
         }
 
         @Override
-        public void downloadFailed() {
-            Log.i(logcat, "Download failed");
+        public void downloadFailed(Exception exception) {
+            Log.i(logcat, String.format("Download failed with exception: %s", exception.getLocalizedMessage()));
             result = runResult.FAIL;
         }
     }
@@ -81,7 +81,7 @@ public class HtmlDownloaderTest {
     public void interfaceDownloadStatus() throws Exception {
         DownloadInterfaceTest inter = new DownloadInterfaceTest();
         HtmlDownloader downloader = new HtmlDownloader(inter);
-        downloader.execute("http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php");
+        downloader.execute("https://inf.ug.edu.pl/");
         downloader.get();
 
         assertTrue(inter.result != null);
