@@ -23,7 +23,6 @@ public final class HtmlDownloader extends AsyncTask<String, Void, Void> {
 
     @Override
     protected void onPreExecute() {
-        Log.i(logcat, "Start download.");
         callSource.downloadStarted();
     }
 
