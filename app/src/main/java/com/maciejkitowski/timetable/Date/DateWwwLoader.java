@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.maciejkitowski.timetable.utilities.IDownloadable;
 
+import java.util.ArrayList;
+
 final class DateWwwLoader implements ILoader, IDownloadable {
     private static final String logcat = "DateWwwLoader";
     private final String downloadUrl = "http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php";
@@ -11,7 +13,20 @@ final class DateWwwLoader implements ILoader, IDownloadable {
     @Override
     public void load() {
         Log.i(logcat, "Load dates from url.");
-        Log.e(logcat, "Getting dates from url not implemented yet.");
+
+        /*try {
+            HtmlDownloader downloader = new HtmlDownloader(this);
+            downloader.execute(downloadUrl);
+
+
+            Log.i(logcat, "Download finished.");
+            Log.i(logcat + "-val", json[0]);
+        }
+        catch (Exception ex) {
+            Log.e(logcat, ex.getMessage());
+        }*/
+
+        //Log.e(logcat, "Getting dates from url not implemented yet.");
     }
 
     @Override
@@ -20,7 +35,7 @@ final class DateWwwLoader implements ILoader, IDownloadable {
     }
 
     @Override
-    public void downloadSuccessful() {
+    public void downloadSuccessful(ArrayList<String> content) {
         Log.i(logcat, "Download success");
     }
 

@@ -6,84 +6,56 @@ import android.util.Log;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class HtmlDownloaderTest {
     private static final String logcat = "UnitTest";
 
-    @Test
-    public void downloadOnePageNotNull() throws Exception {
-        HtmlDownloader downloader = new HtmlDownloader();
-        downloader.execute("http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php");
-        String[] content = downloader.get();
+    private static class TestObject implements IDownloadable {
+        public ArrayList<String> downloaded = null;
+        enum DownloadStatus {STARTED, FAILED, FINISHED}
+        public DownloadStatus status;
 
-        assertNotNull(content);
-    }
-
-    @Test
-    public void downloadMultiplePagesCount() throws Exception {
-        String[] pages = new String[3];
-        pages[0] = "http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php";
-        pages[1] = "https://inf.ug.edu.pl/";
-        pages[2] = "https://inf.ug.edu.pl/niestacjonarne";
-
-        HtmlDownloader downloader = new HtmlDownloader();
-        downloader.execute(pages);
-        String[] content = downloader.get();
-
-        assertEquals(content.length, pages.length);
-    }
-
-    @Test
-    public void downloadMultiplePagesEquals() throws Exception {
-        String[] pages = new String[3];
-        pages[0] = "http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php";
-        pages[1] = "http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php";
-        pages[2] = "http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php";
-
-        HtmlDownloader downloader = new HtmlDownloader();
-        downloader.execute(pages);
-        String[] content = downloader.get();
-        String[] pattern = new String[] {content[0], content[0], content[0]};
-
-        assertTrue(Arrays.equals(content, pattern));
-    }
-
-    //Tests with response after finish
-    private static class DownloadInterfaceTest implements IDownloadable {
-        enum runResult {STARTED, SUCCESS, FAIL }
-        runResult result = null;
         @Override
         public void downloadStarted() {
             Log.i(logcat, "Download started");
-            result = runResult.STARTED;
+            status = DownloadStatus.STARTED;
         }
 
         @Override
-        public void downloadSuccessful() {
-            Log.i(logcat, "Download finished");
-            result = runResult.SUCCESS;
+        public void downloadSuccessful(ArrayList<String> content) {
+            Log.i(logcat, "Download success");
+            status = DownloadStatus.FINISHED;
+            downloaded = content;
+            for(String str : downloaded) Log.i(logcat + "-val", str);
         }
 
         @Override
         public void downloadFailed(Exception exception) {
             Log.i(logcat, String.format("Download failed with exception: %s", exception.getLocalizedMessage()));
-            result = runResult.FAIL;
+            status = DownloadStatus.FAILED;
         }
     }
 
     @Test
-    public void interfaceDownloadStatus() throws Exception {
-        DownloadInterfaceTest inter = new DownloadInterfaceTest();
-        HtmlDownloader downloader = new HtmlDownloader(inter);
-        downloader.execute("https://inf.ug.edu.pl/");
-        downloader.get();
+    public void downloadOnePage() throws Exception {
+        TestObject obj = new TestObject();
+        HtmlDownloader downloader = new HtmlDownloader(obj);
+        downloader.execute("https://google.pl").get();
 
-        assertTrue(inter.result != null);
+        assertNotNull(obj.downloaded);
+    }
+
+    @Test
+    public void downloadMultiplePages() throws Exception {
+        String[] pages = new String[] {"https://google.pl", "https://www.wp.pl/", "https://github.com/"};
+        TestObject obj = new TestObject();
+        HtmlDownloader downloader = new HtmlDownloader(obj);
+        downloader.execute(pages).get();
+
+        assertTrue(obj.downloaded.size() == pages.length);
     }
 }
