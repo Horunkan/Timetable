@@ -18,10 +18,13 @@ final class DateWwwLoader implements ILoader, IDownloadable {
     private ArrayList<String> jsonList;
     private Context context;
 
-    @Override
-    public void load(Context context) {
-        Log.i(logcat, "Load dates json from urls.");
+    public DateWwwLoader(Context context) {
         this.context = context;
+    }
+
+    @Override
+    public void load() {
+        Log.i(logcat, "Load dates json from urls.");
         startDownloading();
     }
 

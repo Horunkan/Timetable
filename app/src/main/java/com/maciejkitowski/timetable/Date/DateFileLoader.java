@@ -11,7 +11,7 @@ final class DateFileLoader implements ILoader {
     static final String filename = "dates.json";
 
     @Override
-    public void load(Context context) {
+    public void load() {
         Log.i(logcat, "Load dates from file.");
         Log.e(logcat, "Getting dates from file not implemented yet.");
     }
