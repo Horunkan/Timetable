@@ -16,8 +16,8 @@ public class DateWwwLoaderTest {
     @Test
     public void downloadDates() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        DateWwwLoader loader = new DateWwwLoader();
-        loader.load(context);
+        DateWwwLoader loader = new DateWwwLoader(context);
+        loader.load();
         Thread.sleep(1000);
 
         assertNotNull(loader.getJson());
