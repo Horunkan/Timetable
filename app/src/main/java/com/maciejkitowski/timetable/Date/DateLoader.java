@@ -14,6 +14,6 @@ public final class DateLoader {
         if(DateFileLoader.isDatesSavedOnDevice(context)) loader = new DateFileLoader();
         else loader = new DateWwwLoader();
 
-        loader.load();
+        loader.load(context);
     }
 }

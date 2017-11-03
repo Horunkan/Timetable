@@ -1,5 +1,6 @@
 package com.maciejkitowski.timetable.Date;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.maciejkitowski.timetable.utilities.HtmlDownloader;
@@ -14,7 +15,7 @@ final class DateWwwLoader implements ILoader, IDownloadable {
     private ArrayList<String> jsonList;
 
     @Override
-    public void load() {
+    public void load(Context context) {
         Log.i(logcat, "Load dates json from urls.");
         startDownloading();
     }
