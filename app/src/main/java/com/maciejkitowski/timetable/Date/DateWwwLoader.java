@@ -10,6 +10,7 @@ import com.maciejkitowski.timetable.R;
 import com.maciejkitowski.timetable.utilities.HtmlDownloader;
 import com.maciejkitowski.timetable.utilities.IDownloadable;
 import com.maciejkitowski.timetable.utilities.InternetConnection;
+import com.maciejkitowski.timetable.utilities.LoadingBarToggle;
 
 import java.util.ArrayList;
 
@@ -17,14 +18,14 @@ final class DateWwwLoader implements ILoader, IDownloadable {
     private static final String logcat = "DateWwwLoader";
     private final String[] downloadUrls = {"http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php"};
 
-    private ArrayList<String> jsonList;
     private Context context;
-    private View loadingBar;
+    private ArrayList<String> jsonList;
     private TextView alertTextView;
+    private LoadingBarToggle loadingBar;
 
     public DateWwwLoader(Context context) {
         this.context = context;
-        loadingBar = ((Activity)context).findViewById(R.id.LoadingBar);
+        loadingBar = new LoadingBarToggle(context);
         alertTextView = (TextView)((Activity)context).findViewById(R.id.AlertText);
     }
 
@@ -42,13 +43,13 @@ final class DateWwwLoader implements ILoader, IDownloadable {
     @Override
     public void downloadStarted() {
         Log.i(logcat, "Download started");
-        loadingBar.setVisibility(View.VISIBLE);
+        loadingBar.display();
     }
 
     @Override
     public void downloadSuccessful(ArrayList<String> content) {
         Log.i(logcat, "Download success");
-        loadingBar.setVisibility(View.GONE);
+        loadingBar.hide();
         jsonList = content;
         for(String str : content) Log.i(logcat + "-val", str);
     }
@@ -56,7 +57,7 @@ final class DateWwwLoader implements ILoader, IDownloadable {
     @Override
     public void downloadFailed(Exception exception) {
         Log.w(logcat, String.format("Download failed with exception: %s", exception.getLocalizedMessage()));
-        loadingBar.setVisibility(View.GONE);
+        loadingBar.hide();
     }
 
     private void startDownloading() {
