@@ -1,12 +1,10 @@
 package com.maciejkitowski.timetable.Date;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
 import com.maciejkitowski.timetable.R;
+import com.maciejkitowski.timetable.utilities.AlertText;
 import com.maciejkitowski.timetable.utilities.HtmlDownloader;
 import com.maciejkitowski.timetable.utilities.IDownloadable;
 import com.maciejkitowski.timetable.utilities.InternetConnection;
@@ -20,13 +18,13 @@ final class DateWwwLoader implements ILoader, IDownloadable {
 
     private Context context;
     private ArrayList<String> jsonList;
-    private TextView alertTextView;
+    private AlertText alert;
     private LoadingBarToggle loadingBar;
 
     public DateWwwLoader(Context context) {
         this.context = context;
         loadingBar = new LoadingBarToggle(context);
-        alertTextView = (TextView)((Activity)context).findViewById(R.id.AlertText);
+        alert = new AlertText(context);
     }
 
     @Override
@@ -76,7 +74,6 @@ final class DateWwwLoader implements ILoader, IDownloadable {
 
     private void displayNoConnectionError() {
         Log.i(logcat, "Internet not connected, display error.");
-        alertTextView.setVisibility(View.VISIBLE);
-        alertTextView.setText(context.getString(R.string.error_nointernet));
+        alert.display(R.string.error_nointernet);
     }
 }
