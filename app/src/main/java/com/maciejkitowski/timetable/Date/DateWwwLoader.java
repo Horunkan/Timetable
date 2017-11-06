@@ -1,8 +1,10 @@
 package com.maciejkitowski.timetable.Date;
 
-import android.app.AlertDialog;
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.maciejkitowski.timetable.R;
 import com.maciejkitowski.timetable.utilities.HtmlDownloader;
@@ -17,9 +19,13 @@ final class DateWwwLoader implements ILoader, IDownloadable {
 
     private ArrayList<String> jsonList;
     private Context context;
+    private View loadingBar;
+    private TextView alertTextView;
 
     public DateWwwLoader(Context context) {
         this.context = context;
+        loadingBar = ((Activity)context).findViewById(R.id.LoadingBar);
+        alertTextView = (TextView)((Activity)context).findViewById(R.id.AlertText);
     }
 
     @Override
@@ -36,11 +42,13 @@ final class DateWwwLoader implements ILoader, IDownloadable {
     @Override
     public void downloadStarted() {
         Log.i(logcat, "Download started");
+        loadingBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void downloadSuccessful(ArrayList<String> content) {
         Log.i(logcat, "Download success");
+        loadingBar.setVisibility(View.GONE);
         jsonList = content;
         for(String str : content) Log.i(logcat + "-val", str);
     }
@@ -48,6 +56,7 @@ final class DateWwwLoader implements ILoader, IDownloadable {
     @Override
     public void downloadFailed(Exception exception) {
         Log.w(logcat, String.format("Download failed with exception: %s", exception.getLocalizedMessage()));
+        loadingBar.setVisibility(View.GONE);
     }
 
     private void startDownloading() {
@@ -66,10 +75,7 @@ final class DateWwwLoader implements ILoader, IDownloadable {
 
     private void displayNoConnectionError() {
         Log.i(logcat, "Internet not connected, display error.");
-        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        dialog.setMessage(context.getString(R.string.error_nointernet));
-        dialog.setCancelable(true);
-
-        dialog.show();
+        alertTextView.setVisibility(View.VISIBLE);
+        alertTextView.setText(context.getString(R.string.error_nointernet));
     }
 }
