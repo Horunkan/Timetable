@@ -17,12 +17,13 @@ final class DateWwwLoader implements ILoader, IDownloadable {
     private final String[] downloadUrls = {"http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php"};
 
     private Context context;
-    private ArrayList<String> jsonList;
+    private DateLoader loader;
     private AlertText alert;
     private LoadingBarToggle loadingBar;
 
-    public DateWwwLoader(Context context) {
+    public DateWwwLoader(Context context, DateLoader loader) {
         this.context = context;
+        this.loader = loader;
         loadingBar = new LoadingBarToggle(context);
         alert = new AlertText(context);
     }
@@ -34,11 +35,6 @@ final class DateWwwLoader implements ILoader, IDownloadable {
     }
 
     @Override
-    public ArrayList<String> getJson() {
-        return jsonList;
-    }
-
-    @Override
     public void downloadStarted() {
         Log.i(logcat, "Download started");
         loadingBar.display();
@@ -47,9 +43,9 @@ final class DateWwwLoader implements ILoader, IDownloadable {
     @Override
     public void downloadSuccessful(ArrayList<String> content) {
         Log.i(logcat, "Download success");
-        loadingBar.hide();
-        jsonList = content;
         for(String str : content) Log.i(logcat + "-val", str);
+        loadingBar.hide();
+        loader.receivedJson(content);
     }
 
     @Override

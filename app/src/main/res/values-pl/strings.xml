@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Plan zajęć</string>
     <string name="error_nointernet">Brak połączenia z internetem</string>
+    <string name="error_unknown">BŁĄD: %s</string>
 </resources>

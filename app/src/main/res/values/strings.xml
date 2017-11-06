@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Timetable</string>
     <string name="error_nointernet">No internet connection</string>
+    <string name="error_unknown">ERROR: %s</string>
 </resources>
