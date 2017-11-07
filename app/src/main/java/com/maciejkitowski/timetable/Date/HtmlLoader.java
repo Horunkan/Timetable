@@ -11,17 +11,19 @@ import com.maciejkitowski.timetable.utilities.InternetConnection;
 import com.maciejkitowski.timetable.utilities.LoadingBarToggle;
 
 import java.util.ArrayList;
+import java.util.List;
 
-final class DateWwwLoader implements ILoader, IDownloadable {
-    private static final String logcat = "DateWwwLoader";
+final class HtmlLoader implements ILoader, IDownloadable {
+    private static final String logcat = "DateHtmlLoader";
     private final String[] downloadUrls = {"http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php"};
 
     private Context context;
-    private DateLoader loader;
+    private Loader loader;
     private AlertText alert;
     private LoadingBarToggle loadingBar;
+    List<String> downloaded;
 
-    public DateWwwLoader(Context context, DateLoader loader) {
+    public HtmlLoader(Context context, Loader loader) {
         this.context = context;
         this.loader = loader;
         loadingBar = new LoadingBarToggle(context);
@@ -45,7 +47,8 @@ final class DateWwwLoader implements ILoader, IDownloadable {
         Log.i(logcat, "Download success");
         for(String str : content) Log.i(logcat + "-val", str);
         loadingBar.hide();
-        loader.receivedJson(content);
+        downloaded = content;
+        loader.receivedJson(downloaded);
     }
 
     @Override

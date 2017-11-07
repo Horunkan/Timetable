@@ -7,19 +7,19 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static junit.framework.Assert.assertNotNull;
 
 @RunWith(AndroidJUnit4.class)
-public class DateWwwLoaderTest {
+public class HtmlLoaderTest {
     private static final String logcat = "UnitTest";
 
     @Test
     public void downloadDates() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        DateWwwLoader loader = new DateWwwLoader(context);
-        loader.load();
+        Loader loader = new Loader(context);
+        HtmlLoader html = new HtmlLoader(context, loader);
         Thread.sleep(1000);
 
-        assertNotNull(loader.getJson());
+        assertNotNull(html.downloaded);
     }
 }

@@ -5,7 +5,7 @@ import android.util.Log;
 
 import java.io.File;
 
-final class DateFileLoader implements ILoader {
+final class FileLoader implements ILoader {
     private static final String logcat = "DateFileLoader";
     static final String filename = "dates.json";
 

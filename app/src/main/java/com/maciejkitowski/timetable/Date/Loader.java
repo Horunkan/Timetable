@@ -11,24 +11,24 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class DateLoader {
+public final class Loader {
     private static final String logcat = "DateLoader";
 
     private Context context;
     private ILoader loader;
-    private List<String> dates;
+    List<String> dates;
 
-    public DateLoader(Context context) {
+    public Loader(Context context) {
         Log.i(logcat, "Initialize date loader");
         this.context = context;
 
-        if(DateFileLoader.isDatesSavedOnDevice(context)) loader = new DateFileLoader();
-        else loader = new DateWwwLoader(context, this);
+        if(FileLoader.isDatesSavedOnDevice(context)) loader = new FileLoader();
+        else loader = new HtmlLoader(context, this);
 
         loader.load();
     }
 
-    public void receivedJson(List<String> json) {
+    void receivedJson(List<String> json) {
         Log.i(logcat, String.format("Received json array with %d size", json.size()));
         dates = new ArrayList<>();
 
