@@ -8,32 +8,33 @@ import org.apache.commons.io.IOUtils;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public final class HtmlDownloader extends AsyncTask<String, Void, Void> {
     private static final String logcat = "HTML-downloader";
 
-    ArrayList<String> downloaded = new ArrayList<>();
-    private IDownloadable callSource = null;
+    private final DataReceivedListener listener;
+    private List<String> downloaded;
     private boolean downloadFailed = false;
-    private Exception failException = null;
+    private Exception downloadFailException = null;
 
-    public HtmlDownloader(IDownloadable source) {
-        callSource = source;
+    public HtmlDownloader(DataReceivedListener listener) {
+        Log.i(logcat, "Set Data listener");
+        this.listener = listener;
     }
 
     @Override
     protected void onPreExecute() {
-        callSource.downloadStarted();
+        Log.i(logcat, "Start data receiving");
+        listener.onDataReceivedBegin();
+        downloaded = new ArrayList<>();
     }
 
     @Override
-    protected Void doInBackground(String... source) {
-        Log.i(logcat, String.format("Start downloading %d HTML pages.", source.length));
-
-        for(String src : source) downloaded.add(loadPage(src));
-
-        if(downloaded.size() == source.length) Log.i(logcat, "Downloading pages finished");
-        else Log.w(logcat, String.format("Downloaded %d pages, should: %d", downloaded.size(), source.length));
+    protected Void doInBackground(String... strings) {
+        Log.i(logcat, String.format("Start downloading %d HTML pages.", strings.length));
+        for(String src : strings) downloaded.add(getPage(src));
+        Log.i(logcat, String.format("Downloading %s pages finished.", downloaded.size()));
 
         return null;
     }
@@ -41,18 +42,19 @@ public final class HtmlDownloader extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         if(downloadFailed) {
-            Log.w(logcat, "Download failed!");
-            callSource.downloadFailed(failException);
+            Log.w(logcat, "Download failed.");
+            if(downloadFailException == null) listener.onDataReceivedFailed();
+            else listener.onDataReceivedFailed(downloadFailException);
         }
         else {
-            Log.i(logcat, "Download finished!");
-            callSource.downloadSuccessful(downloaded);
+            Log.i(logcat, "Download success.");
+            listener.onDataReceivedSuccess(downloaded);
         }
 
         super.onPostExecute(aVoid);
     }
 
-    private String loadPage(String source) {
+    private String getPage(String source) {
         Log.i(logcat, String.format("Start download HTML page from: %s", source));
         InputStreamReader reader;
 
@@ -69,7 +71,7 @@ public final class HtmlDownloader extends AsyncTask<String, Void, Void> {
         catch (Exception ex) {
             Log.e(logcat, ex.getMessage());
             downloadFailed = true;
-            failException = ex;
+            downloadFailException = ex;
 
             return null;
         }

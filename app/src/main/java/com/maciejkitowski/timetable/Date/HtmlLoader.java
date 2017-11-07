@@ -5,9 +5,7 @@ import android.util.Log;
 
 import com.maciejkitowski.timetable.R;
 import com.maciejkitowski.timetable.utilities.AlertText;
-import com.maciejkitowski.timetable.utilities.HtmlDownloader;
 import com.maciejkitowski.timetable.utilities.IDownloadable;
-import com.maciejkitowski.timetable.utilities.InternetConnection;
 import com.maciejkitowski.timetable.utilities.LoadingBarToggle;
 
 import java.util.ArrayList;
@@ -59,11 +57,11 @@ final class HtmlLoader implements ILoader, IDownloadable {
 
     private void startDownloading() {
         try {
-            if(InternetConnection.isConnected(context)) {
+            /*if(InternetConnection.isConnected(context)) {
                 HtmlDownloader downloader = new HtmlDownloader(this);
                 downloader.execute(downloadUrls).get();
             }
-            else displayNoConnectionError();
+            else displayNoConnectionError();*/
         }
         catch (Exception ex) {
             Log.e(logcat, ex.getMessage());

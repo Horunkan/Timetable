@@ -6,42 +6,48 @@ import android.util.Log;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
 @RunWith(AndroidJUnit4.class)
 public class HtmlDownloaderTest {
     private static final String logcat = "UnitTest";
+    private enum DownloadResult {BEGIN, SUCCESS, FAIL}
 
-    private static class TestObject implements IDownloadable {
-        public ArrayList<String> downloaded = null;
-        enum DownloadStatus {STARTED, FAILED, FINISHED}
-        public DownloadStatus status;
+    private class TestObject implements DataReceivedListener {
+        DownloadResult result;
+        List<String> downloaded;
 
         @Override
-        public void downloadStarted() {
-            Log.i(logcat, "Download started");
-            status = DownloadStatus.STARTED;
+        public void onDataReceivedBegin() {
+            Log.i(logcat, "Download begin");
+            result = DownloadResult.BEGIN;
         }
 
         @Override
-        public void downloadSuccessful(ArrayList<String> content) {
+        public void onDataReceivedSuccess(List<String> data) {
             Log.i(logcat, "Download success");
-            status = DownloadStatus.FINISHED;
-            downloaded = content;
-            for(String str : downloaded) Log.i(logcat + "-val", str);
+            result = DownloadResult.SUCCESS;
+            downloaded = data;
         }
 
         @Override
-        public void downloadFailed(Exception exception) {
-            Log.i(logcat, String.format("Download failed with exception: %s", exception.getLocalizedMessage()));
-            status = DownloadStatus.FAILED;
+        public void onDataReceivedFailed() {
+            Log.i(logcat, "Download failed (no exception)");
+            result = DownloadResult.FAIL;
+        }
+
+        @Override
+        public void onDataReceivedFailed(Exception ex) {
+            Log.i(logcat, String.format("Download failed: %s", ex.getMessage()));
+            result = DownloadResult.FAIL;
         }
     }
 
     @Test
-    public void downloadOnePage() throws Exception {
+    public void downloadSinglePage() throws Exception {
         TestObject obj = new TestObject();
         HtmlDownloader downloader = new HtmlDownloader(obj);
         downloader.execute("https://google.pl").get();
@@ -56,6 +62,15 @@ public class HtmlDownloaderTest {
         HtmlDownloader downloader = new HtmlDownloader(obj);
         downloader.execute(pages).get();
 
-        assertTrue(obj.downloaded.size() == pages.length);
+        assertNotNull(obj.downloaded);
+    }
+
+    @Test
+    public void downloadFail() throws Exception {
+        TestObject obj = new TestObject();
+        HtmlDownloader downloader = new HtmlDownloader(obj);
+        downloader.execute("google.pl").get();
+
+        assertEquals(obj.result, DownloadResult.FAIL);
     }
 }
