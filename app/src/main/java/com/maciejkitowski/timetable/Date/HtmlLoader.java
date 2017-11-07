@@ -5,13 +5,14 @@ import android.util.Log;
 
 import com.maciejkitowski.timetable.R;
 import com.maciejkitowski.timetable.utilities.AlertText;
-import com.maciejkitowski.timetable.utilities.IDownloadable;
+import com.maciejkitowski.timetable.utilities.DataReceivedListener;
+import com.maciejkitowski.timetable.utilities.HtmlDownloader;
+import com.maciejkitowski.timetable.utilities.InternetConnection;
 import com.maciejkitowski.timetable.utilities.LoadingBarToggle;
 
-import java.util.ArrayList;
 import java.util.List;
 
-final class HtmlLoader implements ILoader, IDownloadable {
+final class HtmlLoader implements ILoader, DataReceivedListener {
     private static final String logcat = "DateHtmlLoader";
     private final String[] downloadUrls = {"http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php"};
 
@@ -35,37 +36,43 @@ final class HtmlLoader implements ILoader, IDownloadable {
     }
 
     @Override
-    public void downloadStarted() {
+    public void onDataReceivedBegin() {
         Log.i(logcat, "Download started");
         loadingBar.display();
     }
 
     @Override
-    public void downloadSuccessful(ArrayList<String> content) {
+    public void onDataReceivedSuccess(List<String> data) {
         Log.i(logcat, "Download success");
-        for(String str : content) Log.i(logcat + "-val", str);
+        for(String str : data) Log.i(logcat + "-val", str);
         loadingBar.hide();
-        downloaded = content;
+        downloaded = data;
         loader.receivedJson(downloaded);
     }
 
     @Override
-    public void downloadFailed(Exception exception) {
-        Log.w(logcat, String.format("Download failed with exception: %s", exception.getLocalizedMessage()));
+    public void onDataReceivedFailed() {
+        Log.w(logcat, "Download failed without exception");
+        loadingBar.hide();
+    }
+
+    @Override
+    public void onDataReceivedFailed(Exception ex) {
+        Log.w(logcat, String.format("Download failed with exception: %s", ex.getLocalizedMessage()));
         loadingBar.hide();
     }
 
     private void startDownloading() {
         try {
-            /*if(InternetConnection.isConnected(context)) {
+            if(InternetConnection.isConnected(context)) {
                 HtmlDownloader downloader = new HtmlDownloader(this);
                 downloader.execute(downloadUrls).get();
             }
-            else displayNoConnectionError();*/
+            else displayNoConnectionError();
         }
         catch (Exception ex) {
             Log.e(logcat, ex.getMessage());
-            downloadFailed(ex);
+            onDataReceivedFailed(ex);
         }
     }
 
