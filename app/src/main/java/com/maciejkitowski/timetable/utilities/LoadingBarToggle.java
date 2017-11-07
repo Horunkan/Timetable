@@ -8,9 +8,9 @@ import android.view.View;
 import com.maciejkitowski.timetable.R;
 
 public final class LoadingBarToggle {
-    private static String logcat = "ProgressBar";
+    private static final String logcat = "ProgressBar";
 
-    private View bar;
+    private final View bar;
 
     public LoadingBarToggle(Context context) {
         bar = ((Activity)context).findViewById(R.id.LoadingBar);

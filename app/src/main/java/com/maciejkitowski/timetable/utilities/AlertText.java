@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.maciejkitowski.timetable.R;
 
 public class AlertText {
-    private static String logcat = "AlertText";
+    private static final String logcat = "AlertText";
 
     private TextView text;
     private Context context;
