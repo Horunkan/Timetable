@@ -36,7 +36,7 @@ final class Loader implements AsyncDataListener {
     @Override
     public void onReceiveSuccess(List<String> data) {
         Log.i(logcat, "Receive success");
-        receivedJson(data);
+        formatReceivedData(data);
     }
 
     @Override
@@ -45,7 +45,7 @@ final class Loader implements AsyncDataListener {
         listener.onReceiveFail(message);
     }
 
-    void receivedJson(List<String> json) {
+    void formatReceivedData(List<String> json) {
         Log.i(logcat, String.format("Received json array with %d size", json.size()));
         dates = new ArrayList<>();
 
