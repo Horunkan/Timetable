@@ -13,7 +13,7 @@ import com.maciejkitowski.timetable.utilities.AsyncDataListener;
 
 import java.util.List;
 
-public class SpinnerController implements AdapterView.OnItemClickListener, AsyncDataListener {
+public class SpinnerController implements AdapterView.OnItemSelectedListener, AsyncDataListener {
     private static final String logcat = "SpinnerController";
     private Spinner spinner;
     private Activity activity;
@@ -29,13 +29,11 @@ public class SpinnerController implements AdapterView.OnItemClickListener, Async
     @Override
     public void onReceiveBegin() {
         Log.i(logcat, "Receive begin");
-        AlertText.display("AA");
     }
 
     @Override
     public void onReceiveSuccess(List<String> data) {
         Log.i(logcat, "Receive success");
-        AlertText.display("XD");
         setSpinnerValues(data);
     }
 
@@ -46,8 +44,13 @@ public class SpinnerController implements AdapterView.OnItemClickListener, Async
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Log.i(logcat, String.format("Selected date: %s", spinner.getSelectedItem()));
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
     private void setSpinnerValues(List<String> values) {
@@ -58,6 +61,6 @@ public class SpinnerController implements AdapterView.OnItemClickListener, Async
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
-        spinner.setOnItemClickListener(this);
+        spinner.setOnItemSelectedListener(this);
     }
 }
