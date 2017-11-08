@@ -3,8 +3,8 @@ package com.maciejkitowski.timetable.Date;
 import android.content.Context;
 import android.util.Log;
 
-import com.maciejkitowski.timetable.MainActivity;
 import com.maciejkitowski.timetable.R;
+import com.maciejkitowski.timetable.utilities.AsyncDataListener;
 import com.maciejkitowski.timetable.utilities.DownloadListener;
 import com.maciejkitowski.timetable.utilities.HtmlDownloader;
 import com.maciejkitowski.timetable.utilities.InternetConnection;
@@ -16,12 +16,11 @@ final class HtmlLoader implements ILoader, DownloadListener {
     private final String[] downloadUrls = {"http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php"};
 
     private Context context;
-    private Loader loader;
-    List<String> downloaded;
+    private AsyncDataListener listener;
 
-    public HtmlLoader(Context context, Loader loader) {
+    public HtmlLoader(Context context, AsyncDataListener listener) {
         this.context = context;
-        this.loader = loader;
+        this.listener = listener;
     }
 
     @Override
@@ -33,23 +32,20 @@ final class HtmlLoader implements ILoader, DownloadListener {
     @Override
     public void onDownloadBegin() {
         Log.i(logcat, "Download started");
-        MainActivity.loadingBar.display();
+        listener.onReceiveBegin();
     }
 
     @Override
     public void onDownloadSuccess(List<String> data) {
         Log.i(logcat, "Download success");
         for(String str : data) Log.i(logcat + "-val", str);
-        MainActivity.loadingBar.hide();
-        downloaded = data;
-        loader.receivedJson(downloaded);
+        listener.onReceiveSuccess(data);
     }
 
     @Override
     public void onDownloadFailed(String message) {
         Log.w(logcat, String.format("Download failed with error: %s", message));
-        MainActivity.loadingBar.hide();
-        MainActivity.alertDisplayer.display(String.format("%s %s", R.string.error_unknown, message));
+        listener.onReceiveFail(message);
     }
 
     private void startDownloading() {
@@ -62,14 +58,12 @@ final class HtmlLoader implements ILoader, DownloadListener {
         }
         catch (Exception ex) {
             Log.e(logcat, ex.getMessage());
-            //onDataReceivedFailed(ex);
+            listener.onReceiveFail(ex.getLocalizedMessage());
         }
     }
 
     private void displayNoConnectionError() {
         Log.i(logcat, "Internet not connected, display error.");
-        MainActivity.alertDisplayer.display(R.string.error_nointernet);
+        listener.onReceiveFail(context.getString(R.string.error_nointernet));
     }
-
-
 }

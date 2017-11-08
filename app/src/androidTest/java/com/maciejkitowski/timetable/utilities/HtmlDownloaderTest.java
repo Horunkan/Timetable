@@ -16,11 +16,11 @@ public class HtmlDownloaderTest {
     private static final String logcat = "UnitTest";
     private enum DownloadResult {BEGIN, SUCCESS, FAIL}
 
-    private class TestObject implements DataReceivedListener {
+    private class TestObject {
         DownloadResult result;
         List<String> downloaded;
 
-        @Override
+        /*@Override
         public void onDataReceivedBegin() {
             Log.i(logcat, "Download begin");
             result = DownloadResult.BEGIN;
@@ -43,7 +43,7 @@ public class HtmlDownloaderTest {
         public void onDataReceivedFailed(Exception ex) {
             Log.i(logcat, String.format("Download failed: %s", ex.getMessage()));
             result = DownloadResult.FAIL;
-        }
+        }*/
     }
 
     @Test
