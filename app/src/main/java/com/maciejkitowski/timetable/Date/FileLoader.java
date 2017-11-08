@@ -68,4 +68,10 @@ final class FileLoader extends Loader {
         Log.i(logcat, String.format("File %s found: %s", filename, file.exists()));
         return file.exists();
     }
+
+    static void delete(Context context) {
+        Log.i(logcat, String.format("Delete %s file.", filename));
+        File file = new File(context.getFilesDir(), filename);
+        file.delete();
+    }
 }

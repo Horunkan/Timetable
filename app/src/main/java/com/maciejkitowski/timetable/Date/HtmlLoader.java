@@ -8,6 +8,7 @@ import com.maciejkitowski.timetable.utilities.AsyncDataListener;
 import com.maciejkitowski.timetable.utilities.DownloadListener;
 import com.maciejkitowski.timetable.utilities.HtmlDownloader;
 import com.maciejkitowski.timetable.utilities.InternetConnection;
+import com.maciejkitowski.timetable.utilities.LoadingBar;
 
 import java.util.List;
 
@@ -29,12 +30,14 @@ final class HtmlLoader extends Loader implements DownloadListener {
     public void onDownloadBegin() {
         Log.i(logcat, "Download started");
         listener.onReceiveBegin();
+        LoadingBar.display();
     }
 
     @Override
     public void onDownloadSuccess(List<String> data) {
         Log.i(logcat, "Download success");
         for(String str : data) Log.i(logcat + "-val", str);
+        LoadingBar.hide();
         setReceivedData(data);
         FileLoader.saveToFile(context, data);
     }
@@ -42,6 +45,7 @@ final class HtmlLoader extends Loader implements DownloadListener {
     @Override
     public void onDownloadFailed(String message) {
         Log.w(logcat, String.format("Download failed with error: %s", message));
+        LoadingBar.hide();
         listener.onReceiveFail(message);
     }
 

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.maciejkitowski.timetable.Date.SpinnerController;
 import com.maciejkitowski.timetable.utilities.AlertText;
+import com.maciejkitowski.timetable.utilities.LoadingBar;
 
 public class MainActivity extends AppCompatActivity {
     private static final String logcat = "MainActivity";
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private void initialize() {
         Log.i(logcat, "Initialize");
         AlertText.initialize(this);
+        LoadingBar.initialize(this);
 
         SpinnerController spinner = new SpinnerController(this);
     }
