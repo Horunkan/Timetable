@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.maciejkitowski.timetable.Date.Loader;
 import com.maciejkitowski.timetable.utilities.AlertText;
 import com.maciejkitowski.timetable.utilities.LoadingBarToggle;
 
@@ -25,7 +24,5 @@ public class MainActivity extends AppCompatActivity {
         Log.i(logcat, "Initialize");
         alertDisplayer = new AlertText(this);
         loadingBar = new LoadingBarToggle(this);
-
-        Loader dateLoader = new Loader(this);
     }
 }

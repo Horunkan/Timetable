@@ -46,15 +46,10 @@ final class HtmlLoader implements ILoader, DataReceivedListener {
     }
 
     @Override
-    public void onDataReceivedFailed() {
-        Log.w(logcat, "Download failed without exception");
-        MainActivity.loadingBar.hide();
-    }
-
-    @Override
     public void onDataReceivedFailed(Exception ex) {
         Log.w(logcat, String.format("Download failed with exception: %s", ex.getLocalizedMessage()));
         MainActivity.loadingBar.hide();
+        MainActivity.alertDisplayer.display(String.format("%s %s", R.string.error_unknown, ex.getLocalizedMessage()));
     }
 
     private void startDownloading() {
