@@ -62,7 +62,7 @@ final class Loader implements AsyncDataListener {
                 listener.onReceiveSuccess(dates);
             }
             catch (Exception ex) {
-                Log.e(logcat, ex.getMessage());
+                ex.printStackTrace();
                 listener.onReceiveFail(ex.getLocalizedMessage());
             }
         }

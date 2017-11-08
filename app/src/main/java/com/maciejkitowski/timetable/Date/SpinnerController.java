@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.maciejkitowski.timetable.R;
+import com.maciejkitowski.timetable.utilities.AlertText;
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
 
 import java.util.List;
@@ -28,17 +29,20 @@ public class SpinnerController implements AdapterView.OnItemClickListener, Async
     @Override
     public void onReceiveBegin() {
         Log.i(logcat, "Receive begin");
+        AlertText.display("AA");
     }
 
     @Override
     public void onReceiveSuccess(List<String> data) {
         Log.i(logcat, "Receive success");
+        AlertText.display("XD");
         setSpinnerValues(data);
     }
 
     @Override
     public void onReceiveFail(String message) {
         Log.i(logcat, String.format("Receive fail: %s", message));
+        AlertText.display(message);
     }
 
     @Override

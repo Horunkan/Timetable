@@ -68,7 +68,7 @@ public final class HtmlDownloader extends AsyncTask<String, Void, Void> {
             return loaded;
         }
         catch (Exception ex) {
-            Log.e(logcat, ex.getMessage());
+            ex.printStackTrace();
             downloadFailed = true;
             downloadFailException = ex;
 

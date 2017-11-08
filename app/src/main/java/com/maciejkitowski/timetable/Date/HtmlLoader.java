@@ -52,12 +52,12 @@ final class HtmlLoader implements ILoader, DownloadListener {
         try {
             if(InternetConnection.isConnected(context)) {
                 HtmlDownloader downloader = new HtmlDownloader(this);
-                downloader.execute(downloadUrls).get();
+                downloader.execute(downloadUrls);
             }
             else displayNoConnectionError();
         }
         catch (Exception ex) {
-            Log.e(logcat, ex.getMessage());
+            ex.printStackTrace();
             listener.onReceiveFail(ex.getLocalizedMessage());
         }
     }

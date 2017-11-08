@@ -1,36 +1,39 @@
 package com.maciejkitowski.timetable.utilities;
 
-import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.maciejkitowski.timetable.MainActivity;
 import com.maciejkitowski.timetable.R;
 
 public class AlertText {
     private static final String logcat = "AlertText";
+    private static MainActivity activity;
+    private static TextView text;
 
-    private TextView text;
-    private Context context;
-
-    public AlertText(Context context) {
-        this.context = context;
-        text = (TextView)((Activity)context).findViewById(R.id.AlertText);
+    public static void initialize(MainActivity activity) {
+        Log.i(logcat, "Initialize");
+        AlertText.activity = activity;
+        text = (TextView) activity.findViewById(R.id.AlertText);
     }
 
-    public void display(int ID) {
-        display(context.getString(ID));
+    public static void display(int ID) {
+        display(activity.getString(ID));
     }
 
-    public void display(String value) {
-        Log.i(logcat, String.format("Display alert with text: %s", value));
-        text.setVisibility(View.VISIBLE);
-        text.setText(value);
+    public static void display(String message) {
+        Log.i(logcat, String.format("Display alert with text: %s", message));
+        if(text != null) {
+            text.setVisibility(View.VISIBLE);
+            text.setText(message);
+        }
+        else Log.e(logcat, "Alert text display not initialized");
     }
 
-    public void hide() {
+    public static void hide() {
         Log.i(logcat, "Hide alert");
-        text.setVisibility(View.GONE);
+        if(text != null)text.setVisibility(View.GONE);
+        else Log.e(logcat, "Alert text display not initialized");
     }
 }
