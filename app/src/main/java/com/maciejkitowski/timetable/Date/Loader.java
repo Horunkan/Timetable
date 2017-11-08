@@ -3,29 +3,46 @@ package com.maciejkitowski.timetable.Date;
 import android.content.Context;
 import android.util.Log;
 
-import com.maciejkitowski.timetable.R;
-import com.maciejkitowski.timetable.utilities.AlertText;
+import com.maciejkitowski.timetable.utilities.AsyncDataListener;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Loader {
+final class Loader implements AsyncDataListener {
     private static final String logcat = "DateLoader";
 
-    private Context context;
     private ILoader loader;
+    private AsyncDataListener listener;
     List<String> dates;
 
-    public Loader(Context context) {
+    public Loader(Context context, AsyncDataListener listener) {
         Log.i(logcat, "Initialize date loader");
-        this.context = context;
+        this.listener = listener;
 
         if(FileLoader.isDatesSavedOnDevice(context)) loader = new FileLoader();
         else loader = new HtmlLoader(context, this);
 
         loader.load();
+    }
+
+    @Override
+    public void onReceiveBegin() {
+        Log.i(logcat, "Receive begin");
+        listener.onReceiveBegin();
+    }
+
+    @Override
+    public void onReceiveSuccess(List<String> data) {
+        Log.i(logcat, "Receive success");
+        receivedJson(data);
+    }
+
+    @Override
+    public void onReceiveFail(String message) {
+        Log.i(logcat, String.format("Receive fail: %s", message));
+        listener.onReceiveFail(message);
     }
 
     void receivedJson(List<String> json) {
@@ -41,11 +58,12 @@ public final class Loader {
                     Log.i(logcat+"-val", String.format("Add %s to dates array", array.getString(i)));
                     dates.add(array.getString(i));
                 }
+
+                listener.onReceiveSuccess(dates);
             }
             catch (Exception ex) {
                 Log.e(logcat, ex.getMessage());
-                AlertText alert = new AlertText(context);
-                alert.display(String.format(context.getString(R.string.error_unknown), ex.getLocalizedMessage()));
+                listener.onReceiveFail(ex.getLocalizedMessage());
             }
         }
     }
