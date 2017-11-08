@@ -14,12 +14,14 @@ final class Loader implements AsyncDataListener {
     private static final String logcat = "DateLoader";
 
     private ILoader loader;
+    private Context context;
     private AsyncDataListener listener;
     List<String> dates;
 
     public Loader(Context context, AsyncDataListener listener) {
         Log.i(logcat, "Initialize date loader");
         this.listener = listener;
+        this.context = context;
 
         if(FileLoader.isDatesSavedOnDevice(context)) loader = new FileLoader();
         else loader = new HtmlLoader(context, this);
@@ -60,6 +62,7 @@ final class Loader implements AsyncDataListener {
                 }
 
                 listener.onReceiveSuccess(dates);
+                FileLoader.saveToFile(context, dates);
             }
             catch (Exception ex) {
                 ex.printStackTrace();
