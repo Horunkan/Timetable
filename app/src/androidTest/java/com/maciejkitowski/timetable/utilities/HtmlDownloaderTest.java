@@ -16,34 +16,28 @@ public class HtmlDownloaderTest {
     private static final String logcat = "UnitTest";
     private enum DownloadResult {BEGIN, SUCCESS, FAIL}
 
-    private class TestObject {
+    private class TestObject implements DownloadListener {
         DownloadResult result;
         List<String> downloaded;
 
-        /*@Override
-        public void onDataReceivedBegin() {
+        @Override
+        public void onDownloadBegin() {
             Log.i(logcat, "Download begin");
             result = DownloadResult.BEGIN;
         }
 
         @Override
-        public void onDataReceivedSuccess(List<String> data) {
+        public void onDownloadSuccess(List<String> data) {
             Log.i(logcat, "Download success");
             result = DownloadResult.SUCCESS;
             downloaded = data;
         }
 
         @Override
-        public void onDataReceivedFailed() {
-            Log.i(logcat, "Download failed (no exception)");
+        public void onDownloadFailed(String message) {
+            Log.i(logcat, String.format("Download failed: %s", message));
             result = DownloadResult.FAIL;
         }
-
-        @Override
-        public void onDataReceivedFailed(Exception ex) {
-            Log.i(logcat, String.format("Download failed: %s", ex.getMessage()));
-            result = DownloadResult.FAIL;
-        }*/
     }
 
     @Test
