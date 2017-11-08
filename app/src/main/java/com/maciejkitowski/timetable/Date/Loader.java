@@ -10,24 +10,20 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-final class Loader implements AsyncDataListener {
+abstract class Loader implements AsyncDataListener {
     private static final String logcat = "DateLoader";
 
-    private ILoader loader;
-    private Context context;
-    private AsyncDataListener listener;
-    List<String> dates;
+    protected Context context;
+    protected AsyncDataListener listener;
+    protected List<String> dates;
 
     public Loader(Context context, AsyncDataListener listener) {
         Log.i(logcat, "Initialize date loader");
-        this.listener = listener;
         this.context = context;
-
-        if(FileLoader.isDatesSavedOnDevice(context)) loader = new FileLoader();
-        else loader = new HtmlLoader(context, this);
-
-        loader.load();
+        this.listener = listener;
     }
+
+    public abstract void start();
 
     @Override
     public void onReceiveBegin() {
@@ -38,7 +34,7 @@ final class Loader implements AsyncDataListener {
     @Override
     public void onReceiveSuccess(List<String> data) {
         Log.i(logcat, "Receive success");
-        formatReceivedData(data);
+        setReceivedData(data);
     }
 
     @Override
@@ -47,7 +43,7 @@ final class Loader implements AsyncDataListener {
         listener.onReceiveFail(message);
     }
 
-    void formatReceivedData(List<String> json) {
+    protected void setReceivedData(List<String> json) {
         Log.i(logcat, String.format("Received json array with %d size", json.size()));
         dates = new ArrayList<>();
 
@@ -62,7 +58,6 @@ final class Loader implements AsyncDataListener {
                 }
 
                 listener.onReceiveSuccess(dates);
-                FileLoader.saveToFile(context, dates);
             }
             catch (Exception ex) {
                 ex.printStackTrace();

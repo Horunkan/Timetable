@@ -23,7 +23,10 @@ public class SpinnerController implements AdapterView.OnItemSelectedListener, As
         this.activity = activity;
         spinner = (Spinner)activity.findViewById(R.id.Date);
 
-        Loader loader = new Loader(activity, this);
+        Loader loader;
+        if(FileLoader.isDatesSavedOnDevice(activity)) loader = new FileLoader(activity, this);
+        else loader = new HtmlLoader(activity, this);
+        loader.start();
     }
 
     @Override

@@ -11,20 +11,16 @@ import com.maciejkitowski.timetable.utilities.InternetConnection;
 
 import java.util.List;
 
-final class HtmlLoader implements ILoader, DownloadListener {
+final class HtmlLoader extends Loader implements DownloadListener {
     private static final String logcat = "DateHtmlLoader";
     private final String[] downloadUrls = {"http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php"};
 
-    private Context context;
-    private AsyncDataListener listener;
-
     public HtmlLoader(Context context, AsyncDataListener listener) {
-        this.context = context;
-        this.listener = listener;
+        super(context, listener);
     }
 
     @Override
-    public void load() {
+    public void start() {
         Log.i(logcat, "Load dates json from urls.");
         startDownloading();
     }
@@ -39,7 +35,8 @@ final class HtmlLoader implements ILoader, DownloadListener {
     public void onDownloadSuccess(List<String> data) {
         Log.i(logcat, "Download success");
         for(String str : data) Log.i(logcat + "-val", str);
-        listener.onReceiveSuccess(data);
+        setReceivedData(data);
+        FileLoader.saveToFile(context, data);
     }
 
     @Override
