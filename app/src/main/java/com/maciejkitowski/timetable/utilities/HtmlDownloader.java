@@ -13,12 +13,12 @@ import java.util.List;
 public final class HtmlDownloader extends AsyncTask<String, Void, Void> {
     private static final String logcat = "HTML-downloader";
 
-    private final DataReceivedListener listener;
+    private final DownloadListener listener;
     private List<String> downloaded;
     private boolean downloadFailed = false;
     private Exception downloadFailException = null;
 
-    public HtmlDownloader(DataReceivedListener listener) {
+    public HtmlDownloader(DownloadListener listener) {
         Log.i(logcat, "Set Data listener");
         this.listener = listener;
     }
@@ -26,7 +26,7 @@ public final class HtmlDownloader extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPreExecute() {
         Log.i(logcat, "Start data receiving");
-        listener.onDataReceivedBegin();
+        listener.onDownloadBegin();
         downloaded = new ArrayList<>();
     }
 
@@ -43,12 +43,11 @@ public final class HtmlDownloader extends AsyncTask<String, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         if(downloadFailed) {
             Log.w(logcat, "Download failed.");
-            if(downloadFailException == null) listener.onDataReceivedFailed();
-            else listener.onDataReceivedFailed(downloadFailException);
+            listener.onDownloadFailed(downloadFailException.getLocalizedMessage());
         }
         else {
             Log.i(logcat, "Download success.");
-            listener.onDataReceivedSuccess(downloaded);
+            listener.onDownloadSuccess(downloaded);
         }
 
         super.onPostExecute(aVoid);

@@ -5,13 +5,13 @@ import android.util.Log;
 
 import com.maciejkitowski.timetable.MainActivity;
 import com.maciejkitowski.timetable.R;
-import com.maciejkitowski.timetable.utilities.DataReceivedListener;
+import com.maciejkitowski.timetable.utilities.DownloadListener;
 import com.maciejkitowski.timetable.utilities.HtmlDownloader;
 import com.maciejkitowski.timetable.utilities.InternetConnection;
 
 import java.util.List;
 
-final class HtmlLoader implements ILoader, DataReceivedListener {
+final class HtmlLoader implements ILoader, DownloadListener {
     private static final String logcat = "DateHtmlLoader";
     private final String[] downloadUrls = {"http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php"};
 
@@ -31,13 +31,13 @@ final class HtmlLoader implements ILoader, DataReceivedListener {
     }
 
     @Override
-    public void onDataReceivedBegin() {
+    public void onDownloadBegin() {
         Log.i(logcat, "Download started");
         MainActivity.loadingBar.display();
     }
 
     @Override
-    public void onDataReceivedSuccess(List<String> data) {
+    public void onDownloadSuccess(List<String> data) {
         Log.i(logcat, "Download success");
         for(String str : data) Log.i(logcat + "-val", str);
         MainActivity.loadingBar.hide();
@@ -46,10 +46,10 @@ final class HtmlLoader implements ILoader, DataReceivedListener {
     }
 
     @Override
-    public void onDataReceivedFailed(Exception ex) {
-        Log.w(logcat, String.format("Download failed with exception: %s", ex.getLocalizedMessage()));
+    public void onDownloadFailed(String message) {
+        Log.w(logcat, String.format("Download failed with error: %s", message));
         MainActivity.loadingBar.hide();
-        MainActivity.alertDisplayer.display(String.format("%s %s", R.string.error_unknown, ex.getLocalizedMessage()));
+        MainActivity.alertDisplayer.display(String.format("%s %s", R.string.error_unknown, message));
     }
 
     private void startDownloading() {
@@ -62,7 +62,7 @@ final class HtmlLoader implements ILoader, DataReceivedListener {
         }
         catch (Exception ex) {
             Log.e(logcat, ex.getMessage());
-            onDataReceivedFailed(ex);
+            //onDataReceivedFailed(ex);
         }
     }
 
@@ -70,4 +70,6 @@ final class HtmlLoader implements ILoader, DataReceivedListener {
         Log.i(logcat, "Internet not connected, display error.");
         MainActivity.alertDisplayer.display(R.string.error_nointernet);
     }
+
+
 }
