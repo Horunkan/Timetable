@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Plan zajęć</string>
-    <string name="error_nointernet">Brak połączenia z internetem</string>
-    <string name="error_unknown">BŁĄD: %s</string>
+    <string name="error_nointernet">Brak połączenia z internetem.</string>
+    <string name="error_nointernet_foundfile">Brak połączenia z internetem, wczytano wersję archiwalną.</string>
 </resources>

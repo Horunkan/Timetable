@@ -39,7 +39,7 @@ final class HtmlLoader extends Loader implements DownloadListener {
         for(String str : data) Log.i(logcat + "-val", str);
         LoadingBar.hide();
         setReceivedData(data);
-        FileLoader.saveToFile(context, data);
+        FileLoader.saveToFile(context, dates);
     }
 
     @Override

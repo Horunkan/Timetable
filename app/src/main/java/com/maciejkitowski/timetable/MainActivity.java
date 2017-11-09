@@ -4,9 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.maciejkitowski.timetable.Date.SpinnerController;
+import com.maciejkitowski.timetable.Date.DateSpinnerController;
 import com.maciejkitowski.timetable.utilities.AlertText;
 import com.maciejkitowski.timetable.utilities.LoadingBar;
+import com.maciejkitowski.timetable.utilities.RefreshButton;
 
 public class MainActivity extends AppCompatActivity {
     private static final String logcat = "MainActivity";
@@ -23,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
         Log.i(logcat, "Initialize");
         AlertText.initialize(this);
         LoadingBar.initialize(this);
+        RefreshButton refresh = new RefreshButton(this);
 
-        SpinnerController spinner = new SpinnerController(this);
+        DateSpinnerController spinner = new DateSpinnerController(this);
+        refresh.addRefreshListener(spinner);
     }
 }

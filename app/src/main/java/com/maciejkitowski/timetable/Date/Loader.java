@@ -56,13 +56,13 @@ abstract class Loader implements AsyncDataListener {
                     Log.i(logcat+"-val", String.format("Add %s to dates array", array.getString(i)));
                     dates.add(array.getString(i));
                 }
-
-                listener.onReceiveSuccess(dates);
             }
             catch (Exception ex) {
                 ex.printStackTrace();
                 listener.onReceiveFail(ex.getLocalizedMessage());
             }
         }
+
+        listener.onReceiveSuccess(dates);
     }
 }

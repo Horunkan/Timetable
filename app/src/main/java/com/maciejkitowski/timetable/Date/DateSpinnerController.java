@@ -6,27 +6,31 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.maciejkitowski.timetable.R;
 import com.maciejkitowski.timetable.utilities.AlertText;
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
+import com.maciejkitowski.timetable.utilities.RefreshListener;
 
 import java.util.List;
 
-public class SpinnerController implements AdapterView.OnItemSelectedListener, AsyncDataListener {
-    private static final String logcat = "SpinnerController";
+public class DateSpinnerController implements AdapterView.OnItemSelectedListener, AsyncDataListener, RefreshListener {
+    private static final String logcat = "DateSpinner";
+    private enum sourceType {FILE, HTML}
     private Spinner spinner;
     private Activity activity;
 
-    public SpinnerController(Activity activity) {
+    public DateSpinnerController(Activity activity) {
         Log.i(logcat, "Initialize spinner controller");
         this.activity = activity;
         spinner = (Spinner)activity.findViewById(R.id.Date);
 
-        Loader loader;
-        if(FileLoader.isDatesSavedOnDevice(activity)) loader = new FileLoader(activity, this);
-        else loader = new HtmlLoader(activity, this);
-        loader.start();
+        sourceType type;
+        if(FileLoader.isDatesSavedOnDevice(activity)) type = sourceType.FILE;
+        else type = sourceType.HTML;
+
+        startLoading(type);
     }
 
     @Override
@@ -43,7 +47,13 @@ public class SpinnerController implements AdapterView.OnItemSelectedListener, As
     @Override
     public void onReceiveFail(String message) {
         Log.i(logcat, String.format("Receive fail: %s", message));
-        AlertText.display(message);
+        if(FileLoader.isDatesSavedOnDevice(activity)) {
+            Toast.makeText(activity, R.string.error_nointernet_foundfile, Toast.LENGTH_LONG).show();
+            startLoading(sourceType.FILE);
+        }
+        else {
+            AlertText.display(message);
+        }
     }
 
     @Override
@@ -56,6 +66,12 @@ public class SpinnerController implements AdapterView.OnItemSelectedListener, As
 
     }
 
+    @Override
+    public void onRefresh() {
+        Log.i(logcat, "Refresh dates");
+        startLoading(sourceType.HTML);
+    }
+
     private void setSpinnerValues(List<String> values) {
         Log.i(logcat, String.format("Set %d values to spinner", values.size()));
         for(String str : values) Log.i(logcat+"-val", str);
@@ -65,5 +81,15 @@ public class SpinnerController implements AdapterView.OnItemSelectedListener, As
 
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+    }
+
+    private void startLoading(sourceType type) {
+        Log.i(logcat, "Start loading");
+        Loader loader;
+
+        if(type == sourceType.FILE) loader = new FileLoader(activity, this);
+        else loader = new HtmlLoader(activity, this);
+
+        loader.start();
     }
 }
