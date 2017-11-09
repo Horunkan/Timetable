@@ -13,6 +13,8 @@ import com.maciejkitowski.timetable.utilities.AlertText;
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
 import com.maciejkitowski.timetable.utilities.RefreshListener;
 
+import org.joda.time.LocalDate;
+
 import java.util.List;
 
 public class DateSpinnerController implements AdapterView.OnItemSelectedListener, AsyncDataListener, RefreshListener {
@@ -20,11 +22,12 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     private enum sourceType {FILE, HTML}
     private Spinner spinner;
     private Activity activity;
+    private List<String> dates;
 
     public DateSpinnerController(Activity activity) {
         Log.i(logcat, "Initialize spinner controller");
         this.activity = activity;
-        spinner = (Spinner)activity.findViewById(R.id.Date);
+        spinner = activity.findViewById(R.id.Date);
 
         sourceType type;
         if(FileLoader.isDatesSavedOnDevice(activity)) type = sourceType.FILE;
@@ -41,7 +44,8 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     @Override
     public void onReceiveSuccess(List<String> data) {
         Log.i(logcat, "Receive success");
-        setSpinnerValues(data);
+        dates = data;
+        setSpinnerValues();
     }
 
     @Override
@@ -72,14 +76,15 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
         startLoading(sourceType.HTML);
     }
 
-    private void setSpinnerValues(List<String> values) {
-        Log.i(logcat, String.format("Set %d values to spinner", values.size()));
-        for(String str : values) Log.i(logcat+"-val", str);
+    private void setSpinnerValues() {
+        Log.i(logcat, String.format("Set %d values to spinner", dates.size()));
+        for(String str : dates) Log.i(logcat+"-val", str);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, values);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, dates);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
+        setClosestDate();
         spinner.setOnItemSelectedListener(this);
     }
 
@@ -91,5 +96,20 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
         else loader = new HtmlLoader(activity, this);
 
         loader.start();
+    }
+
+    private void setClosestDate() {
+        Log.i(logcat, "Set spinner initial item based on current date");
+        LocalDate date = LocalDate.now();
+
+        for(int i = 0; i < dates.size(); ++i) {
+            LocalDate buffer = LocalDate.parse(dates.get(i));
+            if(date.isEqual(buffer) || date.isBefore(buffer)) {
+                Log.i(logcat, String.format("Set spinner date: %s", buffer));
+                spinner.setSelection(i, true);
+
+                break;
+            }
+        }
     }
 }

@@ -9,6 +9,8 @@ import com.maciejkitowski.timetable.utilities.AlertText;
 import com.maciejkitowski.timetable.utilities.LoadingBar;
 import com.maciejkitowski.timetable.utilities.RefreshButton;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 public class MainActivity extends AppCompatActivity {
     private static final String logcat = "MainActivity";
 
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initialize() {
         Log.i(logcat, "Initialize");
+        JodaTimeAndroid.init(this);
         AlertText.initialize(this);
         LoadingBar.initialize(this);
         RefreshButton refresh = new RefreshButton(this);

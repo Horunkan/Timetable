@@ -5,7 +5,7 @@ android {
     buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.maciejkitowski.timetable"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 3
         versionName "3.0"
@@ -32,5 +32,6 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.1.0'
     compile 'commons-io:commons-io:2.6'
+    compile 'net.danlew:android.joda:2.9.9.1'
     testCompile 'junit:junit:4.12'
 }
