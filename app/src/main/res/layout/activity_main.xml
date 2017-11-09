@@ -5,27 +5,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.maciejkitowski.timetable.MainActivity">
 
     <Spinner
         android:id="@+id/Date"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp" />
+        android:layout_height="@dimen/spinner_height"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:textAlignment="center" />
 
     <Spinner
         android:id="@+id/Group"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/spinner_height"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/Date"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp" />
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:textAlignment="center" />
 
     <ProgressBar
         android:id="@+id/LoadingBar"
@@ -52,12 +53,13 @@
         android:id="@+id/RefreshButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/LoadingBar"
-        android:layout_toRightOf="@+id/LoadingBar"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="@dimen/floatingButton_margin"
+        android:layout_marginLeft="@dimen/floatingButton_margin"
         android:clickable="true"
+        android:focusable="true"
         app:backgroundTint="@color/colorAlert"
         app:fabSize="normal"
         app:srcCompat="@android:drawable/stat_notify_sync_noanim" />
@@ -69,9 +71,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginBottom="@dimen/floatingButton_margin"
+        android:layout_marginRight="@dimen/floatingButton_margin"
         android:clickable="true"
+        android:focusable="true"
         app:backgroundTint="@android:color/holo_green_dark"
         app:fabSize="normal"
         app:srcCompat="@android:drawable/ic_menu_my_calendar" />
