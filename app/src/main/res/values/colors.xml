@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorAlert">#ff0000</color>
     <color name="colorTimestampHour">#7c7c7c</color>
+    <color name="colorTimestampStroke">#7c7c7c</color>
 </resources>

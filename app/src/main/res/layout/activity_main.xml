@@ -85,116 +85,327 @@
         android:layout_height="match_parent"
         android:layout_below="@id/Group">
 
-        <RelativeLayout
-            android:id="@+id/Timestamp"
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/Hours"
-                android:layout_width="@dimen/timestamp_width"
+            <TableRow
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_marginBottom="@dimen/timestamp_marginbottom"
+                android:minHeight="@dimen/timestamp_height">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/timestamp_height"
+                    android:layout_width="@dimen/timestamp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="7:00"
                     android:theme="@style/Timestamp_hour" />
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/timestamp_height"
+                    android:layout_height="@dimen/timestamp_stroke"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/colorTimestampStroke" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/timestamp_marginbottom"
+                android:minHeight="@dimen/timestamp_height">
+
+                <TextView
+                    android:layout_width="@dimen/timestamp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="8:00"
                     android:theme="@style/Timestamp_hour" />
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/timestamp_height"
+                    android:layout_height="@dimen/timestamp_stroke"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/colorTimestampStroke" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/timestamp_marginbottom"
+                android:minHeight="@dimen/timestamp_height">
+
+                <TextView
+                    android:layout_width="@dimen/timestamp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="9:00"
                     android:theme="@style/Timestamp_hour" />
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/timestamp_height"
+                    android:layout_height="@dimen/timestamp_stroke"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/colorTimestampStroke" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/timestamp_marginbottom"
+                android:minHeight="@dimen/timestamp_height">
+
+                <TextView
+                    android:layout_width="@dimen/timestamp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="10:00"
                     android:theme="@style/Timestamp_hour" />
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/timestamp_height"
+                    android:layout_height="@dimen/timestamp_stroke"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/colorTimestampStroke" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/timestamp_marginbottom"
+                android:minHeight="@dimen/timestamp_height">
+
+                <TextView
+                    android:layout_width="@dimen/timestamp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="11:00"
                     android:theme="@style/Timestamp_hour" />
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/timestamp_height"
+                    android:layout_height="@dimen/timestamp_stroke"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/colorTimestampStroke" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/timestamp_marginbottom"
+                android:minHeight="@dimen/timestamp_height">
+
+                <TextView
+                    android:layout_width="@dimen/timestamp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="12:00"
                     android:theme="@style/Timestamp_hour" />
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/timestamp_height"
+                    android:layout_height="@dimen/timestamp_stroke"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/colorTimestampStroke" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/timestamp_marginbottom"
+                android:minHeight="@dimen/timestamp_height">
+
+                <TextView
+                    android:layout_width="@dimen/timestamp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="13:00"
                     android:theme="@style/Timestamp_hour" />
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/timestamp_height"
+                    android:layout_height="@dimen/timestamp_stroke"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/colorTimestampStroke" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/timestamp_marginbottom"
+                android:minHeight="@dimen/timestamp_height">
+
+                <TextView
+                    android:layout_width="@dimen/timestamp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="14:00"
                     android:theme="@style/Timestamp_hour" />
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/timestamp_height"
+                    android:layout_height="@dimen/timestamp_stroke"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/colorTimestampStroke" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/timestamp_marginbottom"
+                android:minHeight="@dimen/timestamp_height">
+
+                <TextView
+                    android:layout_width="@dimen/timestamp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="15:00"
                     android:theme="@style/Timestamp_hour" />
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/timestamp_height"
+                    android:layout_height="@dimen/timestamp_stroke"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/colorTimestampStroke" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/timestamp_marginbottom"
+                android:minHeight="@dimen/timestamp_height">
+
+                <TextView
+                    android:layout_width="@dimen/timestamp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="16:00"
                     android:theme="@style/Timestamp_hour" />
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/timestamp_height"
+                    android:layout_height="@dimen/timestamp_stroke"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/colorTimestampStroke" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/timestamp_marginbottom"
+                android:minHeight="@dimen/timestamp_height">
+
+                <TextView
+                    android:layout_width="@dimen/timestamp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="17:00"
                     android:theme="@style/Timestamp_hour" />
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/timestamp_height"
+                    android:layout_height="@dimen/timestamp_stroke"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/colorTimestampStroke" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/timestamp_marginbottom"
+                android:minHeight="@dimen/timestamp_height">
+
+                <TextView
+                    android:layout_width="@dimen/timestamp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="18:00"
                     android:theme="@style/Timestamp_hour" />
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/timestamp_height"
+                    android:layout_height="@dimen/timestamp_stroke"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/colorTimestampStroke" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/timestamp_marginbottom"
+                android:minHeight="@dimen/timestamp_height">
+
+                <TextView
+                    android:layout_width="@dimen/timestamp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="19:00"
                     android:theme="@style/Timestamp_hour" />
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/timestamp_height"
+                    android:layout_height="@dimen/timestamp_stroke"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/colorTimestampStroke" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/timestamp_marginbottom"
+                android:minHeight="@dimen/timestamp_height">
+
+                <TextView
+                    android:layout_width="@dimen/timestamp_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="20:00"
                     android:theme="@style/Timestamp_hour" />
 
-                <!-- Empty view (Floating buttons may cause view problems) -->
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="15dp" />
-            </LinearLayout>
+                    android:layout_height="@dimen/timestamp_stroke"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/colorTimestampStroke" />
 
-            <LinearLayout
-                android:id="@+id/Lines"
+            </TableRow>
+
+            <!-- Empty view (Space between timestamp and floating buttons) -->
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_toEndOf="@id/Hours">
+                android:minHeight="@dimen/timestamp_height">
+            </TableRow>
 
-            </LinearLayout>
-        </RelativeLayout>
+        </TableLayout>
+
     </ScrollView>
 
 </android.widget.RelativeLayout>

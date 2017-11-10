@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         AlertText.initialize(this);
         LoadingBar.initialize(this);
         RefreshButton refresh = new RefreshButton(this);
-
+        
         DateSpinnerController spinner = new DateSpinnerController(this);
         refresh.addRefreshListener(spinner);
     }
