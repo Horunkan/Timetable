@@ -1,4 +1,4 @@
-package com.maciejkitowski.timetable.utilities;
+package com.maciejkitowski.timetable.utilities.UserInterface;
 
 import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;

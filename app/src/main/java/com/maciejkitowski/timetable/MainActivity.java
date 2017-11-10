@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.maciejkitowski.timetable.Date.DateSpinnerController;
-import com.maciejkitowski.timetable.utilities.AlertText;
-import com.maciejkitowski.timetable.utilities.LoadingBar;
-import com.maciejkitowski.timetable.utilities.RefreshButton;
+import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
+import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
+import com.maciejkitowski.timetable.utilities.UserInterface.RefreshButton;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 

@@ -5,10 +5,10 @@ import android.util.Log;
 
 import com.maciejkitowski.timetable.R;
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
-import com.maciejkitowski.timetable.utilities.DownloadListener;
-import com.maciejkitowski.timetable.utilities.HtmlDownloader;
-import com.maciejkitowski.timetable.utilities.InternetConnection;
-import com.maciejkitowski.timetable.utilities.LoadingBar;
+import com.maciejkitowski.timetable.utilities.Internet.DownloadListener;
+import com.maciejkitowski.timetable.utilities.Internet.HtmlDownloader;
+import com.maciejkitowski.timetable.utilities.Internet.InternetConnection;
+import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
 
 import java.util.List;
 

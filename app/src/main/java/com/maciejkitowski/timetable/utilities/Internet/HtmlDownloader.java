@@ -1,4 +1,4 @@
-package com.maciejkitowski.timetable.utilities;
+package com.maciejkitowski.timetable.utilities.Internet;
 
 import android.os.AsyncTask;
 import android.util.Log;

@@ -79,4 +79,12 @@
         app:fabSize="normal"
         app:srcCompat="@android:drawable/ic_menu_my_calendar" />
 
+    <ScrollView
+        android:id="@+id/ScheduleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/Group">
+
+    </ScrollView>
+
 </android.widget.RelativeLayout>

@@ -1,7 +1,10 @@
-package com.maciejkitowski.timetable.utilities;
+package com.maciejkitowski.timetable.utilities.Internet;
 
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
+
+import com.maciejkitowski.timetable.utilities.Internet.DownloadListener;
+import com.maciejkitowski.timetable.utilities.Internet.HtmlDownloader;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package com.maciejkitowski.timetable.utilities;
+package com.maciejkitowski.timetable.utilities.UserInterface;
 
 import android.util.Log;
 import android.view.View;

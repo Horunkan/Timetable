@@ -1,4 +1,4 @@
-package com.maciejkitowski.timetable.utilities;
+package com.maciejkitowski.timetable.utilities.Internet;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
