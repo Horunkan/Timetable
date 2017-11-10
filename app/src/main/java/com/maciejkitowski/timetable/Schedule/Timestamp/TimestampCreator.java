@@ -8,7 +8,6 @@ import java.util.List;
 
 public final class TimestampCreator {
     private static final String logcat = "TimestampCreator";
-    private static final int singleTimestampHeight = 60 * 2;
     private static final int startHour = 7;
     private static final int endHour = 20;
 
@@ -22,7 +21,7 @@ public final class TimestampCreator {
         hours = new ArrayList<>();
 
         for(int hr = startHour; hr <= endHour; ++hr) {
-            hours.add(new Timestamp(activity, hr, singleTimestampHeight));
+            hours.add(new Timestamp(activity, hr));
         }
     }
 

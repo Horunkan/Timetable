@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.maciejkitowski.timetable.R;
 
 final class Timestamp {
+    public static final int height = 60 * 2;
+
     private static final String logcat = "Timestamp";
     private static final float textSize = 13f;
 
@@ -15,7 +17,7 @@ final class Timestamp {
     private final int hour;
     private final TextView text;
 
-    public Timestamp(Activity activity, int hour, int height) {
+    public Timestamp(Activity activity, int hour) {
         Log.i(logcat, String.format("Create %02d:00", hour, height));
         layout = activity.findViewById(R.id.Timestamp);
         this.hour = hour;
