@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.maciejkitowski.timetable.Date.DateSpinnerController;
+import com.maciejkitowski.timetable.Schedule.Timestamp.TimestampCreator;
 import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
 import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
 import com.maciejkitowski.timetable.utilities.UserInterface.RefreshButton;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         JodaTimeAndroid.init(this);
         AlertText.initialize(this);
         LoadingBar.initialize(this);
+        TimestampCreator.create(this);
         RefreshButton refresh = new RefreshButton(this);
 
         DateSpinnerController spinner = new DateSpinnerController(this);
