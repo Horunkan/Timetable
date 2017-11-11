@@ -7,16 +7,27 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.maciejkitowski.timetable.R;
+
+import org.joda.time.Duration;
+import org.joda.time.LocalTime;
+import org.joda.time.Minutes;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public final class CurrentTimeLine {
     private static final String logcat = "CurrentTimeLine";
 
     private final int strokeWidth = 4;
     private final int color = Color.RED;
+    private final int startHour = 7;
+    private final int endHour = 20;
+    private final Minutes refreshDelay = Minutes.minutes(2);
     private final int hourHeight;
     private final int firstTimestampPosition;
 
@@ -27,6 +38,7 @@ public final class CurrentTimeLine {
     private Canvas canvas;
     private RelativeLayout layout;
     private ImageView view;
+    private Timer timer;
 
     public CurrentTimeLine(Activity activity) {
         Log.i(logcat, "Initialize");
@@ -39,10 +51,20 @@ public final class CurrentTimeLine {
         initializePaint();
         initializeCanvas();
         initializeImageView();
+        hide();
 
-        //view.setTranslationY(hourHeight*0);
+        startDisplaying();
     }
 
+    public void hide() {
+        Log.i(logcat, "Hide current time pointer");
+        if(view != null) view.setVisibility(View.INVISIBLE);
+    }
+
+    public void display() {
+        Log.i(logcat, "Display current time pointer");
+        if(view != null) view.setVisibility(View.VISIBLE);
+    }
 
     private void initializePaint() {
         Log.i(logcat, "Initialize paint");
@@ -55,7 +77,6 @@ public final class CurrentTimeLine {
         Log.i(logcat, "Initialize canvas");
 
         canvas = new Canvas(bitmap);
-
         int positionY = firstTimestampPosition + (hourHeight * 0);
         canvas.drawLine(0, positionY, width, positionY, paint);
     }
@@ -78,5 +99,58 @@ public final class CurrentTimeLine {
 
         width = display.widthPixels;
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+    }
+
+    private void setPosition() {
+        LocalTime time = LocalTime.now();
+        Log.i(logcat, String.format("Current time: %02d:%02d", time.getHourOfDay(), time.getMinuteOfHour()));
+        int currentHour = time.getHourOfDay();
+        int currentMinute = time.getMinuteOfHour();
+
+        if(currentHour < startHour || currentHour > endHour) {
+            Log.i(logcat, "Time out of timestamp");
+            if(timer != null) timer.cancel();
+            hide();
+        }
+        else {
+            if(view.getVisibility() == View.INVISIBLE) display();
+
+            int hourPosition = hourHeight * (currentHour - startHour);
+            float minutePosition = (hourHeight/60f)*currentMinute;
+            float newPosition = hourPosition + minutePosition;
+            Log.i(logcat, String.format("hour position: %d, minute position: %f, final position: %f", hourPosition, minutePosition, newPosition));
+
+            view.setTranslationY(newPosition);
+        }
+    }
+
+    private void startDisplaying() {
+        Log.i(logcat, "Start pointer movement");
+        LocalTime currentTime = LocalTime.now();
+        int currentHour = currentTime.getHourOfDay();
+
+        if(currentHour < startHour) {
+            LocalTime startTime = LocalTime.parse(String.format("%02d:00", startHour));
+            Duration duration = new Duration(currentTime.toDateTimeToday(), startTime.toDateTimeToday());
+
+            Log.i(logcat, String.format("Started before first timestamp, wait for: %02d:%02d:%02d(%d milliseconds) to display current time.", duration.getStandardHours(), duration.getStandardMinutes(), duration.getStandardSeconds(), duration.getMillis()));
+            startDelayedTimer(duration.getMillis());
+        }
+        else if(currentHour > endHour) {
+            Log.i(logcat, String.format("Started after 20:00"));
+        }
+        else startTimer();
+    }
+
+    private void startDelayedTimer(long milliseconds) {
+        Log.i(logcat, String.format("Start counting to 02d:00 - %d milliseconds left", startHour, milliseconds));
+        Timer delayTimer = new Timer();
+        delayTimer.schedule(new TimerTask() { @Override public void run() { startTimer(); }}, milliseconds );
+    }
+
+    private void startTimer() {
+        Log.i(logcat, "Start timer");
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() { @Override public void run() { activity.runOnUiThread(() -> setPosition()); }}, 0, refreshDelay.toStandardDuration().getMillis());
     }
 }
