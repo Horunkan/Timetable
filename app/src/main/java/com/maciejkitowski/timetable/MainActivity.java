@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.maciejkitowski.timetable.Date.DateSpinnerController;
 import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
+import com.maciejkitowski.timetable.utilities.UserInterface.CurrentTimeLine;
 import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
 import com.maciejkitowski.timetable.utilities.UserInterface.RefreshButton;
 
@@ -31,5 +32,7 @@ public class MainActivity extends AppCompatActivity {
         
         DateSpinnerController spinner = new DateSpinnerController(this);
         refresh.addRefreshListener(spinner);
+
+        CurrentTimeLine time = new CurrentTimeLine(this);
     }
 }
