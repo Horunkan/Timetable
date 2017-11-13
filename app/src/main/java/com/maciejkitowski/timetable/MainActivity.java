@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         LoadingBar.initialize(this);
         RefreshButton refresh = new RefreshButton(this);
         
-        DateSpinnerController spinner = new DateSpinnerController(this);
+        DateSpinnerController spinner = new DateSpinnerController(this, null);
         refresh.addRefreshListener(spinner);
 
         CurrentTimeLine time = new CurrentTimeLine(this);

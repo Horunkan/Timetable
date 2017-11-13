@@ -23,10 +23,12 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     private Spinner spinner;
     private Activity activity;
     private List<String> dates;
+    private DateChangedListener listener;
 
-    public DateSpinnerController(Activity activity) {
+    public DateSpinnerController(Activity activity, DateChangedListener listener) {
         Log.i(logcat, "Initialize spinner controller");
         this.activity = activity;
+        this.listener = listener;
         spinner = activity.findViewById(R.id.Date);
 
         sourceType type;
@@ -63,6 +65,7 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Log.i(logcat, String.format("Selected date: %s", spinner.getSelectedItem()));
+        listener.onDateChanged(String.valueOf(spinner.getSelectedItem()));
     }
 
     @Override
