@@ -19,7 +19,7 @@ public class RefreshButton implements View.OnClickListener {
     public RefreshButton(Activity activity) {
         Log.i(logcat, "Initialize");
         listeners = new ArrayList<>();
-        button = (FloatingActionButton)activity.findViewById(R.id.RefreshButton);
+        button = activity.findViewById(R.id.RefreshButton);
         button.setOnClickListener(this);
     }
 

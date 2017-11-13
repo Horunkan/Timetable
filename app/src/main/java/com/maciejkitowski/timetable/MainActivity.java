@@ -25,11 +25,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void initialize() {
         Log.i(logcat, "Initialize");
+        initializeStatic();
+        initializeTimetable();
+    }
+
+    private void initializeStatic() {
+        Log.i(logcat, "Initialize static classes");
         JodaTimeAndroid.init(this);
         AlertText.initialize(this);
         LoadingBar.initialize(this);
+    }
+
+    private void initializeTimetable() {
+        Log.i(logcat, "Initialize timetable");
+
         RefreshButton refresh = new RefreshButton(this);
-        
+
         DateSpinnerController spinner = new DateSpinnerController(this, null);
         refresh.addRefreshListener(spinner);
 
