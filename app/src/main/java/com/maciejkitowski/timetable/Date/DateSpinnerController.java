@@ -30,12 +30,6 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
         this.activity = activity;
         this.listener = listener;
         spinner = activity.findViewById(R.id.Date);
-
-        sourceType type;
-        if(FileLoader.isDatesSavedOnDevice(activity)) type = sourceType.FILE;
-        else type = sourceType.HTML;
-
-        startLoading(type);
     }
 
     @Override
@@ -77,6 +71,15 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     public void onRefresh() {
         Log.i(logcat, "Refresh dates");
         startLoading(sourceType.HTML);
+    }
+
+    public void start() {
+        Log.i(logcat, "Start loading");
+        sourceType type;
+        if(FileLoader.isDatesSavedOnDevice(activity)) type = sourceType.FILE;
+        else type = sourceType.HTML;
+
+        startLoading(type);
     }
 
     private void setSpinnerValues() {

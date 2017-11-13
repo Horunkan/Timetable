@@ -39,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
     private void initializeTimetable() {
         Log.i(logcat, "Initialize timetable");
         CurrentTimeLine timePointer = new CurrentTimeLine(this);
-        timePointer.display();
-
-        DateSpinnerController dateSpinner = new DateSpinnerController(this, null);
-
         RefreshButton refresh = new RefreshButton(this);
+        DateSpinnerController dateSpinner = new DateSpinnerController(this, null);
+        
         refresh.addRefreshListener(dateSpinner);
+        timePointer.display();
+        dateSpinner.start();
     }
 }
