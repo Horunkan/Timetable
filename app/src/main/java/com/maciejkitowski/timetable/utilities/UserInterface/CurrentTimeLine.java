@@ -52,8 +52,6 @@ public final class CurrentTimeLine {
         initializeCanvas();
         initializeImageView();
         hide();
-
-        startDisplaying();
     }
 
     public void hide() {
@@ -63,7 +61,10 @@ public final class CurrentTimeLine {
 
     public void display() {
         Log.i(logcat, "Display current time pointer");
-        if(view != null) view.setVisibility(View.VISIBLE);
+        if(view != null) {
+            view.setVisibility(View.VISIBLE);
+            if(timer == null) startDisplaying();
+        }
     }
 
     private void initializePaint() {
