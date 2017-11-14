@@ -49,7 +49,7 @@ public class HtmlLoaderTest {
         Context context = InstrumentationRegistry.getTargetContext();
         TestObject obj = new TestObject();
         HtmlLoader loader = new HtmlLoader(context, obj);
-        loader.load();
+        //loader.load();
         Thread.sleep(1000);
 
         assertNotNull(obj.received);
