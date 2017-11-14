@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.maciejkitowski.timetable.R;
-import com.maciejkitowski.timetable.utilities.AsyncDataListener;
+import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncDataListener;
 import com.maciejkitowski.timetable.utilities.Internet.DownloadListener;
 import com.maciejkitowski.timetable.utilities.Internet.HtmlDownloader;
 import com.maciejkitowski.timetable.utilities.Internet.InternetConnection;

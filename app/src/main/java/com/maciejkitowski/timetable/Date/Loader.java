@@ -3,7 +3,7 @@ package com.maciejkitowski.timetable.Date;
 import android.content.Context;
 import android.util.Log;
 
-import com.maciejkitowski.timetable.utilities.AsyncDataListener;
+import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncDataListener;
 
 import org.json.JSONArray;
 
