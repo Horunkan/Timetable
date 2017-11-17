@@ -16,6 +16,7 @@ import com.maciejkitowski.timetable.utilities.UserInterface.RefreshListener;
 
 import org.joda.time.LocalDate;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class DateSpinnerController implements AdapterView.OnItemSelectedListener, AsyncDataListener, RefreshListener {
@@ -24,13 +25,17 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     private Spinner spinner;
     private Activity activity;
     private List<String> dates;
-    private DateChangedListener listener;
+    private List<DateChangedListener> listeners = new LinkedList<>();
 
-    public DateSpinnerController(Activity activity, DateChangedListener listener) {
+    public DateSpinnerController(Activity activity) {
         Log.i(logcat, "Initialize spinner controller");
         this.activity = activity;
-        this.listener = listener;
         spinner = activity.findViewById(R.id.Date);
+    }
+
+    public void addListener(DateChangedListener listener) {
+        Log.i(logcat, "Add new listener");
+        listeners.add(listener);
     }
 
     @Override
@@ -60,7 +65,7 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Log.i(logcat, String.format("Selected date: %s", spinner.getSelectedItem()));
-        listener.onDateChanged(String.valueOf(spinner.getSelectedItem()));
+        for(DateChangedListener listener : listeners) listener.onDateChanged(String.valueOf(spinner.getSelectedItem()));
     }
 
     @Override

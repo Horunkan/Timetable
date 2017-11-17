@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i(logcat, "Initialize timetable");
         CurrentTimeLine timePointer = new CurrentTimeLine(this);
         RefreshButton refresh = new RefreshButton(this);
-        DateSpinnerController dateSpinner = new DateSpinnerController(this, null);
+        DateSpinnerController dateSpinner = new DateSpinnerController(this);
         
         refresh.addRefreshListener(dateSpinner);
         timePointer.display();
