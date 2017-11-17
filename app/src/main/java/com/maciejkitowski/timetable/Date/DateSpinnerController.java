@@ -12,6 +12,7 @@ import com.maciejkitowski.timetable.R;
 import com.maciejkitowski.timetable.utilities.FileUtil;
 import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
+import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
 import com.maciejkitowski.timetable.utilities.UserInterface.RefreshListener;
 
 import org.joda.time.LocalDate;
@@ -41,12 +42,14 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     @Override
     public void onReceiveBegin() {
         Log.i(logcat, "Receive begin");
+        LoadingBar.display();
     }
 
     @Override
     public void onReceiveSuccess(List<String> data) {
         Log.i(logcat, "Receive success");
         dates = data;
+        LoadingBar.hide();
         setSpinnerValues();
     }
 
@@ -77,6 +80,7 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     public void onRefresh() {
         Log.i(logcat, "Refresh dates");
         startLoading(sourceType.HTML);
+        AlertText.hide();
     }
 
     public void start() {
