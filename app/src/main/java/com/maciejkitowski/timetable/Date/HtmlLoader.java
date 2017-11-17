@@ -5,14 +5,10 @@ import android.util.Log;
 
 import com.maciejkitowski.timetable.R;
 import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncDataListener;
-import com.maciejkitowski.timetable.utilities.Internet.DownloadListener;
 import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncHtmlDownloader;
-import com.maciejkitowski.timetable.utilities.Internet.InternetConnection;
-import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
+import com.maciejkitowski.timetable.utilities.InternetConnection;
 
-import java.util.List;
-
-final class HtmlLoader extends Loader implements DownloadListener {
+final class HtmlLoader extends Loader/* implements DownloadListener*/ {
     private static final String logcat = "DateHtmlLoader";
     private final String[] downloadUrls = {"http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php"};
 
@@ -26,7 +22,7 @@ final class HtmlLoader extends Loader implements DownloadListener {
         startDownloading();
     }
 
-    @Override
+    /*@Override
     public void onDownloadBegin() {
         Log.i(logcat, "Download started");
         listener.onReceiveBegin();
@@ -47,7 +43,7 @@ final class HtmlLoader extends Loader implements DownloadListener {
         Log.w(logcat, String.format("Download failed with error: %s", message));
         LoadingBar.hide();
         listener.onReceiveFail(message);
-    }
+    }*/
 
     private void startDownloading() {
         try {
