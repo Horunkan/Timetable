@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.maciejkitowski.timetable.R;
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
+import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncHtmlDownloader;
+import com.maciejkitowski.timetable.utilities.FileUtil;
 import com.maciejkitowski.timetable.utilities.InternetConnection;
 
 import java.util.List;
@@ -35,6 +37,7 @@ final class HtmlLoader extends Loader {
         Log.i(logcat, "Download success");
         for(String dat : data) Log.i(logcat+"-val", dat);
         formatData(data);
+        FileUtil.saveJsonArray(context, FileLoader.filename, dates);
     }
 
     @Override
@@ -46,7 +49,9 @@ final class HtmlLoader extends Loader {
     private void startDownloading() {
         try {
             if(InternetConnection.isConnected(context)) {
-
+                AsyncHtmlDownloader downloader = new AsyncHtmlDownloader();
+                downloader.addListener(this);
+                downloader.execute(downloadUrls);
             }
             else displayNoConnectionError();
         }

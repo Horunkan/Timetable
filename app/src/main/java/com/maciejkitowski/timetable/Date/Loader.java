@@ -15,6 +15,7 @@ abstract class Loader implements AsyncDataSourceListener {
     private static final String logcat = "Loader";
     protected final Context context;
     protected List<AsyncDataListener> listeners = new ArrayList<>();
+    List<String> dates = new ArrayList<>();
 
     public Loader(Context context) {
         Log.i(logcat, "Initialize");
@@ -30,7 +31,6 @@ abstract class Loader implements AsyncDataSourceListener {
 
     protected void formatData(List<String> json) {
         Log.i(logcat, String.format("Received json array with %d size", json.size()));
-        List<String> dates = new ArrayList<>();
         boolean fail = false;
 
         for(String js : json) {
