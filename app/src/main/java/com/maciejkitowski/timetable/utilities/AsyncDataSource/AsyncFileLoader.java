@@ -59,7 +59,7 @@ public class AsyncFileLoader extends AsyncTask<String, Void, Void> {
             for(AsyncDataSourceListener list : listeners) list.onLoadSuccess(loaded);
         }
     }
-    
+
     private String getFile(String filename) {
         Log.i(logcat, "Load from file: " + filename);
 
