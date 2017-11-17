@@ -10,8 +10,10 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.util.List;
 
-public class FileUtil {
+public final class FileUtil {
     private static final String logcat = "FileUtil";
+
+    private FileUtil() { }
 
     public static boolean isSavedOnDevice(Context context, String name) {
         Log.i(logcat, String.format("Check if %s exists on device.", name));

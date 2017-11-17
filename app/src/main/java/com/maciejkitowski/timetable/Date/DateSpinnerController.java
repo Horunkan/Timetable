@@ -9,6 +9,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.maciejkitowski.timetable.R;
+import com.maciejkitowski.timetable.utilities.FileUtil;
 import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
 import com.maciejkitowski.timetable.utilities.UserInterface.RefreshListener;
@@ -47,7 +48,7 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     @Override
     public void onReceiveFail(String message) {
         Log.i(logcat, String.format("Receive fail: %s", message));
-        if(FileLoader.isDatesSavedOnDevice(activity)) {
+        if(FileUtil.isSavedOnDevice(activity, FileLoader.filename)) {
             Toast.makeText(activity, R.string.error_nointernet_foundfile, Toast.LENGTH_LONG).show();
             startLoading(sourceType.FILE);
         }
@@ -76,7 +77,7 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     public void start() {
         Log.i(logcat, "Start loading");
         sourceType type;
-        if(FileLoader.isDatesSavedOnDevice(activity)) type = sourceType.FILE;
+        if(FileUtil.isSavedOnDevice(activity, FileLoader.filename)) type = sourceType.FILE;
         else type = sourceType.HTML;
 
         startLoading(type);
