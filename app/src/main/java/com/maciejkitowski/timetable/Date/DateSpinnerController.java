@@ -52,7 +52,7 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
 
     @Override
     public void onReceiveFail(String message) {
-        Log.i(logcat, String.format("Receive fail: %s", message));
+        Log.w(logcat, String.format("Receive fail: %s", message));
         if(FileUtil.isSavedOnDevice(activity, FileLoader.filename)) {
             Toast.makeText(activity, R.string.error_nointernet_foundfile, Toast.LENGTH_LONG).show();
             startLoading(sourceType.FILE);

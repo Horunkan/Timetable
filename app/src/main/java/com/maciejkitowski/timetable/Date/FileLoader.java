@@ -39,7 +39,7 @@ final class FileLoader extends Loader {
 
     @Override
     public void onLoadFail(String message) {
-        Log.i(logcat, "Load fail: " + message);
+        Log.w(logcat, "Load fail: " + message);
         for(AsyncDataListener listener : listeners) listener.onReceiveFail(message);
     }
 
