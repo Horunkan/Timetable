@@ -99,8 +99,8 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
         Log.i(logcat, "Start loading");
         Loader loader;
 
-        if(type == sourceType.FILE) loader = new FileLoader(activity, this);
-        else loader = new HtmlLoader(activity, this);
+        /*if(type == sourceType.FILE) loader = new FileLoader(activity, this);
+        else loader = new HtmlLoader(activity, this);*/
 
         loader.start();
     }
