@@ -55,7 +55,8 @@ public class AsyncFileLoader extends AsyncTask<String, Void, Void> {
             for(AsyncDataSourceListener list : listeners) list.onLoadFail(message);
         }
         else {
-            Log.i(logcat, "Download success.");
+            Log.i(logcat, "Load success.");
+            for(String str : loaded) Log.i(logcat+"-val", str);
             for(AsyncDataSourceListener list : listeners) list.onLoadSuccess(loaded);
         }
     }
