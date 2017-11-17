@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.maciejkitowski.timetable.utilities.AsyncDataListener;
-
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -17,7 +15,7 @@ import java.util.List;
 public class AsyncFileLoader extends AsyncTask<String, Void, Void> {
     private static final String logcat = "AsyncFileLoader";
     private Context context;
-    private List<AsyncDataListener> listeners;
+    private List<AsyncDataSourceListener> listeners;
     private List<String> loaded;
     private boolean loadFailed = false;
     private Exception failException = null;
@@ -28,7 +26,7 @@ public class AsyncFileLoader extends AsyncTask<String, Void, Void> {
         this.listeners = new LinkedList<>();
     }
 
-    public void addListener(AsyncDataListener listener) {
+    public void addListener(AsyncDataSourceListener listener) {
         Log.i(logcat, "Add new listener");
         listeners.add(listener);
     }
@@ -37,7 +35,7 @@ public class AsyncFileLoader extends AsyncTask<String, Void, Void> {
     protected void onPreExecute() {
         Log.i(logcat, "Start data receiving");
         loaded = new ArrayList<>();
-        callOnReceiveBegin();
+        for(AsyncDataSourceListener list : listeners) list.onLoadBegin();
     }
 
     @Override
@@ -53,29 +51,15 @@ public class AsyncFileLoader extends AsyncTask<String, Void, Void> {
         super.onPostExecute(aVoid);
         if(loadFailed) {
             Log.w(logcat, "Load failed.");
-            callOnReceiveFail(failException.getLocalizedMessage());
+            String message = failException.getLocalizedMessage();
+            for(AsyncDataSourceListener list : listeners) list.onLoadFail(message);
         }
         else {
             Log.i(logcat, "Download success.");
-            callOnReceiveSuccess(loaded);
+            for(AsyncDataSourceListener list : listeners) list.onLoadSuccess(loaded);
         }
     }
-
-    private void callOnReceiveBegin() {
-        Log.i(logcat, "Call all listeners (onReceiveBegin)");
-        for(AsyncDataListener list : listeners) list.onReceiveBegin();
-    }
-
-    private void callOnReceiveSuccess(List<String> data) {
-        Log.i(logcat, "Call all listeners (onReceiveSuccess)");
-        for(AsyncDataListener list : listeners) list.onReceiveSuccess(data);
-    }
-
-    private void callOnReceiveFail(String message) {
-        Log.i(logcat, "Call all listeners (onReceiveFail)");
-        for(AsyncDataListener list : listeners) list.onReceiveFail(message);
-    }
-
+    
     private String getFile(String filename) {
         Log.i(logcat, "Load from file: " + filename);
 
