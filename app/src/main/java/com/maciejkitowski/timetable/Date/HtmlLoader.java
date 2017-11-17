@@ -1,14 +1,22 @@
 package com.maciejkitowski.timetable.Date;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.maciejkitowski.timetable.R;
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
+import com.maciejkitowski.timetable.utilities.InternetConnection;
 
 import java.util.List;
 
 final class HtmlLoader extends Loader {
     private static final String logcat = "HtmlLoader";
     private final String[] downloadUrls = {"http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php"};
+
+    public HtmlLoader(Context context) {
+        super(context);
+        Log.i(logcat, "Initialize");
+    }
 
     @Override
     void start() {
@@ -32,9 +40,24 @@ final class HtmlLoader extends Loader {
     @Override
     public void onLoadFail(String message) {
         Log.w(logcat, String.format("Download failed: %s", message));
+        for(AsyncDataListener listener : listeners) listener.onReceiveFail(message);
     }
 
     private void startDownloading() {
+        try {
+            if(InternetConnection.isConnected(context)) {
 
+            }
+            else displayNoConnectionError();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            for(AsyncDataListener listener : listeners) listener.onReceiveFail(ex.getLocalizedMessage());
+        }
+    }
+
+    private void displayNoConnectionError() {
+        Log.i(logcat, "Internet not connected, display error.");
+        for(AsyncDataListener listener : listeners) listener.onReceiveFail(context.getString(R.string.error_nointernet));
     }
 }

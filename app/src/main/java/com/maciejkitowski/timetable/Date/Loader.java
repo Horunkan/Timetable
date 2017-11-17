@@ -1,5 +1,6 @@
 package com.maciejkitowski.timetable.Date;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
@@ -12,7 +13,13 @@ import java.util.List;
 
 abstract class Loader implements AsyncDataSourceListener {
     private static final String logcat = "Loader";
+    protected final Context context;
     protected List<AsyncDataListener> listeners = new ArrayList<>();
+
+    public Loader(Context context) {
+        Log.i(logcat, "Initialize");
+        this.context = context;
+    }
 
     abstract void start();
 

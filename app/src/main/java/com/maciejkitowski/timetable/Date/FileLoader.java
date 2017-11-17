@@ -11,11 +11,10 @@ import java.util.List;
 final class FileLoader extends Loader {
     private static final String logcat = "FileLoader";
     static final String filename = "dates.json";
-    private final Context context;
 
     public FileLoader(Context context) {
+        super(context);
         Log.i(logcat, "Initialize");
-        this.context = context;
     }
 
     @Override
