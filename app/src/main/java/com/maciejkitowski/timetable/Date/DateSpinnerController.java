@@ -9,9 +9,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.maciejkitowski.timetable.R;
+import com.maciejkitowski.timetable.utilities.AsyncDataListener;
 import com.maciejkitowski.timetable.utilities.FileUtil;
 import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
-import com.maciejkitowski.timetable.utilities.AsyncDataListener;
 import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
 import com.maciejkitowski.timetable.utilities.UserInterface.RefreshListener;
 
@@ -79,8 +79,8 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     @Override
     public void onRefresh() {
         Log.i(logcat, "Refresh dates");
-        startLoading(sourceType.HTML);
         AlertText.hide();
+        startLoading(sourceType.HTML);
     }
 
     public void start() {
