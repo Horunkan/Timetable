@@ -6,7 +6,7 @@ import android.util.Log;
 import com.maciejkitowski.timetable.R;
 import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncDataListener;
 import com.maciejkitowski.timetable.utilities.Internet.DownloadListener;
-import com.maciejkitowski.timetable.utilities.Internet.HtmlDownloader;
+import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncHtmlDownloader;
 import com.maciejkitowski.timetable.utilities.Internet.InternetConnection;
 import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
 
@@ -52,7 +52,7 @@ final class HtmlLoader extends Loader implements DownloadListener {
     private void startDownloading() {
         try {
             if(InternetConnection.isConnected(context)) {
-                HtmlDownloader downloader = new HtmlDownloader(this);
+                AsyncHtmlDownloader downloader = new AsyncHtmlDownloader(this);
                 downloader.execute(downloadUrls);
             }
             else displayNoConnectionError();
