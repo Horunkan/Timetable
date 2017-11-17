@@ -3,6 +3,8 @@ package com.maciejkitowski.timetable.utilities.AsyncDataSource;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.maciejkitowski.timetable.utilities.AsyncDataListener;
+
 import org.apache.commons.io.IOUtils;
 
 import java.io.InputStreamReader;

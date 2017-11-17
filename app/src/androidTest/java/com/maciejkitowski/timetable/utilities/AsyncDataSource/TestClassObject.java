@@ -2,6 +2,8 @@ package com.maciejkitowski.timetable.utilities.AsyncDataSource;
 
 import android.util.Log;
 
+import com.maciejkitowski.timetable.utilities.AsyncDataListener;
+
 import java.util.List;
 
 final class TestClassObject implements AsyncDataListener {

@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.maciejkitowski.timetable.R;
 import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
-import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncDataListener;
+import com.maciejkitowski.timetable.utilities.AsyncDataListener;
 import com.maciejkitowski.timetable.utilities.UserInterface.RefreshListener;
 
 import org.joda.time.LocalDate;

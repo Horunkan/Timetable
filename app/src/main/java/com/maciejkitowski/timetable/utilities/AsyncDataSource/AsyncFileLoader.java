@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.maciejkitowski.timetable.utilities.AsyncDataListener;
+
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;

@@ -1,4 +1,4 @@
-package com.maciejkitowski.timetable.utilities.AsyncDataSource;
+package com.maciejkitowski.timetable.utilities;
 
 import java.util.List;
 
