@@ -14,8 +14,6 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class AsyncFileLoaderTest {
-    private static final String logcat = "UnitTest";
-
     private String[] getNotCreatedFiles(int count) {
         String[] buffer = new String[count];
 

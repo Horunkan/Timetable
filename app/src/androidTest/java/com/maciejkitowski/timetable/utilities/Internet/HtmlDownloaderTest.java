@@ -33,24 +33,7 @@ public class HtmlDownloaderTest {
         }
     }
 
-    @Test
-    public void downloadSinglePage() throws Exception {
-        TestObject obj = new TestObject();
-        AsyncHtmlDownloader downloader = new AsyncHtmlDownloader(obj);
-        downloader.execute("https://google.pl").get();
 
-        assertNotNull(obj.downloaded);
-    }
-
-    @Test
-    public void downloadMultiplePages() throws Exception {
-        String[] pages = new String[] {"https://google.pl", "https://www.wp.pl/", "https://github.com/"};
-        TestObject obj = new TestObject();
-        AsyncHtmlDownloader downloader = new AsyncHtmlDownloader(obj);
-        downloader.execute(pages).get();
-
-        assertNotNull(obj.downloaded);
-    }
 
     @Test
     public void downloadFail() throws Exception {
