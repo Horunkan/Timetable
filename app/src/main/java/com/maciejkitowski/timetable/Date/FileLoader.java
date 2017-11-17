@@ -34,6 +34,7 @@ final class FileLoader extends Loader {
     public void onLoadSuccess(List<String> data) {
         Log.i(logcat, "Load success");
         for(String dat : data) Log.i(logcat+"-val", dat);
+        formatData(data);
     }
 
     @Override
