@@ -12,18 +12,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public final class AsyncHtmlDownloader extends AsyncTask<String, Void, Void> {
-    private static final String logcat = "HTML-downloader";
-
-    //private final DownloadListener listener;
+    private static final String logcat = "AsyncHtmlDownloader";
     private List<AsyncDataListener> listeners;
     private List<String> downloaded;
     private boolean downloadFailed = false;
     private Exception downloadFailException = null;
-
-    /*public AsyncHtmlDownloader(DownloadListener listener) {
-        Log.i(logcat, "Set Data listener");
-        this.listener = listener;
-    }*/
 
     public AsyncHtmlDownloader() {
         Log.i(logcat, "Initialize");

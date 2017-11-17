@@ -52,7 +52,7 @@ final class HtmlLoader extends Loader implements DownloadListener {
     private void startDownloading() {
         try {
             if(InternetConnection.isConnected(context)) {
-                AsyncHtmlDownloader downloader = new AsyncHtmlDownloader(this);
+                AsyncHtmlDownloader downloader = new AsyncHtmlDownloader();
                 downloader.execute(downloadUrls);
             }
             else displayNoConnectionError();
