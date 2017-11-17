@@ -1,32 +1,39 @@
-package com.maciejkitowski.timetable.utilities.Internet;
+package com.maciejkitowski.timetable.utilities.AsyncDataSource;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.maciejkitowski.timetable.utilities.AsyncDataListener;
 
 import org.apache.commons.io.IOUtils;
 
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public final class HtmlDownloader extends AsyncTask<String, Void, Void> {
-    private static final String logcat = "HTML-downloader";
-
-    private final DownloadListener listener;
+public final class AsyncHtmlDownloader extends AsyncTask<String, Void, Void> {
+    private static final String logcat = "AsyncHtmlDownloader";
+    private List<AsyncDataSourceListener> listeners;
     private List<String> downloaded;
     private boolean downloadFailed = false;
     private Exception downloadFailException = null;
 
-    public HtmlDownloader(DownloadListener listener) {
-        Log.i(logcat, "Set Data listener");
-        this.listener = listener;
+    public AsyncHtmlDownloader() {
+        Log.i(logcat, "Initialize");
+        listeners = new LinkedList<>();
+    }
+
+    public void addListener(AsyncDataSourceListener listener) {
+        Log.i(logcat, "Add new listener");
+        listeners.add(listener);
     }
 
     @Override
     protected void onPreExecute() {
         Log.i(logcat, "Start data receiving");
-        listener.onDownloadBegin();
+        callOnReceiveBegin();
         downloaded = new ArrayList<>();
     }
 
@@ -43,14 +50,29 @@ public final class HtmlDownloader extends AsyncTask<String, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         if(downloadFailed) {
             Log.w(logcat, "Download failed.");
-            listener.onDownloadFailed(downloadFailException.getLocalizedMessage());
+            callOnReceiveFail(downloadFailException.getLocalizedMessage());
         }
         else {
             Log.i(logcat, "Download success.");
-            listener.onDownloadSuccess(downloaded);
+            callOnReceiveSuccess(downloaded);
         }
 
         super.onPostExecute(aVoid);
+    }
+
+    private void callOnReceiveBegin() {
+        Log.i(logcat, "Call all listeners (onReceiveBegin)");
+        for(AsyncDataSourceListener list : listeners) list.onLoadBegin();
+    }
+
+    private void callOnReceiveSuccess(List<String> data) {
+        Log.i(logcat, "Call all listeners (onReceiveSuccess)");
+        for(AsyncDataSourceListener list : listeners) list.onLoadSuccess(data);
+    }
+
+    private void callOnReceiveFail(String message) {
+        Log.i(logcat, "Call all listeners (onReceiveFail)");
+        for(AsyncDataSourceListener list : listeners) list.onLoadFail(message);
     }
 
     private String getPage(String source) {

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.maciejkitowski.timetable.Date.DateSpinnerController;
 import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
+import com.maciejkitowski.timetable.utilities.UserInterface.CurrentTimeLine;
 import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
 import com.maciejkitowski.timetable.utilities.UserInterface.RefreshButton;
 
@@ -24,12 +25,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void initialize() {
         Log.i(logcat, "Initialize");
+        initializeStatic();
+        initializeTimetable();
+    }
+
+    private void initializeStatic() {
+        Log.i(logcat, "Initialize static classes");
         JodaTimeAndroid.init(this);
         AlertText.initialize(this);
         LoadingBar.initialize(this);
+    }
+
+    private void initializeTimetable() {
+        Log.i(logcat, "Initialize timetable");
+        CurrentTimeLine timePointer = new CurrentTimeLine(this);
         RefreshButton refresh = new RefreshButton(this);
+        DateSpinnerController dateSpinner = new DateSpinnerController(this);
         
-        DateSpinnerController spinner = new DateSpinnerController(this);
-        refresh.addRefreshListener(spinner);
+        refresh.addRefreshListener(dateSpinner);
+        timePointer.display();
+        dateSpinner.start();
     }
 }

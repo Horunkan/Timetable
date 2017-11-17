@@ -4,74 +4,48 @@ import android.content.Context;
 import android.util.Log;
 
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
+import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncFileLoader;
 
-import org.apache.commons.io.FileUtils;
-import org.json.JSONArray;
-
-import java.io.File;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
 
 final class FileLoader extends Loader {
-    private static final String logcat = "DateFileLoader";
+    private static final String logcat = "FileLoader";
     static final String filename = "dates.json";
 
-    public FileLoader(Context context, AsyncDataListener listener) {
-        super(context, listener);
+    public FileLoader(Context context) {
+        super(context);
+        Log.i(logcat, "Initialize");
     }
 
     @Override
-    public void start() {
-        Log.i(logcat, "Load dates from file.");
-        listener.onReceiveBegin();
+    void start() {
+        Log.i(logcat, "Start");
         startLoading();
     }
 
+    @Override
+    public void onLoadBegin() {
+        Log.i(logcat, "Begin load");
+        for(AsyncDataListener listener : listeners) listener.onReceiveBegin();
+    }
+
+    @Override
+    public void onLoadSuccess(List<String> data) {
+        Log.i(logcat, "Load success");
+        for(String dat : data) Log.i(logcat+"-val", dat);
+        formatData(data);
+    }
+
+    @Override
+    public void onLoadFail(String message) {
+        Log.w(logcat, "Load fail: " + message);
+        for(AsyncDataListener listener : listeners) listener.onReceiveFail(message);
+    }
+
     private void startLoading() {
-        Log.i(logcat, "Start loading from file");
-
-        try {
-            File file = new File(context.getFilesDir(), filename);
-            List<String> loaded = new ArrayList<>();
-            loaded.add(FileUtils.readFileToString(file, Charset.defaultCharset()));
-
-            Log.i(logcat, "Loading finished");
-            setReceivedData(loaded);
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-            listener.onReceiveFail(ex.getLocalizedMessage());
-        }
-    }
-
-    static void saveToFile(Context context, List<String> dates) {
-        Log.i(logcat, "Save dates to JSON file");
-
-        try {
-            JSONArray array = new JSONArray();
-            for(String str : dates) array.put(str);
-            Log.i(logcat+"-val", array.toString());
-
-            File file = new File(context.getFilesDir(), filename);
-            FileUtils.writeStringToFile(file, array.toString(), Charset.defaultCharset());
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    static boolean isDatesSavedOnDevice(Context context) {
-        Log.i(logcat, String.format("Check if %s exists on device.", filename));
-        File file = new File(context.getFilesDir(), filename);
-
-        Log.i(logcat, String.format("File %s found: %s", filename, file.exists()));
-        return file.exists();
-    }
-
-    static void delete(Context context) {
-        Log.i(logcat, String.format("Delete %s file.", filename));
-        File file = new File(context.getFilesDir(), filename);
-        file.delete();
+        Log.i(logcat, "Start loading dates from file.");
+        AsyncFileLoader loader = new AsyncFileLoader(context);
+        loader.addListener(this);
+        loader.execute(filename);
     }
 }

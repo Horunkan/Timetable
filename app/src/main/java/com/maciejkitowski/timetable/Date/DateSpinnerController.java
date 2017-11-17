@@ -9,12 +9,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.maciejkitowski.timetable.R;
-import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
+import com.maciejkitowski.timetable.utilities.FileUtil;
+import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
+import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
 import com.maciejkitowski.timetable.utilities.UserInterface.RefreshListener;
 
 import org.joda.time.LocalDate;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class DateSpinnerController implements AdapterView.OnItemSelectedListener, AsyncDataListener, RefreshListener {
@@ -23,35 +26,37 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     private Spinner spinner;
     private Activity activity;
     private List<String> dates;
+    private List<DateChangedListener> listeners = new LinkedList<>();
 
     public DateSpinnerController(Activity activity) {
         Log.i(logcat, "Initialize spinner controller");
         this.activity = activity;
         spinner = activity.findViewById(R.id.Date);
+    }
 
-        sourceType type;
-        if(FileLoader.isDatesSavedOnDevice(activity)) type = sourceType.FILE;
-        else type = sourceType.HTML;
-
-        startLoading(type);
+    public void addListener(DateChangedListener listener) {
+        Log.i(logcat, "Add new listener");
+        listeners.add(listener);
     }
 
     @Override
     public void onReceiveBegin() {
         Log.i(logcat, "Receive begin");
+        LoadingBar.display();
     }
 
     @Override
     public void onReceiveSuccess(List<String> data) {
         Log.i(logcat, "Receive success");
         dates = data;
+        LoadingBar.hide();
         setSpinnerValues();
     }
 
     @Override
     public void onReceiveFail(String message) {
-        Log.i(logcat, String.format("Receive fail: %s", message));
-        if(FileLoader.isDatesSavedOnDevice(activity)) {
+        Log.w(logcat, String.format("Receive fail: %s", message));
+        if(FileUtil.isSavedOnDevice(activity, FileLoader.filename)) {
             Toast.makeText(activity, R.string.error_nointernet_foundfile, Toast.LENGTH_LONG).show();
             startLoading(sourceType.FILE);
         }
@@ -63,6 +68,7 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Log.i(logcat, String.format("Selected date: %s", spinner.getSelectedItem()));
+        for(DateChangedListener listener : listeners) listener.onDateChanged(String.valueOf(spinner.getSelectedItem()));
     }
 
     @Override
@@ -73,7 +79,17 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     @Override
     public void onRefresh() {
         Log.i(logcat, "Refresh dates");
+        AlertText.hide();
         startLoading(sourceType.HTML);
+    }
+
+    public void start() {
+        Log.i(logcat, "Start loading");
+        sourceType type;
+        if(FileUtil.isSavedOnDevice(activity, FileLoader.filename)) type = sourceType.FILE;
+        else type = sourceType.HTML;
+
+        startLoading(type);
     }
 
     private void setSpinnerValues() {
@@ -92,9 +108,10 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
         Log.i(logcat, "Start loading");
         Loader loader;
 
-        if(type == sourceType.FILE) loader = new FileLoader(activity, this);
-        else loader = new HtmlLoader(activity, this);
+        if(type == sourceType.FILE) loader = new FileLoader(activity);
+        else loader = new HtmlLoader(activity);
 
+        loader.addListener(this);
         loader.start();
     }
 

@@ -4,48 +4,34 @@ import android.content.Context;
 import android.util.Log;
 
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
+import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncDataSourceListener;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class Loader implements AsyncDataListener {
-    private static final String logcat = "DateLoader";
+abstract class Loader implements AsyncDataSourceListener {
+    private static final String logcat = "Loader";
+    protected final Context context;
+    protected List<AsyncDataListener> listeners = new ArrayList<>();
+    List<String> dates = new ArrayList<>();
 
-    protected Context context;
-    protected AsyncDataListener listener;
-    protected List<String> dates;
-
-    public Loader(Context context, AsyncDataListener listener) {
-        Log.i(logcat, "Initialize date loader");
+    public Loader(Context context) {
+        Log.i(logcat, "Initialize");
         this.context = context;
-        this.listener = listener;
     }
 
-    public abstract void start();
+    abstract void start();
 
-    @Override
-    public void onReceiveBegin() {
-        Log.i(logcat, "Receive begin");
-        listener.onReceiveBegin();
+    public void addListener(AsyncDataListener listener) {
+        Log.i(logcat, "Add new listener");
+        listeners.add(listener);
     }
 
-    @Override
-    public void onReceiveSuccess(List<String> data) {
-        Log.i(logcat, "Receive success");
-        setReceivedData(data);
-    }
-
-    @Override
-    public void onReceiveFail(String message) {
-        Log.i(logcat, String.format("Receive fail: %s", message));
-        listener.onReceiveFail(message);
-    }
-
-    protected void setReceivedData(List<String> json) {
+    protected void formatData(List<String> json) {
         Log.i(logcat, String.format("Received json array with %d size", json.size()));
-        dates = new ArrayList<>();
+        boolean fail = false;
 
         for(String js : json) {
             try {
@@ -59,10 +45,11 @@ abstract class Loader implements AsyncDataListener {
             }
             catch (Exception ex) {
                 ex.printStackTrace();
-                listener.onReceiveFail(ex.getLocalizedMessage());
+                fail = true;
+                for(AsyncDataListener listener : listeners) listener.onReceiveFail(ex.getLocalizedMessage());
             }
         }
 
-        listener.onReceiveSuccess(dates);
+        if(!fail) for(AsyncDataListener listener : listeners) listener.onReceiveSuccess(dates);
     }
 }
