@@ -6,11 +6,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.maciejkitowski.timetable.R;
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
 import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncFileLoader;
+import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncHtmlDownloader;
 import com.maciejkitowski.timetable.utilities.FileUtil;
+import com.maciejkitowski.timetable.utilities.InternetConnection;
 import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
 import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
 import com.maciejkitowski.timetable.utilities.UserInterface.RefreshListener;
@@ -28,6 +31,7 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
 
     private Spinner spinner;
     private Activity activity;
+    private boolean loadingFromUrl = false;
     private List<String> dates = new LinkedList<>();
     private List<DateChangedListener> listeners = new LinkedList<>();
 
@@ -51,6 +55,7 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     @Override
     public void onReceiveSuccess(List<String> data) {
         Log.i(logcat, "Receive success");
+        if(loadingFromUrl) FileUtil.saveToFile(activity, filename, data);
         LoadingBar.hide();
         formatData(data);
     }
@@ -76,6 +81,7 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     @Override
     public void onRefresh() {
         Log.i(logcat, "Refresh dates");
+        dates.clear();
         AlertText.hide();
         loadFromUrl();
     }
@@ -89,6 +95,8 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
 
     private void loadFromFile() {
         Log.i(logcat, "Load dates from file");
+        loadingFromUrl = false;
+
         AsyncFileLoader loader = new AsyncFileLoader(activity);
         loader.addListener(this);
         loader.execute(filename);
@@ -96,8 +104,20 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
 
     private void loadFromUrl() {
         Log.i(logcat, "Load dates from url");
+        loadingFromUrl = true;
 
-
+        if(InternetConnection.isConnected(activity)) {
+            AsyncHtmlDownloader downloader = new AsyncHtmlDownloader();
+            downloader.addListener(this);
+            downloader.execute(url);
+        }
+        else {
+            if(isFileOnDevice()) {
+                Toast.makeText(activity, R.string.error_nointernet_foundfile, Toast.LENGTH_LONG).show();
+                loadFromFile();
+            }
+            else AlertText.display(activity.getString(R.string.error_nointernet));
+        }
     }
 
     private void formatData(List<String> json) {

@@ -26,6 +26,22 @@ public final class FileUtil {
         return exists;
     }
 
+    public static void saveToFile(Context context, String name, List<String> data) {
+        Log.i(logcat, String.format("Save %d array to %s file", data.size(), name));
+
+        try {
+            StringBuilder builder = new StringBuilder();
+            for(String str : data) builder.append(str + "\n");
+            Log.i(logcat + "-val", builder.toString());
+
+            File file = new File(context.getFilesDir(), name);
+            FileUtils.writeStringToFile(file, builder.toString(), Charset.defaultCharset());
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public static void saveJsonArray(Context context, String name, List<String> data) {
         Log.i(logcat, String.format("Save %d JSON array to %s file.", data.size(), name));
 

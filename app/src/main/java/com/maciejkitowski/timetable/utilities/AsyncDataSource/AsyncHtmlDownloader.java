@@ -15,7 +15,7 @@ import java.util.List;
 
 public final class AsyncHtmlDownloader extends AsyncTask<String, Void, Void> {
     private static final String logcat = "AsyncHtmlDownloader";
-    private List<AsyncDataSourceListener> listeners;
+    private List<AsyncDataListener> listeners;
     private List<String> downloaded;
     private boolean downloadFailed = false;
     private Exception downloadFailException = null;
@@ -25,7 +25,7 @@ public final class AsyncHtmlDownloader extends AsyncTask<String, Void, Void> {
         listeners = new LinkedList<>();
     }
 
-    public void addListener(AsyncDataSourceListener listener) {
+    public void addListener(AsyncDataListener listener) {
         Log.i(logcat, "Add new listener");
         listeners.add(listener);
     }
@@ -62,17 +62,17 @@ public final class AsyncHtmlDownloader extends AsyncTask<String, Void, Void> {
 
     private void callOnReceiveBegin() {
         Log.i(logcat, "Call all listeners (onReceiveBegin)");
-        for(AsyncDataSourceListener list : listeners) list.onLoadBegin();
+        for(AsyncDataListener list : listeners) list.onReceiveBegin();
     }
 
     private void callOnReceiveSuccess(List<String> data) {
         Log.i(logcat, "Call all listeners (onReceiveSuccess)");
-        for(AsyncDataSourceListener list : listeners) list.onLoadSuccess(data);
+        for(AsyncDataListener list : listeners) list.onReceiveSuccess(data);
     }
 
     private void callOnReceiveFail(String message) {
         Log.i(logcat, "Call all listeners (onReceiveFail)");
-        for(AsyncDataSourceListener list : listeners) list.onLoadFail(message);
+        for(AsyncDataListener list : listeners) list.onReceiveFail(message);
     }
 
     private String getPage(String source) {
