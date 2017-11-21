@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.maciejkitowski.timetable.utilities.AsyncDataListener;
+
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -15,7 +17,7 @@ import java.util.List;
 public class AsyncFileLoader extends AsyncTask<String, Void, Void> {
     private static final String logcat = "AsyncFileLoader";
     private Context context;
-    private List<AsyncDataSourceListener> listeners;
+    private List<AsyncDataListener> listeners;
     private List<String> loaded;
     private boolean loadFailed = false;
     private Exception failException = null;
@@ -26,7 +28,7 @@ public class AsyncFileLoader extends AsyncTask<String, Void, Void> {
         this.listeners = new LinkedList<>();
     }
 
-    public void addListener(AsyncDataSourceListener listener) {
+    public void addListener(AsyncDataListener listener) {
         Log.i(logcat, "Add new listener");
         listeners.add(listener);
     }
@@ -35,7 +37,7 @@ public class AsyncFileLoader extends AsyncTask<String, Void, Void> {
     protected void onPreExecute() {
         Log.i(logcat, "Start data receiving");
         loaded = new ArrayList<>();
-        for(AsyncDataSourceListener list : listeners) list.onLoadBegin();
+        for(AsyncDataListener list : listeners) list.onReceiveBegin();
     }
 
     @Override
@@ -52,12 +54,12 @@ public class AsyncFileLoader extends AsyncTask<String, Void, Void> {
         if(loadFailed) {
             Log.w(logcat, "Load failed.");
             String message = failException.getLocalizedMessage();
-            for(AsyncDataSourceListener list : listeners) list.onLoadFail(message);
+            for(AsyncDataListener list : listeners) list.onReceiveFail(message);
         }
         else {
             Log.i(logcat, "Load success.");
             for(String str : loaded) Log.i(logcat+"-val", str);
-            for(AsyncDataSourceListener list : listeners) list.onLoadSuccess(loaded);
+            for(AsyncDataListener list : listeners) list.onReceiveSuccess(loaded);
         }
     }
 
