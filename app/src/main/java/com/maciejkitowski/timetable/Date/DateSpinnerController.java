@@ -6,26 +6,29 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.maciejkitowski.timetable.R;
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
+import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncFileLoader;
 import com.maciejkitowski.timetable.utilities.FileUtil;
 import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
 import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
 import com.maciejkitowski.timetable.utilities.UserInterface.RefreshListener;
 
 import org.joda.time.LocalDate;
+import org.json.JSONArray;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class DateSpinnerController implements AdapterView.OnItemSelectedListener, AsyncDataListener, RefreshListener {
     private static final String logcat = "DateSpinner";
-    private enum sourceType {FILE, HTML}
+    private final String filename = "dates.json";
+    private final String url = "http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php";
+
     private Spinner spinner;
     private Activity activity;
-    private List<String> dates;
+    private List<String> dates = new LinkedList<>();
     private List<DateChangedListener> listeners = new LinkedList<>();
 
     public DateSpinnerController(Activity activity) {
@@ -48,21 +51,15 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     @Override
     public void onReceiveSuccess(List<String> data) {
         Log.i(logcat, "Receive success");
-        dates = data;
         LoadingBar.hide();
-        setSpinnerValues();
+        formatData(data);
     }
 
     @Override
     public void onReceiveFail(String message) {
         Log.w(logcat, String.format("Receive fail: %s", message));
-        if(FileUtil.isSavedOnDevice(activity, FileLoader.filename)) {
-            Toast.makeText(activity, R.string.error_nointernet_foundfile, Toast.LENGTH_LONG).show();
-            startLoading(sourceType.FILE);
-        }
-        else {
-            AlertText.display(message);
-        }
+        if(isFileOnDevice()) loadFromFile();
+        else AlertText.display(message);
     }
 
     @Override
@@ -80,16 +77,50 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
     public void onRefresh() {
         Log.i(logcat, "Refresh dates");
         AlertText.hide();
-        startLoading(sourceType.HTML);
+        loadFromUrl();
     }
 
     public void start() {
         Log.i(logcat, "Start loading");
-        sourceType type;
-        if(FileUtil.isSavedOnDevice(activity, FileLoader.filename)) type = sourceType.FILE;
-        else type = sourceType.HTML;
 
-        startLoading(type);
+        if(isFileOnDevice()) loadFromFile();
+        else loadFromUrl();
+    }
+
+    private void loadFromFile() {
+        Log.i(logcat, "Load dates from file");
+        AsyncFileLoader loader = new AsyncFileLoader(activity);
+        loader.addListener(this);
+        loader.execute(filename);
+    }
+
+    private void loadFromUrl() {
+        Log.i(logcat, "Load dates from url");
+
+
+    }
+
+    private void formatData(List<String> json) {
+        Log.i(logcat, "Format received json");
+
+        for(String js : json) {
+            try {
+                JSONArray array = new JSONArray(js);
+                Log.i(logcat+"-val", array.toString());
+
+                for(int i = 0; i < array.length(); ++i) {
+                    Log.i(logcat+"-val", String.format("Add %s to dates array", array.getString(i)));
+                    dates.add(array.getString(i));
+                }
+            }
+            catch (Exception ex) {
+                ex.printStackTrace();
+                AlertText.display(ex.getLocalizedMessage());
+                break;
+            }
+        }
+
+        setSpinnerValues();
     }
 
     private void setSpinnerValues() {
@@ -102,17 +133,6 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
         spinner.setAdapter(adapter);
         setClosestDate();
         spinner.setOnItemSelectedListener(this);
-    }
-
-    private void startLoading(sourceType type) {
-        Log.i(logcat, "Start loading");
-        DateLoader loader;
-
-        if(type == sourceType.FILE) loader = new FileLoader(activity);
-        else loader = new HtmlLoader(activity);
-
-        loader.addListener(this);
-        loader.start();
     }
 
     private void setClosestDate() {
@@ -129,4 +149,6 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
             }
         }
     }
+
+    private boolean isFileOnDevice() { return FileUtil.isSavedOnDevice(activity, filename); }
 }

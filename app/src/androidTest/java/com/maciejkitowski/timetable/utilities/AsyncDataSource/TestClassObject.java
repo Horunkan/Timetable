@@ -10,7 +10,7 @@ final class TestClassObject implements AsyncDataListener {
     private static final String logcat = "UnitTest";
     boolean fail = false;
     boolean success = false;
-    
+
     @Override
     public void onReceiveBegin() {
         Log.i(logcat, "Receive begin");

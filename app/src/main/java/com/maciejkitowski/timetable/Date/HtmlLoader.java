@@ -6,7 +6,6 @@ import android.util.Log;
 import com.maciejkitowski.timetable.R;
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
 import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncHtmlDownloader;
-import com.maciejkitowski.timetable.utilities.FileUtil;
 import com.maciejkitowski.timetable.utilities.InternetConnection;
 
 import java.util.List;
@@ -37,7 +36,7 @@ final class HtmlLoader extends DateLoader {
         Log.i(logcat, "Download success");
         for(String dat : data) Log.i(logcat+"-val", dat);
         formatData(data);
-        FileUtil.saveJsonArray(context, FileLoader.filename, dates);
+        //FileUtil.saveJsonArray(context, FileLoader.filename, dates);
     }
 
     @Override
