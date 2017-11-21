@@ -8,7 +8,7 @@ import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncFileLoader;
 
 import java.util.List;
 
-final class FileLoader extends Loader {
+final class FileLoader extends DateLoader {
     private static final String logcat = "FileLoader";
     static final String filename = "dates.json";
 

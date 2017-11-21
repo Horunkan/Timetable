@@ -11,7 +11,7 @@ import com.maciejkitowski.timetable.utilities.InternetConnection;
 
 import java.util.List;
 
-final class HtmlLoader extends Loader {
+final class HtmlLoader extends DateLoader {
     private static final String logcat = "HtmlLoader";
     private final String[] downloadUrls = {"http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php"};
 

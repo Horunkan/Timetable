@@ -106,7 +106,7 @@ public class DateSpinnerController implements AdapterView.OnItemSelectedListener
 
     private void startLoading(sourceType type) {
         Log.i(logcat, "Start loading");
-        Loader loader;
+        DateLoader loader;
 
         if(type == sourceType.FILE) loader = new FileLoader(activity);
         else loader = new HtmlLoader(activity);

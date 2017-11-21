@@ -11,13 +11,13 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class Loader implements AsyncDataSourceListener {
-    private static final String logcat = "Loader";
+abstract class DateLoader implements AsyncDataSourceListener {
+    private static final String logcat = "DateLoader";
     protected final Context context;
     protected List<AsyncDataListener> listeners = new ArrayList<>();
     List<String> dates = new ArrayList<>();
 
-    public Loader(Context context) {
+    public DateLoader(Context context) {
         Log.i(logcat, "Initialize");
         this.context = context;
     }
