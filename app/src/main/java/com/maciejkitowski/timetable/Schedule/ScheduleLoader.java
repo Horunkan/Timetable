@@ -2,11 +2,16 @@ package com.maciejkitowski.timetable.Schedule;
 
 import android.app.Activity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.maciejkitowski.timetable.Date.DateChangedListener;
+import com.maciejkitowski.timetable.R;
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
 import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncFileLoader;
+import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncHtmlDownloader;
 import com.maciejkitowski.timetable.utilities.FileUtil;
+import com.maciejkitowski.timetable.utilities.InternetConnection;
+import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
 import com.maciejkitowski.timetable.utilities.UserInterface.RefreshListener;
 
 import java.util.List;
@@ -73,6 +78,19 @@ public final class ScheduleLoader implements DateChangedListener, RefreshListene
     private void loadFromUrl() {
         Log.i(logcat, "Load schedule from url for date: " + selectedDate);
         loadingFromUrl = true;
+
+        if(InternetConnection.isConnected(activity)) {
+            AsyncHtmlDownloader downloader = new AsyncHtmlDownloader();
+            downloader.addListener(this);
+            downloader.execute(String.format(urlTemplate, selectedDate));
+        }
+        else {
+            if(isFileOnDevice()) {
+                Toast.makeText(activity, R.string.error_nointernet_foundfile, Toast.LENGTH_LONG).show();
+                loadFromFile();
+            }
+            else AlertText.display(activity.getString(R.string.error_nointernet));
+        }
     }
 
     private boolean isFileOnDevice() { return FileUtil.isSavedOnDevice(activity, String.format(filenameTemplate, selectedDate)); }
