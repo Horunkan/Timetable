@@ -12,24 +12,27 @@ import com.maciejkitowski.timetable.utilities.FileUtil;
 import com.maciejkitowski.timetable.utilities.InternetConnection;
 import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
 import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
+import com.maciejkitowski.timetable.utilities.UserInterface.RefreshListener;
 
 import org.json.JSONArray;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class DateLoader implements AsyncDataListener {
+final class DateLoader implements AsyncDataListener, RefreshListener {
     private static final String logcat = "DateLoader";
     private final String filename = "dates.json";
     private final String url = "http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php";
     private final Activity activity;
 
     private List<String> dates = new LinkedList<>();
+    private DateSpinnerController spinner;
     private boolean loadingFromUrl = false;
 
     public DateLoader(Activity activity) {
         Log.i(logcat, "Initialize");
         this.activity = activity;
+        spinner = new DateSpinnerController(activity);
     }
 
     public void start() {
@@ -49,8 +52,10 @@ public class DateLoader implements AsyncDataListener {
     @Override
     public void onReceiveSuccess(List<String> data) {
         Log.i(logcat, "Receive success");
+        if(loadingFromUrl) FileUtil.saveToFile(activity, filename, data);
         LoadingBar.hide();
         formatData(data);
+        spinner.updateValues(dates);
     }
 
     @Override
@@ -59,6 +64,13 @@ public class DateLoader implements AsyncDataListener {
         LoadingBar.hide();
         if(isFileOnDevice()) loadFromFile();
         else AlertText.display(message);
+    }
+
+    @Override
+    public void onRefresh() {
+        Log.i(logcat, "Refresh dates");
+        AlertText.hide();
+        loadFromUrl();
     }
 
     private void loadFromFile() {
@@ -107,8 +119,6 @@ public class DateLoader implements AsyncDataListener {
                 break;
             }
         }
-
-        //setSpinnerValues();
     }
 
     private boolean isFileOnDevice() { return FileUtil.isSavedOnDevice(activity, filename); }
