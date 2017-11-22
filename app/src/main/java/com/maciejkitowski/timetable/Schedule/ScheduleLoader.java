@@ -118,6 +118,7 @@ public final class ScheduleLoader implements DateChangedListener, RefreshListene
                 if(isReceivedError(js)) break;
                 else {
                     JSONArray array = new JSONArray(js);
+                    for(int i = 0; i < array.length(); ++i) groups.add(new Group(array.getJSONObject(i)));
                 }
             }
             catch (Exception ex) {
