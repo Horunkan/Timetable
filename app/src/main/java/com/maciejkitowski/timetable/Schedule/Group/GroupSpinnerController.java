@@ -1,4 +1,4 @@
-package com.maciejkitowski.timetable.Schedule;
+package com.maciejkitowski.timetable.Schedule.Group;
 
 import android.app.Activity;
 import android.util.Log;

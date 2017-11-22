@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.maciejkitowski.timetable.Date.DateLoader;
 import com.maciejkitowski.timetable.Date.DateSpinnerController;
-import com.maciejkitowski.timetable.Schedule.GroupSpinnerController;
+import com.maciejkitowski.timetable.Schedule.Group.GroupSpinnerController;
 import com.maciejkitowski.timetable.Schedule.ScheduleLoader;
 import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
 import com.maciejkitowski.timetable.utilities.UserInterface.CurrentTimeLine;

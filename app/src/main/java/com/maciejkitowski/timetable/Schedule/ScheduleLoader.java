@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import com.maciejkitowski.timetable.Date.DateChangedListener;
 import com.maciejkitowski.timetable.R;
+import com.maciejkitowski.timetable.Schedule.Group.Group;
+import com.maciejkitowski.timetable.Schedule.Group.GroupSpinnerController;
 import com.maciejkitowski.timetable.utilities.AsyncDataListener;
 import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncFileLoader;
 import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncHtmlDownloader;
