@@ -129,6 +129,8 @@ public final class ScheduleLoader implements DateChangedListener, RefreshListene
     }
 
     private boolean isReceivedError(String json) throws Exception {
+        Log.i(logcat, "Check if received JSON is not error");
+
         Object js = new JSONTokener(json).nextValue();
         if(js instanceof JSONObject) {
             JSONObject obj = new JSONObject(json);

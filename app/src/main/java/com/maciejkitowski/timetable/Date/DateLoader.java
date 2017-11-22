@@ -55,6 +55,7 @@ public final class DateLoader implements AsyncDataListener, RefreshListener {
         if(loadingFromUrl) FileUtil.saveToFile(activity, filename, data);
         LoadingBar.hide();
         formatData(data);
+        dates.add("2100-12-12");    //TODO Debug date, remove in final version
         spinner.updateValues(dates);
     }
 
