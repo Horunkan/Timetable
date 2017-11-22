@@ -15,6 +15,10 @@ import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
 import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
 import com.maciejkitowski.timetable.utilities.UserInterface.RefreshListener;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -108,6 +112,33 @@ public final class ScheduleLoader implements DateChangedListener, RefreshListene
 
     private void formatData(List<String> json) {
         Log.i(logcat, "Format received json");
+
+        for(String js : json) {
+            try {
+                if(isReceivedError(js)) break;
+                else {
+                    JSONArray array = new JSONArray(js);
+                }
+            }
+            catch (Exception ex) {
+                ex.printStackTrace();
+                AlertText.display(ex.getLocalizedMessage());
+                break;
+            }
+        }
+    }
+
+    private boolean isReceivedError(String json) throws Exception {
+        Object js = new JSONTokener(json).nextValue();
+        if(js instanceof JSONObject) {
+            JSONObject obj = new JSONObject(json);
+            if(obj.has("ERROR")) {
+                AlertText.display(obj.getString("ERROR"));
+                return true;
+            }
+            else return false;
+        }
+        else return false;
     }
 
     private boolean isFileOnDevice() { return FileUtil.isSavedOnDevice(activity, String.format(filenameTemplate, selectedDate)); }
