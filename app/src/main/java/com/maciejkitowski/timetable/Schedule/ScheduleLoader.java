@@ -48,6 +48,7 @@ public final class ScheduleLoader implements DateChangedListener, RefreshListene
         if(loadingFromUrl) FileUtil.saveToFile(activity, String.format(filenameTemplate, selectedDate), data);
         LoadingBar.hide();
         formatData(data);
+        spinner.updateValues(groups);
     }
 
     @Override
@@ -68,6 +69,7 @@ public final class ScheduleLoader implements DateChangedListener, RefreshListene
     @Override
     public void onRefresh() {
         Log.i(logcat, "Refresh saved schedules");
+        Log.e(logcat, "NOT IMPLEMENTED YET");
     }
 
     private void loadSelectedSchedule() {
