@@ -93,5 +93,9 @@ public final class ScheduleLoader implements DateChangedListener, RefreshListene
         }
     }
 
+    private void formatData(List<String> json) {
+        Log.i(logcat, "Format received json");
+    }
+
     private boolean isFileOnDevice() { return FileUtil.isSavedOnDevice(activity, String.format(filenameTemplate, selectedDate)); }
 }
