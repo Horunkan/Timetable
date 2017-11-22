@@ -19,20 +19,20 @@ import org.json.JSONArray;
 import java.util.LinkedList;
 import java.util.List;
 
-final class DateLoader implements AsyncDataListener, RefreshListener {
+public final class DateLoader implements AsyncDataListener, RefreshListener {
     private static final String logcat = "DateLoader";
     private final String filename = "dates.json";
     private final String url = "http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php";
     private final Activity activity;
+    private final DateSpinnerController spinner;
 
     private List<String> dates = new LinkedList<>();
-    private DateSpinnerController spinner;
     private boolean loadingFromUrl = false;
 
-    public DateLoader(Activity activity) {
+    public DateLoader(Activity activity, DateSpinnerController spinner) {
         Log.i(logcat, "Initialize");
         this.activity = activity;
-        spinner = new DateSpinnerController(activity);
+        this.spinner = spinner;
     }
 
     public void start() {

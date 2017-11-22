@@ -14,7 +14,7 @@ import org.joda.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
-final class DateSpinnerController implements AdapterView.OnItemSelectedListener {
+public final class DateSpinnerController implements AdapterView.OnItemSelectedListener {
     private static final String logcat = "DateSpinner";
 
     private Spinner spinner;
