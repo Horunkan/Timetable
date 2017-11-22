@@ -7,6 +7,7 @@ import android.util.Log;
 import com.maciejkitowski.timetable.Date.DateLoader;
 import com.maciejkitowski.timetable.Date.DateSpinnerController;
 import com.maciejkitowski.timetable.Schedule.GroupSpinnerController;
+import com.maciejkitowski.timetable.Schedule.ScheduleLoader;
 import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
 import com.maciejkitowski.timetable.utilities.UserInterface.CurrentTimeLine;
 import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
@@ -46,9 +47,11 @@ public class MainActivity extends AppCompatActivity {
         GroupSpinnerController groupSpinner = new GroupSpinnerController(this);
 
         DateLoader date = new DateLoader(this, dateSpinner);
+        ScheduleLoader schedule = new ScheduleLoader(this, groupSpinner);
 
         refresh.addRefreshListener(date);
-        dateSpinner.addListener(groupSpinner);
+        refresh.addRefreshListener(schedule);
+        dateSpinner.addListener(schedule);
         timePointer.display();
         date.start();
     }

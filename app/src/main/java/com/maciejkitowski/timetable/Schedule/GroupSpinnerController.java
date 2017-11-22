@@ -17,7 +17,7 @@ import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
 
 import java.util.List;
 
-public class GroupSpinnerController implements DateChangedListener, AsyncDataListener {
+public final class GroupSpinnerController implements DateChangedListener, AsyncDataListener {
     private static final String logcat = "GroupSpinner";
     private final String urlTemplate = "http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Timetable.php?date=%s";
 
