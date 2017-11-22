@@ -11,7 +11,11 @@ import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncHtmlDownloade
 import com.maciejkitowski.timetable.utilities.FileUtil;
 import com.maciejkitowski.timetable.utilities.InternetConnection;
 import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
+import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
 
+import org.json.JSONArray;
+
+import java.util.LinkedList;
 import java.util.List;
 
 public class DateLoader implements AsyncDataListener {
@@ -20,6 +24,7 @@ public class DateLoader implements AsyncDataListener {
     private final String url = "http://sigma.inf.ug.edu.pl/~mkitowski/Timetable/Date.php";
     private final Activity activity;
 
+    private List<String> dates = new LinkedList<>();
     private boolean loadingFromUrl = false;
 
     public DateLoader(Activity activity) {
@@ -37,16 +42,23 @@ public class DateLoader implements AsyncDataListener {
     @Override
     public void onReceiveBegin() {
         Log.i(logcat, "Receive begin");
+        dates.clear();
+        LoadingBar.display();
     }
 
     @Override
     public void onReceiveSuccess(List<String> data) {
         Log.i(logcat, "Receive success");
+        LoadingBar.hide();
+        formatData(data);
     }
 
     @Override
     public void onReceiveFail(String message) {
         Log.w(logcat, String.format("Receive fail: %s", message));
+        LoadingBar.hide();
+        if(isFileOnDevice()) loadFromFile();
+        else AlertText.display(message);
     }
 
     private void loadFromFile() {
@@ -74,6 +86,29 @@ public class DateLoader implements AsyncDataListener {
             }
             else AlertText.display(activity.getString(R.string.error_nointernet));
         }
+    }
+
+    private void formatData(List<String> json) {
+        Log.i(logcat, "Format received json");
+
+        for(String js : json) {
+            try {
+                JSONArray array = new JSONArray(js);
+                Log.i(logcat+"-val", array.toString());
+
+                for(int i = 0; i < array.length(); ++i) {
+                    Log.i(logcat+"-val", String.format("Add %s to dates array", array.getString(i)));
+                    dates.add(array.getString(i));
+                }
+            }
+            catch (Exception ex) {
+                ex.printStackTrace();
+                AlertText.display(ex.getLocalizedMessage());
+                break;
+            }
+        }
+
+        //setSpinnerValues();
     }
 
     private boolean isFileOnDevice() { return FileUtil.isSavedOnDevice(activity, filename); }
