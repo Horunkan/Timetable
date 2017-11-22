@@ -12,8 +12,10 @@ import com.maciejkitowski.timetable.utilities.AsyncDataSource.AsyncHtmlDownloade
 import com.maciejkitowski.timetable.utilities.FileUtil;
 import com.maciejkitowski.timetable.utilities.InternetConnection;
 import com.maciejkitowski.timetable.utilities.UserInterface.AlertText;
+import com.maciejkitowski.timetable.utilities.UserInterface.LoadingBar;
 import com.maciejkitowski.timetable.utilities.UserInterface.RefreshListener;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public final class ScheduleLoader implements DateChangedListener, RefreshListener, AsyncDataListener {
@@ -25,6 +27,7 @@ public final class ScheduleLoader implements DateChangedListener, RefreshListene
 
     private String selectedDate;
     private boolean loadingFromUrl = false;
+    private List<Group> groups = new LinkedList<>();
 
     public ScheduleLoader(Activity activity, GroupSpinnerController spinner) {
         Log.i(logcat, "Initialize");
@@ -35,16 +38,24 @@ public final class ScheduleLoader implements DateChangedListener, RefreshListene
     @Override
     public void onReceiveBegin() {
         Log.i(logcat, "Receive begin");
+        groups.clear();
+        LoadingBar.display();
     }
 
     @Override
     public void onReceiveSuccess(List<String> data) {
         Log.i(logcat, "Receive success");
+        if(loadingFromUrl) FileUtil.saveToFile(activity, String.format(filenameTemplate, selectedDate), data);
+        LoadingBar.hide();
+        formatData(data);
     }
 
     @Override
     public void onReceiveFail(String message) {
         Log.w(logcat, String.format("Receive fail: %s", message));
+        LoadingBar.hide();
+        if(isFileOnDevice()) loadFromFile();
+        else AlertText.display(message);
     }
 
     @Override
